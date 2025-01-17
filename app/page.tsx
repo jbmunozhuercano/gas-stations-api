@@ -15,6 +15,8 @@ interface Station {
 export default function Home() {
   const [comunityCode, setComunityCode] = useState('');
   const [stations, setStations] = useState<Station[]>([]);
+  const [postalCode, setPostalCode] = useState('');
+  const [filteredStations, setFilteredStations] = useState<Station[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -42,6 +44,14 @@ export default function Home() {
   useEffect(() => {
     fetchStations('/api/gas-stations');
   }, []);
+
+  useEffect(() => {
+    if (stations.length > 0) {
+      setFilteredStations(
+        stations.filter((station) => station['C.P.'].includes(postalCode))
+      );
+    }
+  }, [postalCode, stations]);
 
   const handleFetchStations = () => {
     if (comunityCode) {
@@ -83,6 +93,12 @@ export default function Home() {
         {loading ? 'Cargando...' : 'Mostrar'}
       </button>
       {error && <p style={{ color: 'red' }}>{error}</p>}
+      <input
+        type="text"
+        placeholder="Filtrar por C.P."
+        value={postalCode}
+        onChange={(e) => setPostalCode(e.target.value)}
+      />
       <table>
         <thead>
           <tr>
@@ -98,7 +114,7 @@ export default function Home() {
           </tr>
         </thead>
         <tbody>
-          {stations.map((station, index) => (
+          {filteredStations.map((station, index) => (
             <tr key={index}>
               <td>{station.Rótulo}</td>
               <td>{station['C.P.']}</td>
