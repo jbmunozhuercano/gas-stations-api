@@ -65,6 +65,12 @@ export default function Home() {
     }
   }, [comunityCode]);
 
+  const clearSelections = () => {
+    setComunityCode('');
+    setPostalCode('');
+    fetchStations('/api/gas-stations');
+  };
+
   return (
     <div>
       <h1>Precio del combustible en las Estaciones de Servicio de España</h1>
@@ -101,6 +107,7 @@ export default function Home() {
         value={postalCode}
         onChange={(e) => setPostalCode(e.target.value)}
       />
+      <button onClick={clearSelections}>Limpiar selección</button>
       {loading ? (
         <h3>Cargando...</h3>
       ) : (
