@@ -1,4 +1,6 @@
 'use client';
+import styles from './page.module.css';
+import { Select } from './modules/Select/Select';
 import { useState, useEffect } from 'react';
 
 interface Station {
@@ -11,12 +13,6 @@ interface Station {
   'Precio Gasolina 95 E5': string;
   'Precio Gasolina 98 E5': string;
 }
-
-const yesterday = new Date(Date.now() - 86400000).toLocaleDateString('es-ES', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-});
 
 export default function Home() {
   const [comunityCode, setComunityCode] = useState('');
@@ -72,34 +68,8 @@ export default function Home() {
   };
 
   return (
-    <div>
-      <h1>Precio del combustible en las Estaciones de Servicio de España</h1>
-      <h2>Fecha de actualización: {yesterday}.</h2>
-      <select
-        value={comunityCode}
-        onChange={(e) => setComunityCode(e.target.value)}
-      >
-        <option value="">Comunidad Autónoma</option>
-        <option value="01">Andalucía</option>
-        <option value="02">Aragón</option>
-        <option value="03">Asturias</option>
-        <option value="04">Baleares</option>
-        <option value="05">Canarias</option>
-        <option value="06">Cantabria</option>
-        <option value="07">Castilla-La Mancha</option>
-        <option value="08">Castilla y León</option>
-        <option value="09">Cataluña</option>
-        <option value="10">Valencia</option>
-        <option value="11">Extremadura</option>
-        <option value="12">Galicia</option>
-        <option value="13">Madrid</option>
-        <option value="14">Murcia</option>
-        <option value="15">Navarra</option>
-        <option value="16">País Vasco</option>
-        <option value="17">La Rioja</option>
-        <option value="18">Ceuta</option>
-        <option value="19">Melilla</option>
-      </select>
+    <main className={styles.container}>
+      <Select comunityCode={comunityCode} setComunityCode={setComunityCode} />
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <input
         type="text"
@@ -168,6 +138,6 @@ export default function Home() {
           </tbody>
         </table>
       )}
-    </div>
+    </main>
   );
 }
