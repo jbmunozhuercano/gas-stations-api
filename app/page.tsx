@@ -12,6 +12,12 @@ interface Station {
   'Precio Gasolina 98 E5': string;
 }
 
+const yesterday = new Date(Date.now() - 86400000).toLocaleDateString('es-ES', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
 export default function Home() {
   const [comunityCode, setComunityCode] = useState('');
   const [stations, setStations] = useState<Station[]>([]);
@@ -53,17 +59,16 @@ export default function Home() {
     }
   }, [postalCode, stations]);
 
-  const handleFetchStations = () => {
+  useEffect(() => {
     if (comunityCode) {
       fetchStations(`/api/gas-stations/${comunityCode}`);
-    } else {
-      setError('Por favor, selecciona una Comunidad Autónoma');
     }
-  };
+  }, [comunityCode]);
 
   return (
     <div>
-      <h1>Estaciones de servicio por Comunidad Autónoma</h1>
+      <h1>Precio del combustible en las Estaciones de Servicio de España</h1>
+      <h2>Fecha de actualización: {yesterday}.</h2>
       <select
         value={comunityCode}
         onChange={(e) => setComunityCode(e.target.value)}
@@ -89,9 +94,6 @@ export default function Home() {
         <option value="18">Ceuta</option>
         <option value="19">Melilla</option>
       </select>
-      <button onClick={handleFetchStations} disabled={loading}>
-        {loading ? 'Cargando...' : 'Mostrar'}
-      </button>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <input
         type="text"
@@ -99,62 +101,66 @@ export default function Home() {
         value={postalCode}
         onChange={(e) => setPostalCode(e.target.value)}
       />
-      <table>
-        <thead>
-          <tr>
-            <th>Rótulo</th>
-            <th>C.P.</th>
-            <th>Municipio</th>
-            <th>Horario</th>
-            <th>Ir</th>
-            <th>Gasoleo A</th>
-            <th>Gasoleo Premium</th>
-            <th>Gasolina 95</th>
-            <th>Gasolina 98</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredStations.map((station, index) => (
-            <tr key={index}>
-              <td>{station.Rótulo}</td>
-              <td>{station['C.P.']}</td>
-              <td>{station.Municipio}</td>
-              <td>{station.Horario}</td>
-              <td>
-                <a
-                  href={`https://www.google.es/maps/place/${station.Latitud.replace(
-                    ',',
-                    '.'
-                  )},${station['Longitud (WGS84)'].replace(',', '.')}`}
-                  target="blank"
-                >
-                  Google Maps
-                </a>
-              </td>
-              <td>
-                {station['Precio Gasoleo A']
-                  ? `${station['Precio Gasoleo A']}€`
-                  : ''}
-              </td>
-              <td>
-                {station['Precio Gasoleo Premium']
-                  ? `${station['Precio Gasoleo Premium']}€`
-                  : ''}
-              </td>
-              <td>
-                {station['Precio Gasolina 95 E5']
-                  ? `${station['Precio Gasolina 95 E5']}€`
-                  : ''}
-              </td>
-              <td>
-                {station['Precio Gasolina 98 E5']
-                  ? `${station['Precio Gasolina 98 E5']}€`
-                  : ''}
-              </td>
+      {loading ? (
+        <h3>Cargando...</h3>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>Rótulo</th>
+              <th>C.P.</th>
+              <th>Municipio</th>
+              <th>Horario</th>
+              <th>Google Maps</th>
+              <th>Gasoleo A</th>
+              <th>Gasoleo Premium</th>
+              <th>Gasolina 95</th>
+              <th>Gasolina 98</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filteredStations.map((station, index) => (
+              <tr key={index}>
+                <td>{station.Rótulo}</td>
+                <td>{station['C.P.']}</td>
+                <td>{station.Municipio}</td>
+                <td>{station.Horario}</td>
+                <td>
+                  <a
+                    href={`https://www.google.es/maps/place/${station.Latitud.replace(
+                      ',',
+                      '.'
+                    )},${station['Longitud (WGS84)'].replace(',', '.')}`}
+                    target="blank"
+                  >
+                    Abrir
+                  </a>
+                </td>
+                <td>
+                  {station['Precio Gasoleo A']
+                    ? `${station['Precio Gasoleo A']}€`
+                    : ''}
+                </td>
+                <td>
+                  {station['Precio Gasoleo Premium']
+                    ? `${station['Precio Gasoleo Premium']}€`
+                    : ''}
+                </td>
+                <td>
+                  {station['Precio Gasolina 95 E5']
+                    ? `${station['Precio Gasolina 95 E5']}€`
+                    : ''}
+                </td>
+                <td>
+                  {station['Precio Gasolina 98 E5']
+                    ? `${station['Precio Gasolina 98 E5']}€`
+                    : ''}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }
