@@ -1,3 +1,14 @@
+/**
+ * The Select component is a dropdown that allows the user to select a region
+ * of Spain.
+ *
+ * @param {Object} props - The props object.
+ * @param {string} props.comunityCode - The code of the selected region.
+ * @param {function} props.setComunityCode - A function to update the selected region.
+ *
+ * @returns {JSX.Element} The Select component.
+ */
+
 import styles from './Select.module.css';
 
 type SelectProps = {
@@ -5,7 +16,10 @@ type SelectProps = {
   setComunityCode: (comunityCode: string) => void;
 };
 
-export function Select({ comunityCode, setComunityCode }: SelectProps) {
+export function Select({
+  comunityCode,
+  setComunityCode,
+}: SelectProps): JSX.Element {
   return (
     <select
       className={styles.select}
