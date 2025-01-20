@@ -10,6 +10,7 @@
   font-size: 0.9em;
   font-weight: 700;
   border: 2px solid #212529;
+  cursor: pointer;
   &::placeholder {
     color: inherit;
     font-weight: inherit;
