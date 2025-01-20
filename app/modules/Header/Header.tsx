@@ -1,6 +1,13 @@
+/**
+ * The Header component displays the title of the app and the date of the last
+ * update.
+ *
+ * @returns {JSX.Element} The Header component.
+ */
+
 import styles from './Header.module.css';
 
-export function Header() {
+export function Header(): JSX.Element {
   const yesterday = new Date(Date.now() - 86400000).toLocaleDateString(
     'es-ES',
     {
@@ -12,7 +19,7 @@ export function Header() {
 
   return (
     <header className={styles.header}>
-      <h1>Precio del combustible en las Estaciones de Servicio de España</h1>
+      <h1>Precio combustible Estaciones de Servicio de España</h1>
       <h2>
         <span>Actualización:</span> {yesterday}
       </h2>
