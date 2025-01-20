@@ -2,6 +2,7 @@
 import styles from './page.module.css';
 import { Select } from './modules/Select/Select';
 import { PcInput } from './modules/PcInput/PcInput';
+import { ClearButton } from './modules/ClearButton/ClearButton';
 import { useState, useEffect } from 'react';
 
 interface Station {
@@ -73,7 +74,7 @@ export default function Home() {
       <Select comunityCode={comunityCode} setComunityCode={setComunityCode} />
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <PcInput postalCode={postalCode} setPostalCode={setPostalCode} />
-      <button onClick={clearSelections}>Limpiar selección</button>
+      <ClearButton clearSelections={clearSelections} />
       {loading ? (
         <h3>Cargando...</h3>
       ) : (
