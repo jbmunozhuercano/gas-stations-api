@@ -1,6 +1,7 @@
 'use client';
 import styles from './page.module.css';
 import { Select } from './modules/Select/Select';
+import { PcInput } from './modules/PcInput/PcInput';
 import { useState, useEffect } from 'react';
 
 interface Station {
@@ -71,12 +72,7 @@ export default function Home() {
     <main className={styles.container}>
       <Select comunityCode={comunityCode} setComunityCode={setComunityCode} />
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      <input
-        type="text"
-        placeholder="Filtrar por C.P."
-        value={postalCode}
-        onChange={(e) => setPostalCode(e.target.value)}
-      />
+      <PcInput postalCode={postalCode} setPostalCode={setPostalCode} />
       <button onClick={clearSelections}>Limpiar selección</button>
       {loading ? (
         <h3>Cargando...</h3>
