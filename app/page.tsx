@@ -3,6 +3,7 @@ import styles from './page.module.css';
 import { Select } from './modules/Select/Select';
 import { PcInput } from './modules/PcInput/PcInput';
 import { ClearButton } from './modules/ClearButton/ClearButton';
+import { StationCard } from './modules/StationCard/StationCard';
 import { useState, useEffect } from 'react';
 
 interface Station {
@@ -16,7 +17,12 @@ interface Station {
   'Precio Gasolina 98 E5': string;
 }
 
-export default function Home() {
+/**
+ * The Home component fetches and displays gas stations information.
+ *
+ * @returns {JSX.Element} The Home component.
+ */
+export default function Home(): JSX.Element {
   const [comunityCode, setComunityCode] = useState('');
   const [stations, setStations] = useState<Station[]>([]);
   const [postalCode, setPostalCode] = useState('');
@@ -24,6 +30,11 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  /**
+   * Fetches the gas stations data from the given URL.
+   *
+   * @param {string} url - The URL to fetch the gas stations data from.
+   */
   const fetchStations = async (url: string) => {
     setLoading(true);
     setError('');
@@ -39,7 +50,11 @@ export default function Home() {
       const data = await response.json();
       setStations(data.ListaEESSPrecio);
     } catch (err) {
-      setError(err.message);
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('An unknown error occurred');
+      }
     } finally {
       setLoading(false);
     }
@@ -63,77 +78,31 @@ export default function Home() {
     }
   }, [comunityCode]);
 
+  /**
+   * Clears the community code and postal code selections.
+   */
   const clearSelections = () => {
     setComunityCode('');
     setPostalCode('');
-    fetchStations('/api/gas-stations');
+    setStations(stations);
   };
 
   return (
     <main className={styles.container}>
-      <Select comunityCode={comunityCode} setComunityCode={setComunityCode} />
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <PcInput postalCode={postalCode} setPostalCode={setPostalCode} />
-      <ClearButton clearSelections={clearSelections} />
+      <div className={styles.listHeader}>
+        <Select comunityCode={comunityCode} setComunityCode={setComunityCode} />
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        <PcInput postalCode={postalCode} setPostalCode={setPostalCode} />
+        <ClearButton clearSelections={clearSelections} />
+      </div>
       {loading ? (
-        <h3>Cargando...</h3>
+        <h3 className={styles.loading}>Cargando...</h3>
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>Rótulo</th>
-              <th>C.P.</th>
-              <th>Municipio</th>
-              <th>Horario</th>
-              <th>Google Maps</th>
-              <th>Gasoleo A</th>
-              <th>Gasoleo Premium</th>
-              <th>Gasolina 95</th>
-              <th>Gasolina 98</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredStations.map((station, index) => (
-              <tr key={index}>
-                <td>{station.Rótulo}</td>
-                <td>{station['C.P.']}</td>
-                <td>{station.Municipio}</td>
-                <td>{station.Horario}</td>
-                <td>
-                  <a
-                    href={`https://www.google.es/maps/place/${station.Latitud.replace(
-                      ',',
-                      '.'
-                    )},${station['Longitud (WGS84)'].replace(',', '.')}`}
-                    target="blank"
-                  >
-                    Abrir
-                  </a>
-                </td>
-                <td>
-                  {station['Precio Gasoleo A']
-                    ? `${station['Precio Gasoleo A']}€`
-                    : ''}
-                </td>
-                <td>
-                  {station['Precio Gasoleo Premium']
-                    ? `${station['Precio Gasoleo Premium']}€`
-                    : ''}
-                </td>
-                <td>
-                  {station['Precio Gasolina 95 E5']
-                    ? `${station['Precio Gasolina 95 E5']}€`
-                    : ''}
-                </td>
-                <td>
-                  {station['Precio Gasolina 98 E5']
-                    ? `${station['Precio Gasolina 98 E5']}€`
-                    : ''}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className={styles.cardsContainer}>
+          {filteredStations.map((station, index) => (
+            <StationCard key={index} station={station} />
+          ))}
+        </div>
       )}
     </main>
   );
