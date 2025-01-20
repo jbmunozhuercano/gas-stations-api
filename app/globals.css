@@ -1,6 +1,10 @@
 /* Global styles */
 :root {
   --inter-font: 'Inter';
+  --primary-color: #f8f9fa;
+  --secondary-color: #212529;
+  --grey-color: #cacaca;
+  --success-color: #038f26;
 }
 
 * {
@@ -14,8 +18,8 @@ body {
   font-weight: 400;
   font-size: 1em;
   line-height: 1.6;
-  background-color: #f8f9fa;
-  color: #212529;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
 }
 
 h1,
