@@ -3,13 +3,13 @@
   max-width: 220px;
   padding: 8px;
   border-radius: 3px;
-  color: #212529;
-  background-color: #fff;
+  color: var(--secondary-color);
+  background-color: var(--primary-color);
   margin: 0 0.5em 0.5em 0;
   text-transform: uppercase;
   font-size: 0.9em;
   font-weight: 700;
-  border: 2px solid #212529;
+  border: 2px solid var(--secondary-color);
   cursor: pointer;
   &::placeholder {
     color: inherit;
@@ -17,6 +17,6 @@
   }
   &:focus {
     outline: none;
-    border-color: #038f26;
+    border-color: var(--success-color);
   }
 }
