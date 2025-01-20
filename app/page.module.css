@@ -4,3 +4,35 @@
   margin: 0 auto;
   padding: 0 1em 1em;
 }
+.listHeader {
+  margin: 0 0 1em;
+}
+
+.cardsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.loading {
+  font-size: 1.5em;
+  color: var(--success-color);
+  text-align: center;
+  animation: loadingAnimation 1.5s infinite;
+  opacity: 1;
+}
+
+@keyframes loadingAnimation {
+  0% {
+    opacity: 0;
+  }
+  33% {
+    opacity: 1;
+  }
+  66% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
