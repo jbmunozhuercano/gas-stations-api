@@ -27,34 +27,38 @@ export function StationCard({ station }: StationCardProps): JSX.Element {
         <dd>{station['C.P.']}</dd>
 
         <dt>Horario</dt>
-        <dd>{station.Horario}</dd>
+        <dd
+          dangerouslySetInnerHTML={{
+            __html: station.Horario.replace(';', '<br />'),
+          }}
+        ></dd>
 
         <dt>Gasoleo A</dt>
         <dd>
           {station['Precio Gasoleo A']
             ? `${station['Precio Gasoleo A']}€`
-            : 'N/A'}
+            : 'N/D'}
         </dd>
 
         <dt>Gasoleo Prem.</dt>
         <dd>
           {station['Precio Gasoleo Premium']
             ? `${station['Precio Gasoleo Premium']}€`
-            : 'N/A'}
+            : 'N/D'}
         </dd>
 
         <dt>Gasolina 95</dt>
         <dd>
           {station['Precio Gasolina 95 E5']
             ? `${station['Precio Gasolina 95 E5']}€`
-            : 'N/A'}
+            : 'N/D'}
         </dd>
 
         <dt>Gasolina 98</dt>
         <dd>
           {station['Precio Gasolina 98 E5']
             ? `${station['Precio Gasolina 98 E5']}€`
-            : 'N/A'}
+            : 'N/D'}
         </dd>
       </dl>
       <a
