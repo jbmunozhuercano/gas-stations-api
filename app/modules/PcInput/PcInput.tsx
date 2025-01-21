@@ -19,13 +19,21 @@ export function PcInput({
   postalCode,
   setPostalCode,
 }: PcInputProps): JSX.Element {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const regex = /^\d{0,5}$/;
+    if (regex.test(value)) {
+      setPostalCode(value);
+    }
+  };
+
   return (
     <input
       className={styles.input}
       type="text"
       placeholder="Filtrar por C.P."
       value={postalCode}
-      onChange={(e) => setPostalCode(e.target.value)}
+      onChange={handleChange}
     />
   );
 }
