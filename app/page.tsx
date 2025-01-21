@@ -53,7 +53,7 @@ export default function Home(): JSX.Element {
       if (err instanceof Error) {
         setError(err.message);
       } else {
-        setError('An unknown error occurred');
+        setError('Ha ocurrido un error');
       }
     } finally {
       setLoading(false);
