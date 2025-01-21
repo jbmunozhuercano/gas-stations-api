@@ -1,11 +1,12 @@
 'use client';
+import { useState, useEffect, useCallback } from 'react';
+import debounce from 'lodash/debounce';
 import styles from './page.module.css';
 import { Select } from './modules/Select/Select';
 import { PcInput } from './modules/PcInput/PcInput';
 import { ClearButton } from './modules/ClearButton/ClearButton';
 import { StationCard } from './modules/StationCard/StationCard';
-import { useState, useEffect, useCallback } from 'react';
-import debounce from 'lodash/debounce';
+import { Pagination } from './modules/Pagination/Pagination';
 
 interface Station {
   Municipio: string;
@@ -18,24 +19,22 @@ interface Station {
   'Precio Gasolina 98 E5': string;
 }
 
-/**
- * The Home component fetches and displays gas stations information.
- *
- * @returns {JSX.Element} The Home component.
- */
 export default function Home(): JSX.Element {
+  const itemsPerPage = 20;
   const [comunityCode, setComunityCode] = useState('');
   const [stations, setStations] = useState<Station[]>([]);
   const [postalCode, setPostalCode] = useState('');
   const [filteredStations, setFilteredStations] = useState<Station[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredStations.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
 
-  /**
-   * Fetches the gas stations data from the given URL.
-   *
-   * @param {string} url - The URL to fetch the gas stations data from.
-   */
   const fetchStations = async (url: string) => {
     setLoading(true);
     setError('');
@@ -86,9 +85,6 @@ export default function Home(): JSX.Element {
     }
   }, [comunityCode]);
 
-  /**
-   * Clears the community code and postal code selections.
-   */
   const clearSelections = () => {
     setComunityCode('');
     setPostalCode('');
@@ -107,11 +103,17 @@ export default function Home(): JSX.Element {
         <h3 className={styles.loading}>Cargando...</h3>
       ) : (
         <div className={styles.cardsContainer}>
-          {filteredStations.map((station, index) => (
+          {currentItems.map((station, index) => (
             <StationCard key={index} station={station} />
           ))}
         </div>
       )}
+      <Pagination
+        filteredStations={filteredStations}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        itemsPerPage={itemsPerPage}
+      />
     </main>
   );
 }
