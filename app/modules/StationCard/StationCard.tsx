@@ -20,11 +20,11 @@ export function StationCard({ station }: StationCardProps): JSX.Element {
     <div className={styles.card}>
       <h3>{station.Rótulo}</h3>
       <dl>
-        <dt>C.P.</dt>
-        <dd>{station['C.P.']}</dd>
-
         <dt>Municipio</dt>
         <dd>{station.Municipio}</dd>
+
+        <dt>C.P.</dt>
+        <dd>{station['C.P.']}</dd>
 
         <dt>Horario</dt>
         <dd>{station.Horario}</dd>

@@ -1,10 +1,10 @@
 /* Global styles */
 :root {
-  --inter-font: 'Inter';
+  --main-font: 'Smooch Sans';
   --primary-color: #f8f9fa;
   --secondary-color: #212529;
   --grey-color: #cacaca;
-  --success-color: #038f26;
+  --success-color: #2ecc71;
 }
 
 * {
@@ -14,7 +14,8 @@
 }
 
 body {
-  font-family: var(--inter-font), Arial, Helvetica, sans-serif;
+  font-family: var(--main-font), 'Lucida Sans', 'Lucida Sans Regular',
+    'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-weight: 400;
   font-size: 1em;
   line-height: 1.6;
@@ -31,15 +32,15 @@ h6 {
   text-transform: uppercase;
   font-weight: 700;
   line-height: 1.2;
-  margin: 0 0 0.5em;
+  margin: 0 0 0.25em;
   padding: 0;
 }
 
 h1 {
-  font-size: 1.5em;
+  font-size: 1.8em;
 }
 h2 {
-  font-size: 1.35em;
+  font-size: 1.5em;
 }
 h3 {
   font-size: 1.25em;

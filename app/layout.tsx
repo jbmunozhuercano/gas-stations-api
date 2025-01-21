@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Smooch_Sans } from 'next/font/google';
 import './globals.css';
 import { Header } from './modules/Header/Header';
 
-const interFont = Inter({
-  variable: '--inter-font',
+const smoochSans = Smooch_Sans({
+  variable: '--smooch-sans-font',
   weight: ['400', '700'],
   subsets: ['latin'],
 });
