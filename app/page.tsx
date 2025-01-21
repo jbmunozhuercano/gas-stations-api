@@ -4,7 +4,8 @@ import { Select } from './modules/Select/Select';
 import { PcInput } from './modules/PcInput/PcInput';
 import { ClearButton } from './modules/ClearButton/ClearButton';
 import { StationCard } from './modules/StationCard/StationCard';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import debounce from 'lodash/debounce';
 
 interface Station {
   Municipio: string;
@@ -60,17 +61,24 @@ export default function Home(): JSX.Element {
     }
   };
 
+  const debouncedFilterStations = useCallback(
+    debounce((stations: Station[], postalCode: string) => {
+      setFilteredStations(
+        stations.filter((station) => station['C.P.'].includes(postalCode))
+      );
+    }, 300),
+    []
+  );
+
   useEffect(() => {
     fetchStations('/api/gas-stations');
   }, []);
 
   useEffect(() => {
     if (stations.length > 0) {
-      setFilteredStations(
-        stations.filter((station) => station['C.P.'].includes(postalCode))
-      );
+      debouncedFilterStations(stations, postalCode);
     }
-  }, [postalCode, stations]);
+  }, [postalCode, stations, debouncedFilterStations]);
 
   useEffect(() => {
     if (comunityCode) {
