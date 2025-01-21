@@ -1,19 +1,21 @@
 import styles from './StationCard.module.css';
 
-type StationCardProps = {
-  station: {
-    Municipio: string;
-    Rótulo: string;
-    'C.P.': string;
-    Horario: string;
-    Latitud: string;
-    'Longitud (WGS84)': string;
-    'Precio Gasoleo A': string;
-    'Precio Gasoleo Premium': string;
-    'Precio Gasolina 95 E5': string;
-    'Precio Gasolina 98 E5': string;
-  };
-};
+interface Station {
+  Municipio: string;
+  Rótulo: string;
+  'C.P.': string;
+  Horario: string;
+  Latitud: string;
+  'Longitud (WGS84)': string;
+  'Precio Gasoleo A': string;
+  'Precio Gasoleo Premium': string;
+  'Precio Gasolina 95 E5': string;
+  'Precio Gasolina 98 E5': string;
+}
+
+interface StationCardProps {
+  station: Station;
+}
 
 export function StationCard({ station }: StationCardProps): JSX.Element {
   return (
