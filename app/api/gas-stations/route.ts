@@ -3,10 +3,13 @@ import fetch from 'node-fetch';
 export async function GET(req: Request) {
   const date = new Date();
   date.setDate(date.getDate() - 1);
-  const yesterday = `${date.getDate()}-${(date.getMonth() + 1)
+  const yesterday = `${date.getDate().toString().padStart(2, '0')}-${(
+    date.getMonth() + 1
+  )
     .toString()
     .padStart(2, '0')}-${date.getFullYear()}`;
   const url = `https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestresHist/${yesterday}`;
+  console.log(yesterday);
 
   try {
     const response = await fetch(url);
