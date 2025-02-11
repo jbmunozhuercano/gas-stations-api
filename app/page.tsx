@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 import debounce from 'lodash/debounce';
 import styles from './page.module.css';
 import { Select } from './modules/Select/Select';
-import { PcInput } from './modules/PcInput/PcInput';
+import { InputField } from './modules/InputField/InputField';
 import { ClearButton } from './modules/ClearButton/ClearButton';
 import { StationCard } from './modules/StationCard/StationCard';
 import { Pagination } from './modules/Pagination/Pagination';
@@ -23,7 +23,7 @@ export default function Home(): JSX.Element {
   const itemsPerPage = 20;
   const [comunityCode, setComunityCode] = useState('');
   const [stations, setStations] = useState<Station[]>([]);
-  const [postalCode, setPostalCode] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const [filteredStations, setFilteredStations] = useState<Station[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -61,9 +61,13 @@ export default function Home(): JSX.Element {
   };
 
   const debouncedFilterStations = useCallback(
-    debounce((stations: Station[], postalCode: string) => {
+    debounce((stations: Station[], municipality: string) => {
       setFilteredStations(
-        stations.filter((station) => station['C.P.'].includes(postalCode))
+        stations.filter((station) =>
+          station['Municipio']
+            .toLocaleLowerCase()
+            .includes(municipality.toLowerCase())
+        )
       );
     }, 300),
     []
@@ -75,9 +79,9 @@ export default function Home(): JSX.Element {
 
   useEffect(() => {
     if (stations.length > 0) {
-      debouncedFilterStations(stations, postalCode);
+      debouncedFilterStations(stations, searchTerm);
     }
-  }, [postalCode, stations, debouncedFilterStations]);
+  }, [searchTerm, stations, debouncedFilterStations]);
 
   useEffect(() => {
     if (comunityCode) {
@@ -87,7 +91,7 @@ export default function Home(): JSX.Element {
 
   const clearSelections = () => {
     setComunityCode('');
-    setPostalCode('');
+    setSearchTerm('');
     setStations(stations);
   };
 
@@ -96,7 +100,12 @@ export default function Home(): JSX.Element {
       <div className={styles.listHeader}>
         <Select comunityCode={comunityCode} setComunityCode={setComunityCode} />
         {error && <p style={{ color: 'red' }}>{error}</p>}
-        <PcInput postalCode={postalCode} setPostalCode={setPostalCode} />
+        <InputField
+          type="text"
+          placeholder="Introduce el municipio"
+          searchTerm={searchTerm}
+          onInputChange={setSearchTerm}
+        />
         <ClearButton clearSelections={clearSelections} />
       </div>
       {loading ? (

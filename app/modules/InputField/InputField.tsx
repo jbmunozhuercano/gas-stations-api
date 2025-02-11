@@ -8,31 +8,35 @@
  * @returns {React.JSX.Element} The PcInput component.
  */
 
-import styles from './PcInput.module.css';
+import styles from './InputField.module.css';
 
-type PcInputProps = {
-  postalCode: string;
-  setPostalCode: (postalCode: string) => void;
+type InputProps = {
+  type: string;
+  placeholder: string;
+  searchTerm: string;
+  onInputChange: (searchTerm: string) => void;
 };
 
-export function PcInput({
-  postalCode,
-  setPostalCode,
-}: PcInputProps): JSX.Element {
+export function InputField({
+  type = 'text',
+  placeholder,
+  searchTerm,
+  onInputChange,
+}: InputProps): JSX.Element {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    const regex = /^\d{0,5}$/;
+    const regex = /^[a-zA-Z]*$/;
     if (regex.test(value)) {
-      setPostalCode(value);
+      onInputChange(value);
     }
   };
 
   return (
     <input
       className={styles.input}
-      type="text"
-      placeholder="Filtrar por C.P."
-      value={postalCode}
+      type={type}
+      placeholder={placeholder}
+      value={searchTerm}
       onChange={handleChange}
     />
   );
