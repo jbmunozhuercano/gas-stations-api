@@ -108,12 +108,14 @@ export default function Home(): JSX.Element {
           ))}
         </div>
       )}
-      <Pagination
-        filteredStations={filteredStations}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        itemsPerPage={itemsPerPage}
-      />
+      {itemsPerPage < filteredStations.length && (
+        <Pagination
+          filteredStations={filteredStations}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          itemsPerPage={itemsPerPage}
+        />
+      )}
     </main>
   );
 }
