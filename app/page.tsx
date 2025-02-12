@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect, useCallback } from 'react';
+import axios from 'axios';
 import debounce from 'lodash/debounce';
 import styles from './page.module.css';
 import { Select } from './modules/Select/Select';
@@ -40,15 +41,8 @@ export default function Home(): JSX.Element {
     setError('');
 
     try {
-      const response = await fetch(url);
-
-      if (!response.ok) {
-        console.error('Error al cargar las estaciones');
-        return;
-      }
-
-      const data = await response.json();
-      setStations(data.ListaEESSPrecio);
+      const response = await axios.get(url);
+      setStations(response.data.ListaEESSPrecio);
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
