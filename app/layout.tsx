@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Smooch_Sans } from 'next/font/google';
 import './globals.css';
 import { Header } from './modules/Header/Header';
+import { SeoText } from './modules/SeoText/SeoText';
 
 const smoochSans = Smooch_Sans({
   variable: '--smooch-sans-font',
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body>
         <Header />
         {children}
+        <SeoText />
       </body>
     </html>
   );
