@@ -9,6 +9,7 @@ import { ClearButton } from './modules/ClearButton/ClearButton';
 import { StationCard } from './modules/StationCard/StationCard';
 import { Pagination } from './modules/Pagination/Pagination';
 
+// Interface representing a gas station.
 interface Station {
   Municipio: string;
   Rótulo: string;
@@ -20,8 +21,12 @@ interface Station {
   'Precio Gasolina 98 E5': string;
 }
 
+/**
+ * Home component that displays a list of gas stations with filtering and pagination.
+ * @returns {JSX.Element} The rendered component.
+ */
 export default function Home(): JSX.Element {
-  const itemsPerPage = 20;
+  const itemsPerPage = 20; // Number of items to display per page
   const [comunityCode, setComunityCode] = useState('');
   const [stations, setStations] = useState<Station[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -29,6 +34,8 @@ export default function Home(): JSX.Element {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+
+  // Calculate the indices for the current items to display
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredStations.slice(
@@ -36,6 +43,10 @@ export default function Home(): JSX.Element {
     indexOfLastItem
   );
 
+  /**
+   * Fetches stations data from the API.
+   * @param {string} url - The API endpoint to fetch data from.
+   */
   const fetchStations = async (url: string) => {
     setLoading(true);
     setError('');
@@ -54,6 +65,11 @@ export default function Home(): JSX.Element {
     }
   };
 
+  /**
+   * Debounced function to filter stations based on the search term.
+   * @param {Station[]} stations - The list of stations to filter.
+   * @param {string} municipality - The municipality to filter by.
+   */
   const debouncedFilterStations = useCallback(
     debounce((stations: Station[], municipality: string) => {
       setFilteredStations(
@@ -67,22 +83,26 @@ export default function Home(): JSX.Element {
     []
   );
 
+  // Fetch all stations data on component mount
   useEffect(() => {
     fetchStations('/api/gas-stations');
   }, []);
 
+  // Filter stations whenever the search term or stations data changes
   useEffect(() => {
     if (stations.length > 0) {
       debouncedFilterStations(stations, searchTerm);
     }
   }, [searchTerm, stations, debouncedFilterStations]);
 
+  // Fetch stations data for the selected community code
   useEffect(() => {
     if (comunityCode) {
       fetchStations(`/api/gas-stations/${comunityCode}`);
     }
   }, [comunityCode]);
 
+  // Clears all selections and resets the state
   const clearSelections = () => {
     setComunityCode('');
     setSearchTerm('');
