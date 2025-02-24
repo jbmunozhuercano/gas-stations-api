@@ -4,7 +4,15 @@
   --primary-color: #f8f9fa;
   --secondary-color: #212529;
   --grey-color: #cacaca;
-  --success-color: #2ecc71;
+  --success-color: #00a36c;
+  --color-1: #0f6e8f;
+  --color-2: #2d809d;
+  --color-3: #4b92ab;
+  --color-4: #69a4b9;
+  --color-5: #87b6c7;
+  --color-6: #a5c9d5;
+  --color-7: #c3dbe3;
+  --color-8: #e1edf1;
 }
 
 * {
@@ -19,8 +27,8 @@ body {
   font-weight: 400;
   font-size: 1em;
   line-height: 1.6;
-  background-color: var(--primary-color);
-  color: var(--secondary-color);
+  background-color: var(--color-1);
+  color: var(--color-8);
 }
 
 h1,

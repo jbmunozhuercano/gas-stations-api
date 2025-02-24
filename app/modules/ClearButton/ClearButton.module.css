@@ -1,24 +1,23 @@
 .button {
   width: 100%;
   max-width: 220px;
-  background-color: var(--secondary-color);
-  border: 2px solid var(--secondary-color);
+  background-color: var(--color-1);
+  border: 2px solid var(--color-8);
   color: var(--primary-color);
-  padding: 0.75em 1em;
+  padding: 8px 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 37px;
-  border-radius: 0.25em;
+  height: 41px;
+  border-radius: 12px;
   font-size: 1.1em;
   font-weight: 700;
   text-transform: uppercase;
   cursor: pointer;
-  max-height: 36px;
   transition: all 0.3s ease-in-out;
   margin: 0 0.5em 0.5em 0;
   &:hover {
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
+    background-color: var(--color-8);
+    color: var(--color-1);
   }
 }

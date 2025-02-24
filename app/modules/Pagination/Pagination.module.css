@@ -9,8 +9,8 @@
     li {
       font-size: 1.1em;
       padding: 0.5em 1em;
-      border-top: 2px solid var(--secondary-color);
-      border-bottom: 2px solid var(--secondary-color);
+      border-top: 2px solid var(--color-4);
+      border-bottom: 2px solid var(--color-4);
       cursor: pointer;
       font-weight: 700;
       text-transform: uppercase;
@@ -24,12 +24,12 @@
         height: 27px;
       }
       &:hover {
-        color: var(--primary-color);
-        background-color: var(--grey-color);
+        color: var(--color-1);
+        background-color: var(--color-8);
       }
       &:first-of-type {
         border-radius: 25px 0 0 25px;
-        border-left: 2px solid var(--secondary-color);
+        border-left: 2px solid var(--color-4);
         img {
           transform: rotate(180deg);
         }
@@ -41,11 +41,11 @@
       }
       &:last-of-type {
         border-radius: 0 25px 25px 0;
-        border-right: 2px solid var(--secondary-color);
+        border-right: 2px solid var(--color-4);
       }
       &.active {
-        background-color: var(--grey-color);
-        color: var(--secondary-color);
+        background-color: var(--color-8);
+        color: var(--color-1);
       }
     }
   }

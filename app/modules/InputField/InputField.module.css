@@ -1,22 +1,25 @@
 .input {
   width: 100%;
   max-width: 220px;
-  padding: 6px 8px;
-  border-radius: 3px;
-  color: var(--secondary-color);
-  background-color: var(--primary-color);
+  padding: 8px 12px;
+  border-radius: 12px;
+  color: var(--color-1);
+  background-color: var(--color-8);
   margin: 0 0.5em 0.5em 0;
   text-transform: uppercase;
   font-size: 1.1em;
   font-weight: 700;
-  border: 2px solid var(--secondary-color);
+  border: 2px solid var(--color-4);
   cursor: pointer;
   font-family: var(--main-font);
+  outline: none;
   &::placeholder {
     color: inherit;
     font-weight: inherit;
   }
   &:focus {
-    outline: 2px solid var(--success-color);
+    border-color: var(--success-color);
+    background-color: var(--color-1);
+    color: var(--color-8);
   }
 }
