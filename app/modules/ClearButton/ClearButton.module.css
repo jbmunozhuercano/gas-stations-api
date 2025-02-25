@@ -1,6 +1,6 @@
 .button {
   width: 100%;
-  max-width: 220px;
+  max-width: 280px;
   background-color: var(--color-1);
   border: 2px solid var(--color-8);
   color: var(--primary-color);
