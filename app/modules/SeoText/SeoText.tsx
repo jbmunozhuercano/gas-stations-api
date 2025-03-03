@@ -19,44 +19,46 @@ export function SeoText(): JSX.Element {
   return (
     <section className={styles.seoText}>
       <h2>
-        <FontAwesomeIcon icon={faGasPump} /> Precios de Gasolina y Diésel en
-        España - Encuentra la Gasolinera Más Barata Cerca de Ti
+        <FontAwesomeIcon icon={faGasPump} color="#f9982f" /> Precios de Gasolina
+        y Diésel en España - Encuentra la Gasolinera Más Barata Cerca de Ti
       </h2>
       <p>
         ¿Buscas <strong>las gasolineras más baratas en España</strong>? Consulta
         en tiempo real el <strong>precio de la gasolina y el diésel</strong> en
         todas las estaciones de servicio del país. Ahorra en cada repostaje con
-        nuestra herramienta fácil y rápida. <FontAwesomeIcon icon={faCarSide} />
+        nuestra herramienta fácil y rápida.{' '}
+        <FontAwesomeIcon icon={faCarSide} color="#f9982f" />
       </p>
 
       <h3>
-        <FontAwesomeIcon icon={faMagnifyingGlass} /> ¿Qué puedes hacer en
-        nuestra web?
+        <FontAwesomeIcon icon={faMagnifyingGlass} color="#f9982f" /> ¿Qué puedes
+        hacer en nuestra web?
       </h3>
       <ul>
         <li>
-          <FontAwesomeIcon icon={faSquareCheck} /> Comparar precios de gasolina
-          y diésel por municipio.
+          <FontAwesomeIcon icon={faSquareCheck} color="#f9982f" /> Comparar
+          precios de gasolina y diésel por municipio.
         </li>
         <li>
-          <FontAwesomeIcon icon={faSquareCheck} /> Ver ubicaciones y horarios de
-          cada gasolinera.
+          <FontAwesomeIcon icon={faSquareCheck} color="#f9982f" /> Ver
+          ubicaciones y horarios de cada gasolinera.
         </li>
         <li>
-          <FontAwesomeIcon icon={faSquareCheck} /> Encontrar las mejores ofertas
-          en tu ruta.
+          <FontAwesomeIcon icon={faSquareCheck} color="#f9982f" /> Encontrar las
+          mejores ofertas en tu ruta.
         </li>
       </ul>
 
       <h3>
-        <FontAwesomeIcon icon={faThumbTack} /> Datos actualizados a diario
+        <FontAwesomeIcon icon={faThumbTack} color="#f9982f" /> Datos
+        actualizados a diario
       </h3>
       <p>
         Toda la información proviene de <strong>fuentes oficiales</strong> y se
         actualiza constantemente para que siempre encuentres el mejor precio.
       </p>
       <p>
-        <FontAwesomeIcon icon={faBullhorn} />
+        <FontAwesomeIcon icon={faBullhorn} color="#f9982f" />
         &nbsp;<strong>No pagues de más</strong>. Encuentra la gasolinera más
         económica y empieza a ahorrar hoy mismo.
       </p>

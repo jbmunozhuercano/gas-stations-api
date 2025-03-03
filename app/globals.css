@@ -5,14 +5,11 @@
   --secondary-color: #212529;
   --grey-color: #cacaca;
   --success-color: #00a36c;
-  --color-1: #0f6e8f;
-  --color-2: #2d809d;
-  --color-3: #4b92ab;
-  --color-4: #69a4b9;
-  --color-5: #87b6c7;
-  --color-6: #a5c9d5;
-  --color-7: #c3dbe3;
-  --color-8: #e1edf1;
+  --color-1: #254252;
+  --color-2: rgba(23, 28, 45, 0.5);
+  --color-3: #e37239;
+  --color-4: #f9982f;
+  --color-5: #eab56f;
   font-size: 18px;
 }
 
@@ -29,7 +26,7 @@ body {
   font-size: 1em;
   line-height: 1.6;
   background-color: var(--color-1);
-  color: var(--color-8);
+  color: var(--color-5);
 }
 
 h1,
