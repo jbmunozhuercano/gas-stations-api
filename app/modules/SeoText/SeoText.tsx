@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import styles from './SeoText.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -55,8 +56,9 @@ export function SeoText(): JSX.Element {
         actualiza constantemente para que siempre encuentres el mejor precio.
       </p>
       <p>
-        <FontAwesomeIcon icon={faBullhorn} /> <strong>No pagues de más</strong>.
-        Encuentra la gasolinera más económica y empieza a ahorrar hoy mismo.
+        <FontAwesomeIcon icon={faBullhorn} />
+        &nbsp;<strong>No pagues de más</strong>. Encuentra la gasolinera más
+        económica y empieza a ahorrar hoy mismo.
       </p>
     </section>
   );

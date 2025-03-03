@@ -1,4 +1,11 @@
 import styles from './Pagination.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faAngleLeft,
+  faAnglesLeft,
+  faAngleRight,
+  faAnglesRight,
+} from '@fortawesome/free-solid-svg-icons';
 import anglesRight from '../../../public/img/icons/angles-right.svg';
 import angleRight from '../../../public/img/icons/angle-right.svg';
 import Image from 'next/image';
@@ -85,12 +92,12 @@ export function Pagination({
       <ul>
         {currentPage > 1 && (
           <li onClick={() => handlePageChange(1)}>
-            <Image src={anglesRight} alt="" />
+            <FontAwesomeIcon icon={faAnglesLeft} />
           </li>
         )}
         {currentPage > 1 && (
           <li onClick={() => handlePageChange(currentPage - 1)}>
-            <Image src={angleRight} alt="" />
+            <FontAwesomeIcon icon={faAngleLeft} />
           </li>
         )}
         {pageNumbers.map((page) => (
@@ -105,7 +112,7 @@ export function Pagination({
         {currentPage < Math.ceil(filteredStations.length / itemsPerPage) && (
           <li onClick={() => handlePageChange(currentPage + 1)}>
             {' '}
-            <Image src={angleRight} alt="" />
+            <FontAwesomeIcon icon={faAngleRight} />
           </li>
         )}
         {currentPage < Math.ceil(filteredStations.length / itemsPerPage) && (
@@ -116,7 +123,7 @@ export function Pagination({
               )
             }
           >
-            <Image src={anglesRight} alt="" />
+            <FontAwesomeIcon icon={faAnglesRight} />
           </li>
         )}
       </ul>

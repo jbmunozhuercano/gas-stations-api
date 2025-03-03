@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, JSX } from 'react';
 import axios from 'axios';
 import debounce from 'lodash/debounce';
 import styles from './page.module.css';

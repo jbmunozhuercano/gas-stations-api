@@ -20,7 +20,7 @@ interface StationCardProps {
 export function StationCard({ station }: StationCardProps): JSX.Element {
   return (
     <div className={styles.card}>
-      <h3>{station.Rótulo}</h3>
+      <h4>{station.Rótulo}</h4>
       <dl>
         <dt>Municipio</dt>
         <dd>{station.Municipio}</dd>
@@ -71,7 +71,7 @@ export function StationCard({ station }: StationCardProps): JSX.Element {
         )},${station['Longitud (WGS84)'].replace(',', '.')}`}
         target="blank"
       >
-        <h4>Google Maps</h4>
+        <h5>Google Maps</h5>
       </a>
     </div>
   );

@@ -12,8 +12,10 @@ export function Footer() {
   return (
     <footer className={style.footer}>
       <p>
-        &copy; {actualYear} - Precio combustible Estaciones de Servicio en
-        España
+        <small>
+          &copy; {actualYear} - Precio combustible Estaciones de Servicio en
+          España
+        </small>
       </p>
     </footer>
   );
