@@ -10,6 +10,7 @@
   --color-3: #e37239;
   --color-4: #f9982f;
   --color-5: #eab56f;
+  --color-6: rgba(37, 66, 82, 0.9);
   font-size: 18px;
 }
 
@@ -27,6 +28,9 @@ body {
   line-height: 1.6;
   background-color: var(--color-1);
   color: var(--color-5);
+  background: var(--color-1) url('../public/images/bg_small.webp') center center
+    fixed no-repeat;
+  background-size: cover;
 }
 
 h1,
@@ -86,4 +90,10 @@ dd {
 button {
   font-family: inherit;
   cursor: pointer;
+}
+
+@media screen and (min-width: 768px) {
+  body {
+    background-image: url('../public/images/bg_large.webp');
+  }
 }
