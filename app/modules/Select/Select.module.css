@@ -4,9 +4,9 @@
   max-width: 280px;
   padding: 7px 12px;
   border-radius: 12px;
-  background-color: var(--color-8);
-  border: 2px solid var(--color-4);
-  color: var(--color-1);
+  background-color: var(--color-1);
+  border: 2px solid var(--color-3);
+  color: var(--color-5);
   margin: 0 0.5em 0.5em 0;
   text-transform: uppercase;
   font-size: 1.1em;
@@ -15,7 +15,5 @@
   outline: none;
   &:focus {
     border-color: var(--success-color);
-    background-color: var(--color-7);
-    color: var(--color-1);
   }
 }

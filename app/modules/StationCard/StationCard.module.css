@@ -7,15 +7,15 @@
   padding: 1rem;
   border-radius: 1em;
   background-color: var(--color-1);
-  box-shadow: 1px 1px 1px 2px rgba(45, 128, 157, 0.5);
+  box-shadow: 2px 2px 3px 2px var(--color-2);
   margin: 0 0 1em;
-  color: var(--color-8);
+  color: var(--color-5);
   h4 {
     letter-spacing: 0.035em;
     text-align: center;
     padding: 0 0 0.25em;
     margin: 0 0 0.25em;
-    border-bottom: 2px solid var(--color-8);
+    border-bottom: 2px solid var(--color-3);
   }
   dl {
     display: flex;
@@ -23,7 +23,7 @@
     align-items: flex-end;
     dt,
     dd {
-      border-bottom: 1px dashed var(--color-8);
+      border-bottom: 1px dashed var(--color-3);
       margin: 0;
       padding: 0.25em 0 0.065em;
     }
@@ -43,14 +43,14 @@
   width: auto;
   display: block;
   text-align: center;
-  border: 1px solid var(--color-8);
+  border: 1px solid var(--color-3);
   padding: 0.25em 1em;
   border-radius: 6px;
   margin: 0.5em auto 0.5em;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   &:hover {
-    background-color: var(--color-8);
+    background-color: var(--color-5);
     color: var(--color-1);
   }
   h5 {

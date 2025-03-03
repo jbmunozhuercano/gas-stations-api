@@ -8,8 +8,8 @@
     align-items: center;
     li {
       padding: 0.5em 1em;
-      border-top: 2px solid var(--color-4);
-      border-bottom: 2px solid var(--color-4);
+      border-top: 2px solid var(--color-3);
+      border-bottom: 2px solid var(--color-3);
       cursor: pointer;
       font-weight: 700;
       text-transform: uppercase;
@@ -24,11 +24,11 @@
       }
       &:hover {
         color: var(--color-1);
-        background-color: var(--color-8);
+        background-color: var(--color-5);
       }
       &:first-of-type {
         border-radius: 25px 0 0 25px;
-        border-left: 2px solid var(--color-4);
+        border-left: 2px solid var(--color-3);
         img {
           transform: rotate(180deg);
         }
@@ -40,10 +40,10 @@
       }
       &:last-of-type {
         border-radius: 0 25px 25px 0;
-        border-right: 2px solid var(--color-4);
+        border-right: 2px solid var(--color-3);
       }
       &.active {
-        background-color: var(--color-8);
+        background-color: var(--color-5);
         color: var(--color-1);
       }
     }
