@@ -2,12 +2,11 @@
   font-family: var(--main-font);
   width: 100%;
   max-width: 280px;
-  padding: 7px 12px;
+  padding: 9px 12px;
   border-radius: 12px;
   background-color: var(--color-1);
   border: 2px solid var(--color-3);
   color: var(--color-5);
-  margin: 0 0.5em 0.5em 0;
   text-transform: uppercase;
   font-size: 1.1em;
   font-weight: 700;

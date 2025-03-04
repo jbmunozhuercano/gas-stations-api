@@ -1,11 +1,10 @@
 .input {
   width: 100%;
   max-width: 280px;
-  padding: 8px 12px;
+  padding: 10px 12px;
   border-radius: 12px;
   color: var(--color-5);
   background-color: var(--color-1);
-  margin: 0 0.5em 0.5em 0;
   text-transform: uppercase;
   font-size: 1.1em;
   font-weight: 700;

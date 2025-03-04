@@ -2,14 +2,15 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1em 1em;
+  padding: 0 1em;
 }
 .listHeader {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  margin: 0 0 1em;
+  gap: 16px;
+  margin: 0 0 1.6666em;
 }
 
 .cardsContainer {

@@ -92,6 +92,30 @@ button {
   cursor: pointer;
 }
 
+header {
+  grid-area: header;
+}
+main {
+  grid-area: main;
+}
+section {
+  grid-area: section;
+}
+footer {
+  grid-area: footer;
+}
+
+body {
+  display: grid;
+  grid-template-areas:
+    'header'
+    'main'
+    'section'
+    'footer';
+  grid-template-rows: auto 1fr auto auto;
+  min-height: 100vh;
+}
+
 @media screen and (min-width: 768px) {
   body {
     background-image: url('../public/images/bg_large.webp');
