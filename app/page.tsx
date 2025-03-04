@@ -127,7 +127,7 @@ export default function Home(): JSX.Element {
       ) : (
         <div className={styles.cardsContainer}>
           {currentItems.map((station, index) => (
-            <StationCard key={index} station={station} />
+            <StationCard key={index} station={station} loading={loading} />
           ))}
         </div>
       )}

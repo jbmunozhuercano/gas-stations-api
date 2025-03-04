@@ -1,4 +1,5 @@
 import { JSX } from 'react';
+import { motion } from 'motion/react';
 import styles from './StationCard.module.css';
 
 interface Station {
@@ -16,6 +17,7 @@ interface Station {
 
 interface StationCardProps {
   station: Station;
+  loading: boolean;
 }
 
 /**
@@ -25,9 +27,21 @@ interface StationCardProps {
  * @param {Station} props.station - The gas station data to display.
  * @returns {JSX.Element} The StationCard component.
  */
-export function StationCard({ station }: StationCardProps): JSX.Element {
+export function StationCard({
+  station,
+  loading,
+}: StationCardProps): JSX.Element {
   return (
-    <div className={styles.card}>
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8, y: 30 }}
+      animate={!loading ? { opacity: 1, scale: 1, y: 0 } : {}}
+      transition={{
+        duration: 0.6,
+        ease: [0.22, 1, 0.36, 1], // Custom bounce effect
+      }}
+      whileHover={{ scale: 1.05 }} // Slight hover effect
+      className={styles.card}
+    >
       <h4>{station.Rótulo}</h4>
       <dl>
         <dt>Municipio</dt>
@@ -81,6 +95,6 @@ export function StationCard({ station }: StationCardProps): JSX.Element {
       >
         <h5>Google Maps</h5>
       </a>
-    </div>
+    </motion.div>
   );
 }
