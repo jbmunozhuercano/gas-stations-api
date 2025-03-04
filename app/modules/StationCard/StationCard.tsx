@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import styles from './StationCard.module.css';
 
 interface Station {
@@ -17,6 +18,13 @@ interface StationCardProps {
   station: Station;
 }
 
+/**
+ * Generates a gas station card component with all the elements.
+ *
+ * @param {StationCardProps} props - The props for the StationCard component.
+ * @param {Station} props.station - The gas station data to display.
+ * @returns {JSX.Element} The StationCard component.
+ */
 export function StationCard({ station }: StationCardProps): JSX.Element {
   return (
     <div className={styles.card}>

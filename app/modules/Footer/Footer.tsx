@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import style from './Footer.module.css';
 
 /**
@@ -8,7 +9,7 @@ import style from './Footer.module.css';
 
 const actualYear = new Date().getFullYear();
 
-export function Footer() {
+export function Footer(): JSX.Element {
   return (
     <footer className={style.footer}>
       <p>

@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import styles from './Pagination.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -6,9 +7,6 @@ import {
   faAngleRight,
   faAnglesRight,
 } from '@fortawesome/free-solid-svg-icons';
-import anglesRight from '../../../public/img/icons/angles-right.svg';
-import angleRight from '../../../public/img/icons/angle-right.svg';
-import Image from 'next/image';
 
 interface Station {
   Municipio: string;

@@ -1,11 +1,11 @@
+import { JSX } from 'react';
+import styles from './Header.module.css';
 /**
  * The Header component displays the title of the app and the date of the last
  * update.
  *
  * @returns {JSX.Element} The Header component.
  */
-
-import styles from './Header.module.css';
 
 export function Header(): JSX.Element {
   const yesterday = new Date(Date.now() - 86400000).toLocaleDateString(
