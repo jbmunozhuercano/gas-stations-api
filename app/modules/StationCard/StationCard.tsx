@@ -39,7 +39,7 @@ export function StationCard({
         duration: 0.6,
         ease: [0.22, 1, 0.36, 1], // Custom bounce effect
       }}
-      whileHover={{ scale: 1.05 }} // Slight hover effect
+      whileHover={{ scale: 1.025 }} // Slight hover effect
       className={styles.card}
     >
       <h4>{station.Rótulo}</h4>
