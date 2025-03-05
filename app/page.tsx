@@ -3,11 +3,11 @@ import { useState, useEffect, useCallback, JSX } from 'react';
 import axios from 'axios';
 import debounce from 'lodash/debounce';
 import styles from './page.module.css';
-import { Select } from './modules/Select/Select';
-import { InputField } from './modules/InputField/InputField';
-import { ClearButton } from './modules/ClearButton/ClearButton';
-import { StationCard } from './modules/StationCard/StationCard';
-import { Pagination } from './modules/Pagination/Pagination';
+import { Select } from './components/Select/Select';
+import { InputField } from './components/InputField/InputField';
+import { ClearButton } from './components/ClearButton/ClearButton';
+import { StationCard } from './components/StationCard/StationCard';
+import { Pagination } from './components/Pagination/Pagination';
 
 // Interface representing a gas station.
 interface Station {
