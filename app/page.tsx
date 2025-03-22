@@ -1,142 +1,118 @@
 'use client';
-import { useState, useEffect, useCallback, JSX } from 'react';
-import axios from 'axios';
-import debounce from 'lodash/debounce';
-import styles from './page.module.css';
-import { Select } from './components/Select/Select';
-import { InputField } from './components/InputField/InputField';
-import { ClearButton } from './components/ClearButton/ClearButton';
-import { StationCard } from './components/StationCard/StationCard';
-import { Pagination } from './components/Pagination/Pagination';
+import {useState, useEffect, useCallback, ReactNode, useMemo} from 'react';
+import debounce from 'lodash.debounce';
+import classes from './page.module.css';
+import RegionSelector from './components/Main/Filter/RegionSelector';
+import SearchTerm from './components/Main/Filter/SearchTerm';
+import ClearButton from './components/Main/Filter/ClearButton';
+import StationCard from './components/Main/StationCard';
+import Pagination from './components/Main/Pagination';
+import {fetchStations, RegionCode, Station} from './api';
 
-// Interface representing a gas station.
-interface Station {
-  Municipio: string;
-  Rótulo: string;
-  'C.P.': string;
-  Horario: string;
-  Latitud: string;
-  'Longitud (WGS84)': string;
-  'Precio Gasolina 95 E5': string;
-  'Precio Gasolina 98 E5': string;
-}
-
-/**
- * Home component that displays a list of gas stations with filtering and pagination.
- * @returns {JSX.Element} The rendered component.
- */
-export default function Home(): JSX.Element {
+export default function Home(): ReactNode {
   const itemsPerPage = 20; // Number of items to display per page
-  const [comunityCode, setComunityCode] = useState('');
-  const [stations, setStations] = useState<Station[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filteredStations, setFilteredStations] = useState<Station[]>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
+  const [regionStations, setRegionStations] = useState<Station[]>([]);
+  const [filteredStations, setFilteredStations] = useState<Station[]>([]);
+  const [regionCode, setRegionCode] = useState<RegionCode>(null);
+  const [searchTerm, setSearchTerm] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
-  // Calculate the indices for the current items to display
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredStations.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
+  const loadStations = useCallback(async (regionCode: RegionCode) => {
+    setError(null);
+    if (!regionCode) {
+      setRegionStations([]);
+      return;
+    }
 
-  /**
-   * Fetches stations data from the API.
-   * @param {string} url - The API endpoint to fetch data from.
-   */
-  const fetchStations = async (url: string) => {
     setLoading(true);
-    setError('');
-
     try {
-      const response = await axios.get(url);
-      setStations(response.data.ListaEESSPrecio);
+      setRegionStations(await fetchStations(regionCode));
     } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError('Ha ocurrido un error');
-      }
+      const message =
+        err instanceof Error ? err.message : 'Ha ocurrido un error';
+      setError(message);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  /**
-   * Debounced function to filter stations based on the search term.
-   * @param {Station[]} stations - The list of stations to filter.
-   * @param {string} municipality - The municipality to filter by.
-   */
-  const debouncedFilterStations = useCallback(
-    debounce((stations: Station[], municipality: string) => {
-      setFilteredStations(
-        stations.filter((station) =>
-          station['Municipio']
-            .toLocaleLowerCase()
-            .includes(municipality.toLowerCase())
-        )
-      );
-    }, 300),
+  const filterStations = useMemo(
+    () =>
+      debounce((stations: Station[], town: string | null) => {
+        const lowerCaseTown = town?.toLowerCase() || '';
+        setFilteredStations(
+          stations.filter(station =>
+            station['Municipio'].toLocaleLowerCase().includes(lowerCaseTown)
+          )
+        );
+      }, 300),
     []
   );
 
+  const currentStations = useMemo(() => {
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+    return filteredStations.slice(indexOfFirstItem, indexOfLastItem);
+  }, [currentPage, filteredStations]);
+
   // Fetch all stations data on component mount
+  // useEffect(() => {
+  //   fetchStations('/api/gas-stations');
+  // }, []);
+
   useEffect(() => {
-    fetchStations('/api/gas-stations');
+    filterStations(regionStations, searchTerm);
+  }, [searchTerm, regionStations, filterStations]);
+
+  useEffect(() => {
+    console.log('*** regionCode', regionCode);
+
+    loadStations(regionCode);
+  }, [loadStations, regionCode]);
+
+  const clearSelections = useCallback(() => {
+    setRegionCode(null);
+    setSearchTerm(null);
   }, []);
 
-  // Filter stations whenever the search term or stations data changes
-  useEffect(() => {
-    if (stations.length > 0) {
-      debouncedFilterStations(stations, searchTerm);
-    }
-  }, [searchTerm, stations, debouncedFilterStations]);
-
-  // Fetch stations data for the selected community code
-  useEffect(() => {
-    if (comunityCode) {
-      fetchStations(`/api/gas-stations/${comunityCode}`);
-    }
-  }, [comunityCode]);
-
-  // Clears all selections and resets the state
-  const clearSelections = () => {
-    setComunityCode('');
-    setSearchTerm('');
-    setStations(stations);
-  };
-
   return (
-    <main className={styles.container}>
-      <div className={styles.listHeader}>
-        <Select comunityCode={comunityCode} setComunityCode={setComunityCode} />
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <InputField
-          type="text"
-          placeholder="Introduce el municipio"
-          searchTerm={searchTerm}
-          onInputChange={setSearchTerm}
+    <main className={classes.container}>
+      <div className={classes.listHeader}>
+        <RegionSelector
+          regionCode={regionCode}
+          onRegionChange={setRegionCode}
         />
-        <ClearButton clearSelections={clearSelections} />
+        {error && <p style={{color: 'red'}}>{error}</p>}
+
+        <SearchTerm
+          type='text'
+          placeholder='Introduce el municipio'
+          term={searchTerm}
+          onTermChange={setSearchTerm}
+        />
+
+        <ClearButton onClear={clearSelections} />
       </div>
+
       {loading ? (
-        <h3 className={styles.loading}>Cargando...</h3>
+        <h3 className={classes.loading}>Cargando...</h3>
       ) : (
-        <div className={styles.cardsContainer}>
-          {currentItems.map((station, index) => (
+        <div className={classes.cardsContainer}>
+          {currentStations.map((station, index) => (
             <StationCard key={index} station={station} loading={loading} />
           ))}
         </div>
       )}
+
       {itemsPerPage < filteredStations.length && (
         <Pagination
-          filteredStations={filteredStations}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
+          totalItems={filteredStations.length}
           itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
         />
       )}
     </main>

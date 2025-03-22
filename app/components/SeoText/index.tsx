@@ -1,26 +1,21 @@
-import { JSX } from 'react';
-import styles from './SeoText.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {ReactNode} from 'react';
+import classes from './styles.module.css';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
   faGasPump,
   faCarSide,
   faSquareCheck,
   faMagnifyingGlass,
   faThumbTack,
-  faBullhorn,
+  faBullhorn
 } from '@fortawesome/free-solid-svg-icons';
 
-/**
- * The SeoText component displays the SEO text for the app.
- *
- * @returns {JSX.Element} The SeoText component.
- */
-export function SeoText(): JSX.Element {
+export default function SeoText(): ReactNode {
   return (
-    <section className={styles.seoText}>
-      <div className={styles.seoText__inner}>
+    <section className={classes.seoText}>
+      <div className={classes.seoText__inner}>
         <h2>
-          <FontAwesomeIcon icon={faGasPump} color="#f9982f" /> Precios de
+          <FontAwesomeIcon icon={faGasPump} color='#f9982f' /> Precios de
           Gasolina y Diésel en España - Encuentra la Gasolinera Más Barata Cerca
           de Ti
         </h2>
@@ -30,30 +25,30 @@ export function SeoText(): JSX.Element {
           <strong>precio de la gasolina y el diésel</strong> en todas las
           estaciones de servicio del país. Ahorra en cada repostaje con nuestra
           herramienta fácil y rápida.{' '}
-          <FontAwesomeIcon icon={faCarSide} color="#f9982f" />
+          <FontAwesomeIcon icon={faCarSide} color='#f9982f' />
         </p>
 
         <h3>
-          <FontAwesomeIcon icon={faMagnifyingGlass} color="#f9982f" /> ¿Qué
+          <FontAwesomeIcon icon={faMagnifyingGlass} color='#f9982f' /> ¿Qué
           puedes hacer en nuestra web?
         </h3>
         <ul>
           <li>
-            <FontAwesomeIcon icon={faSquareCheck} color="#f9982f" /> Comparar
+            <FontAwesomeIcon icon={faSquareCheck} color='#f9982f' /> Comparar
             precios de gasolina y diésel por municipio.
           </li>
           <li>
-            <FontAwesomeIcon icon={faSquareCheck} color="#f9982f" /> Ver
+            <FontAwesomeIcon icon={faSquareCheck} color='#f9982f' /> Ver
             ubicaciones y horarios de cada gasolinera.
           </li>
           <li>
-            <FontAwesomeIcon icon={faSquareCheck} color="#f9982f" /> Encontrar
+            <FontAwesomeIcon icon={faSquareCheck} color='#f9982f' /> Encontrar
             las mejores ofertas en tu ruta.
           </li>
         </ul>
 
         <h3>
-          <FontAwesomeIcon icon={faThumbTack} color="#f9982f" /> Datos
+          <FontAwesomeIcon icon={faThumbTack} color='#f9982f' /> Datos
           actualizados a diario
         </h3>
         <p>
@@ -62,7 +57,7 @@ export function SeoText(): JSX.Element {
           precio.
         </p>
         <p>
-          <FontAwesomeIcon icon={faBullhorn} color="#f9982f" />
+          <FontAwesomeIcon icon={faBullhorn} color='#f9982f' />
           &nbsp;<strong>No pagues de más</strong>. Encuentra la gasolinera más
           económica y empieza a ahorrar hoy mismo.
         </p>
