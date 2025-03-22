@@ -1,6 +1,5 @@
 /* Global styles */
 :root {
-  --main-font: 'Smooch Sans';
   --primary-color: #f8f9fa;
   --secondary-color: #212529;
   --grey-color: #cacaca;
@@ -21,7 +20,7 @@
 }
 
 body {
-  font-family: var(--main-font), 'Lucida Sans', 'Lucida Sans Regular',
+  font-family: var(--smooch-sans-font), 'Lucida Sans', 'Lucida Sans Regular',
     'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-weight: 400;
   font-size: 1em;

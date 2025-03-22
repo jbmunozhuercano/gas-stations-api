@@ -18,6 +18,13 @@ export type Region = {
   CCAA: string;
 };
 
+export type Municipality = {
+  code: string;
+  name: string;
+  province: string;
+  autonomousCommunity: string;
+};
+
 export async function fetchStations(
   regionCode: RegionCode
 ): Promise<Station[]> {
@@ -28,6 +35,12 @@ export async function fetchStations(
 }
 
 export async function fetchRegions(): Promise<Region[]> {
+  const url = `/api/regions`;
+  const response = await fetch(url);
+  return response.json();
+}
+
+export async function fetchMunicipalities(): Promise<Municipality[]> {
   const url = `/api/regions`;
   const response = await fetch(url);
   return response.json();
