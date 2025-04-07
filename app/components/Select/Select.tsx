@@ -6,26 +6,26 @@ import styles from './Select.module.css';
  * of Spain.
  *
  * @param {Object} props - The props object.
- * @param {string} props.comunityCode - The code of the selected region.
- * @param {function} props.setComunityCode - A function to update the selected region.
+ * @param {string} props.regionCode - The code of the selected region.
+ * @param {function} props.setRegionCode - A function to update the selected region.
  *
  * @returns {JSX.Element} The Select component.
  */
 
 type SelectProps = {
-  comunityCode: string;
-  setComunityCode: (comunityCode: string) => void;
+  regionCode: string;
+  setRegionCode: (regionCode: string) => void;
 };
 
 export function Select({
-  comunityCode,
-  setComunityCode,
+  regionCode,
+  setRegionCode,
 }: SelectProps): JSX.Element {
   return (
     <select
       className={styles.select}
-      value={comunityCode}
-      onChange={(e) => setComunityCode(e.target.value)}
+      value={regionCode}
+      onChange={(e) => setRegionCode(e.target.value)}
     >
       <option value="">Comunidad Autónoma</option>
       <option value="01">Andalucía</option>

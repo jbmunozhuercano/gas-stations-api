@@ -27,7 +27,7 @@ interface Station {
  */
 export default function Home(): JSX.Element {
   const itemsPerPage = 20; // Number of items to display per page
-  const [comunityCode, setComunityCode] = useState('');
+  const [regionCode, setRegionCode] = useState('');
   const [stations, setStations] = useState<Station[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredStations, setFilteredStations] = useState<Station[]>([]);
@@ -92,14 +92,14 @@ export default function Home(): JSX.Element {
 
   // Fetch stations data for the selected community code
   useEffect(() => {
-    if (comunityCode) {
-      fetchStations(`/api/gas-stations/${comunityCode}`);
+    if (regionCode) {
+      fetchStations(`/api/gas-stations/${regionCode}`);
     }
-  }, [comunityCode]);
+  }, [regionCode]);
 
   // Clears all selections and resets the state
   const clearSelections = () => {
-    setComunityCode('');
+    setRegionCode('');
     setSearchTerm('');
     setStations(stations);
   };
@@ -107,7 +107,7 @@ export default function Home(): JSX.Element {
   return (
     <main className={styles.container}>
       <div className={styles.listHeader}>
-        <Select comunityCode={comunityCode} setComunityCode={setComunityCode} />
+        <Select regionCode={regionCode} setRegionCode={setRegionCode} />
         {error && <p style={{ color: 'red' }}>{error}</p>}
         <InputField
           type="text"
