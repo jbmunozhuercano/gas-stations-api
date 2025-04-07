@@ -42,7 +42,7 @@ This application displays information about gas stations in Spain, including the
 ### API Endpoints
 
 - **/api/gas-stations**: Fetches all gas stations.
-- **/api/gas-stations/[comunity]**: Fetches gas stations for a specific community.
+- **/api/gas-stations/[regionCode]**: Fetches gas stations for a specific community.
 
 ### Styling
 
