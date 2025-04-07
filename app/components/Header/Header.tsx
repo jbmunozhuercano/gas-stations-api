@@ -8,20 +8,17 @@ import styles from './Header.module.css';
  */
 
 export function Header(): JSX.Element {
-  const yesterday = new Date(Date.now() - 86400000).toLocaleDateString(
-    'es-ES',
-    {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    }
-  );
+  const today = new Date(Date.now()).toLocaleDateString('es-ES', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 
   return (
     <header className={styles.header}>
       <h1>Precio combustible Estaciones de Servicio en España</h1>
       <h2>
-        <span>Fecha actualización:</span> {yesterday}
+        <span>Fecha actualización:</span> {today}
       </h2>
     </header>
   );
