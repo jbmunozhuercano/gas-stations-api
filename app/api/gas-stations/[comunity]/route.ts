@@ -5,15 +5,8 @@ export async function GET(
   { params }: { params: { comunity: string } }
 ) {
   const comunityCode = (await params).comunity;
-  const date = new Date();
-  date.setDate(date.getDate() - 1);
-  const yesterday = `${date.getDate().toString().padStart(2, '0')}-${(
-    date.getMonth() + 1
-  )
-    .toString()
-    .padStart(2, '0')}-${date.getFullYear()}`;
-  const url = `https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestresHist/FiltroCCAA/${yesterday}/${comunityCode}`;
-  console.log(yesterday);
+  const url = `https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/FiltroCCAA/${comunityCode}`;
+
   try {
     const response = await fetch(url);
     const data = await response.json();
