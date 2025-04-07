@@ -1,5 +1,9 @@
 # Documentación API
 
+## Listado de opciones de API
+
+https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/help
+
 ## Obtener todas las Gasolineras de España
 
 Para obtener todas las gasolineras de España, utilizamos la siguiente url:
