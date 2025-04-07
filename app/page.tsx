@@ -83,11 +83,6 @@ export default function Home(): JSX.Element {
     []
   );
 
-  // Fetch all stations data on component mount
-  useEffect(() => {
-    fetchStations('/api/gas-stations');
-  }, []);
-
   // Filter stations whenever the search term or stations data changes
   useEffect(() => {
     if (stations.length > 0) {
