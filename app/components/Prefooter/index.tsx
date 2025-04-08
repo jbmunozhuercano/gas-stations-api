@@ -1,5 +1,5 @@
 import { JSX } from 'react';
-import styles from './SeoText.module.css';
+import styles from './Prefooter.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faGasPump,
@@ -17,7 +17,7 @@ import {
  */
 export function SeoText(): JSX.Element {
   return (
-    <section className={styles.seoText}>
+    <section className={styles.preFooter}>
       <div className={styles.seoText__inner}>
         <h2>
           <FontAwesomeIcon icon={faGasPump} color="#f9982f" /> Precios de
