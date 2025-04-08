@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-export async function GET(request: Request): Promise<Response> {
+export async function GET(): Promise<Response> {
   const url =
     'https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/Listados/ComunidadesAutonomas/';
 
