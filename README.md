@@ -26,7 +26,7 @@ This application displays information about gas stations in Spain, including the
 ### Features
 
 - **Fetch Gas Stations**: Fetches gas station data from an external API.
-- **Filter by Postal Code**: Allows users to filter gas stations by postal code.
+- **Filter by Municipality**: Allows users to filter gas stations by municipality.
 - **Pagination**: Displays gas stations in a paginated format.
 - **Clear Filters**: Provides a button to clear all filters.
 
