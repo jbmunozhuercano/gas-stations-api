@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useCallback, JSX } from 'react';
+import { useState, useEffect, useMemo, JSX } from 'react';
 import axios from 'axios';
 import debounce from 'lodash/debounce';
 import styles from './page.module.css';
@@ -19,6 +19,8 @@ interface Station {
   'Longitud (WGS84)': string;
   'Precio Gasolina 95 E5': string;
   'Precio Gasolina 98 E5': string;
+  'Precio Gasoleo A': string;
+  'Precio Gasoleo Premium': string;
 }
 
 /**
@@ -70,8 +72,8 @@ export default function Home(): JSX.Element {
    * @param {Station[]} stations - The list of stations to filter.
    * @param {string} municipality - The municipality to filter by.
    */
-  const debouncedFilterStations = useCallback(
-    debounce((stations: Station[], municipality: string) => {
+  const debouncedFilterStations = useMemo(() => {
+    return debounce((stations: Station[], municipality: string) => {
       setFilteredStations(
         stations.filter((station) =>
           station['Municipio']
@@ -79,9 +81,8 @@ export default function Home(): JSX.Element {
             .includes(municipality.toLowerCase())
         )
       );
-    }, 300),
-    []
-  );
+    }, 300);
+  }, [setFilteredStations]);
 
   // Filter stations whenever the search term or stations data changes
   useEffect(() => {
