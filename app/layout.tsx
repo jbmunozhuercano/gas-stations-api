@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import { Smooch_Sans } from 'next/font/google';
 import './globals.css';
-import { Header } from './components/Header/Header';
-import { SeoText } from './components/SeoText/SeoText';
-import { Footer } from './components/Footer/Footer';
+import { Header } from './components/Header';
+import { SeoText } from './components/Prefooter';
+import { Footer } from './components/Footer';
 
 const smoochSans = Smooch_Sans({
   variable: '--smooch-sans-font',
@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="es" className={smoochSans.className}>
       <body>
         <Header />
         {children}
