@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-export async function GET(req: Request) {
+export async function GET() {
   const date = new Date();
   date.setDate(date.getDate() - 1);
   const yesterday = `${date.getDate().toString().padStart(2, '0')}-${(
