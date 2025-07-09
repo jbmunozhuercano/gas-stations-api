@@ -12,13 +12,15 @@
   cursor: pointer;
   font-family: var(--main-font);
   outline: none;
-  &::placeholder {
-    color: inherit;
-    font-weight: inherit;
-  }
-  &:focus {
-    border-color: var(--success-color);
-    background-color: var(--color-1);
-    color: var(--color-5);
-  }
+}
+
+.input::placeholder {
+  color: inherit;
+  font-weight: inherit;
+}
+
+.input:focus {
+  border-color: var(--success-color);
+  background-color: var(--color-1);
+  color: var(--color-5);
 }

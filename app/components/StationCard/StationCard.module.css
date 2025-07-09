@@ -10,35 +10,34 @@
   box-shadow: 2px 2px 3px 2px var(--color-2);
   margin: 0 0 1em;
   color: var(--color-5);
-  h4 {
-    letter-spacing: 0.035em;
-    text-align: center;
-    padding: 0 0 0.25em;
-    margin: 0 0 0.25em;
-    border-bottom: 2px solid var(--color-3);
-  }
-  dl {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-end;
-    dt,
-    dd {
-      border-bottom: 1px dashed var(--color-3);
-      margin: 0;
-      padding: 0.25em 0 0.065em;
-    }
-    dt {
-      width: 35%;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-    dd {
-      width: 65%;
-      text-align: right;
-    }
-  }
 }
-
+.card h4 {
+  letter-spacing: 0.035em;
+  text-align: center;
+  padding: 0 0 0.25em;
+  margin: 0 0 0.25em;
+  border-bottom: 2px solid var(--color-3);
+}
+.card dl {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+.card dl dt,
+.card dl dd {
+  border-bottom: 1px dashed var(--color-3);
+  margin: 0;
+  padding: 0.25em 0 0.065em;
+}
+.card dl dt {
+  width: 35%;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.card dl dd {
+  width: 65%;
+  text-align: right;
+}
 .link {
   width: auto;
   display: block;
@@ -49,12 +48,12 @@
   margin: 0.5em auto 0.5em;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
-  &:hover {
-    background-color: var(--color-5);
-    color: var(--color-1);
-  }
-  h5 {
-    padding: 0.065em 0.25em;
-    margin: 0;
-  }
+}
+.link:hover {
+  background-color: var(--color-5);
+  color: var(--color-1);
+}
+.link h5 {
+  padding: 0.065em 0.25em;
+  margin: 0;
 }

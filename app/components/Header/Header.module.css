@@ -4,10 +4,12 @@
   text-align: center;
   margin: 0 0 1.6666em;
   background-color: var(--color-6);
-  h2 {
-    margin: 0 0 0.5em;
-    span {
-      font-size: 0.95em;
-    }
-  }
+}
+
+.header h2 {
+  margin: 0 0 0.5em;
+}
+
+.header span {
+  font-size: 0.95em;
 }

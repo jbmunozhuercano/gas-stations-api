@@ -2,52 +2,50 @@
   display: flex;
   justify-content: center;
   margin: 2.5em 1em 0;
-  ul {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    li {
-      background-color: var(--color-1);
-      overflow: hidden;
-      padding: 0.5em 1em;
-      border-top: 2px solid var(--color-3);
-      border-bottom: 2px solid var(--color-3);
-      cursor: pointer;
-      font-weight: 700;
-      text-transform: uppercase;
-      transition: all 0.3s ease-in-out;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 49px;
-      img {
-        width: 27px;
-        height: 27px;
-      }
-      &:hover {
-        color: var(--color-1);
-        background-color: var(--color-5);
-      }
-      &:first-of-type {
-        border-radius: 25px 0 0 25px;
-        border-left: 2px solid var(--color-3);
-        img {
-          transform: rotate(180deg);
-        }
-      }
-      &:nth-of-type(2) {
-        img {
-          transform: rotate(180deg);
-        }
-      }
-      &:last-of-type {
-        border-radius: 0 25px 25px 0;
-        border-right: 2px solid var(--color-3);
-      }
-      &.active {
-        background-color: var(--color-5);
-        color: var(--color-1);
-      }
-    }
-  }
+}
+.pagination ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pagination ul li {
+  background-color: var(--color-1);
+  overflow: hidden;
+  padding: 0.5em 1em;
+  border-top: 2px solid var(--color-3);
+  border-bottom: 2px solid var(--color-3);
+  cursor: pointer;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 49px;
+}
+.pagination ul li img {
+  width: 27px;
+  height: 27px;
+}
+.pagination ul li:hover {
+  color: var(--color-1);
+  background-color: var(--color-5);
+}
+.pagination ul li:first-of-type {
+  border-radius: 25px 0 0 25px;
+  border-left: 2px solid var(--color-3);
+}
+.pagination ul li:first-of-type img {
+  transform: rotate(180deg);
+}
+.pagination ul li:nth-of-type(2) img {
+  transform: rotate(180deg);
+}
+.pagination ul li:last-of-type {
+  border-radius: 0 25px 25px 0;
+  border-right: 2px solid var(--color-3);
+}
+.pagination ul li.active {
+  background-color: var(--color-5);
+  color: var(--color-1);
 }

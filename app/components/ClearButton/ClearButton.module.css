@@ -14,7 +14,8 @@
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
-  &:hover {
-    border-color: var(--success-color);
-  }
+}
+
+.button:hover {
+  border-color: var(--success-color);
 }
