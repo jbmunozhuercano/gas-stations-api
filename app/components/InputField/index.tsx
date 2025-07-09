@@ -8,6 +8,7 @@
  * @returns {React.JSX.Element} The PcInput component.
  */
 
+import { JSX } from 'react';
 import styles from './InputField.module.css';
 
 type InputProps = {
