@@ -13,11 +13,13 @@ interface Station {
   'Precio Gasoleo Premium': string;
   'Precio Gasolina 95 E5': string;
   'Precio Gasolina 98 E5': string;
+  distance?: number; // Optional distance property
 }
 
 interface StationCardProps {
   station: Station;
   loading: boolean;
+  showDistance?: boolean; // Optional prop to show distance
 }
 
 /**
@@ -30,6 +32,7 @@ interface StationCardProps {
 export function StationCard({
   station,
   loading,
+  showDistance = false, // Default to not showing distance
 }: StationCardProps): JSX.Element {
   return (
     <motion.div
@@ -84,6 +87,13 @@ export function StationCard({
             ? `${station['Precio Gasolina 98 E5']}€`
             : 'N/D'}
         </dd>
+
+        {showDistance && station.distance && (
+          <>
+            <dt>Distancia</dt>
+            <dd>{station.distance.toString().replace('.', ',')} km</dd>
+          </>
+        )}
       </dl>
       <a
         className={styles.link}

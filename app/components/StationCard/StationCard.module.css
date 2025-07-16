@@ -57,3 +57,17 @@
   padding: 0.065em 0.25em;
   margin: 0;
 }
+
+.locationInfo {
+  text-align: center;
+  margin: 0 0 1.6666em;
+  padding: 1em;
+  background-color: var(--color-6);
+  border-radius: 8px;
+  color: var(--success-color);
+}
+
+.locationInfo p {
+  margin: 0.25em 0;
+  font-weight: 700;
+}
