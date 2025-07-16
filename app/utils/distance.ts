@@ -74,7 +74,6 @@ export function filterStationsByDistance(
         return null;
       }
 
-      validStations++;
       const distance = calculateDistance(
         userLat,
         userLon,
