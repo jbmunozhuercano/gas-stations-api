@@ -38,7 +38,7 @@ function toRad(value: number): number {
  * @param stations - Array of gas stations
  * @param userLat - User's latitude
  * @param userLon - User's longitude
- * @param radius - Radius in kilometers (default: 2.5)
+ * @param radius - Radius in kilometers (default: 3)
  * @returns Filtered stations with distance information
  */
 export function filterStationsByDistance(
