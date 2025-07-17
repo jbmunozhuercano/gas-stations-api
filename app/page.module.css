@@ -27,6 +27,22 @@
   opacity: 1;
 }
 
+.locationInfo {
+  padding: 1em 0.5em;
+  text-align: center;
+  color: var(--color-5);
+  margin: 1em 0 1.5em;
+  background-color: rgba(37, 66, 82, 0.9);
+}
+
+.locationInfo p {
+  font-size: 1.1em;
+}
+
+.locationInfo span {
+  font-weight: 700;
+}
+
 @keyframes loadingAnimation {
   0% {
     opacity: 0;
