@@ -1,6 +1,6 @@
 .input {
   width: 100%;
-  max-width: 280px;
+  max-width: 220px;
   padding: 10px 12px;
   border-radius: 12px;
   color: var(--color-5);
@@ -12,6 +12,7 @@
   cursor: pointer;
   font-family: var(--main-font);
   outline: none;
+  opacity: 0.8;
 }
 
 .input::placeholder {
