@@ -161,17 +161,22 @@ export default function Home(): JSX.Element {
         {!useLocation && (
           <InputField
             type="text"
-            placeholder="Introduce el municipio"
+            placeholder="Introduce el municipio_"
             searchTerm={searchTerm}
             onInputChange={setSearchTerm}
           />
         )}
         <ClearButton clearSelections={clearSelections} />
       </div>
-      {useLocation && latitude && longitude && (
+      {useLocation && latitude && longitude && filteredStations.length > 0 && (
         <div className={styles.locationInfo}>
-          <p>Mostrando gasolineras en un radio de 3km de tu ubicación</p>
-          <p>Encontradas: {filteredStations.length} gasolineras</p>
+          <p>
+            Mostrando gasolineras en un radio de <span>3km</span> de tu
+            ubicación actual.
+          </p>
+          <p>
+            Encontradas: <span>{filteredStations.length} gasolineras.</span>
+          </p>
         </div>
       )}
       {loading ? (
