@@ -39,6 +39,7 @@ export function InputField({
       placeholder={placeholder}
       value={searchTerm}
       onChange={handleChange}
+      autoComplete="on"
     />
   );
 }
