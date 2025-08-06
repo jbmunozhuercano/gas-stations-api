@@ -42,6 +42,7 @@ function toRad(value: number): number {
  * @returns Filtered stations with distance information
  */
 export function filterStationsByDistance(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   stations: any[],
   userLat: number,
   userLon: number,
