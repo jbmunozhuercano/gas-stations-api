@@ -18,6 +18,16 @@ interface LocationButtonProps {
   disabled?: boolean;
 }
 
+/**
+ * The PcInput component is an input field that allows the user to filter stations by postal code.
+ *
+ * @param {Object} props - The props object.
+ * @param {string} props.postalCode - The current postal code value.
+ * @param {function} props.setPostalCode - A function to update the postal code value.
+ *
+ * @returns {React.JSX.Element} The PcInput component.
+ */
+
 export function LocationButton({
   onClick,
   loading,

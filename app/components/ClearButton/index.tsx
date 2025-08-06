@@ -1,3 +1,10 @@
+import { JSX } from 'react';
+import styles from './ClearButton.module.css';
+
+type ClearButtonProps = {
+  clearSelections: () => void;
+};
+
 /**
  * The ClearButton component is a button that clears the current selections.
  *
@@ -6,13 +13,6 @@
  *
  * @returns {JSX.Element} The ClearButton component.
  */
-
-import { JSX } from 'react';
-import styles from './ClearButton.module.css';
-
-type ClearButtonProps = {
-  clearSelections: () => void;
-};
 
 export function ClearButton({
   clearSelections,

@@ -1,14 +1,3 @@
-/**
- * The Select component is a dropdown that allows the user to select a region
- * of Spain.
- *
- * @param {Object} props - The props object.
- * @param {string} props.regionCode - The code of the selected region.
- * @param {function} props.setRegionCode - A function to update the selected region.
- *
- * @returns {JSX.Element} The Select component.
- */
-
 import { JSX, useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from './Select.module.css';
@@ -22,6 +11,17 @@ type Community = {
   IDCCAA: string;
   CCAA: string;
 };
+
+/**
+ * The Select component is a dropdown that allows the user to select a region
+ * of Spain.
+ *
+ * @param {Object} props - The props object.
+ * @param {string} props.regionCode - The code of the selected region.
+ * @param {function} props.setRegionCode - A function to update the selected region.
+ *
+ * @returns {JSX.Element} The Select component.
+ */
 
 export function Select({
   regionCode,
