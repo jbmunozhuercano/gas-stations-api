@@ -3,6 +3,8 @@ import { useState, useEffect, useMemo, JSX } from 'react';
 import axios from 'axios';
 import debounce from 'lodash/debounce';
 import styles from './page.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { Select } from './components/Select';
 import { InputField } from './components/InputField';
 import { ClearButton } from './components/ClearButton';
@@ -96,9 +98,25 @@ export default function Home(): JSX.Element {
     }, 300);
   }, [setFilteredStations]);
 
-  // Filter stations whenever the search term or stations data changes
+  // Fetch stations for the selected region
   useEffect(() => {
-    if (useLocation && latitude && longitude && stations.length > 0) {
+    if (regionCode) {
+      fetchStations(`/api/gas-stations/${regionCode}`);
+      setUseLocation(false); // Reset geolocation when region changes
+      setSearchTerm(''); // Reset search term when region changes
+    } else {
+      setStations([]);
+      setFilteredStations([]);
+    }
+  }, [regionCode]);
+
+  // Filter stations by geolocation or municipality
+  useEffect(() => {
+    if (!regionCode || stations.length === 0) {
+      setFilteredStations([]);
+      return;
+    }
+    if (useLocation && latitude && longitude) {
       const nearbyStations = filterStationsByDistance(
         stations,
         latitude,
@@ -106,7 +124,7 @@ export default function Home(): JSX.Element {
         3
       );
       setFilteredStations(nearbyStations);
-    } else if (stations.length > 0 && !useLocation) {
+    } else {
       debouncedFilterStations(stations, searchTerm);
     }
   }, [
@@ -116,14 +134,8 @@ export default function Home(): JSX.Element {
     stations,
     searchTerm,
     debouncedFilterStations,
+    regionCode,
   ]);
-
-  // Fetch stations data for the selected community code
-  useEffect(() => {
-    if (regionCode) {
-      fetchStations(`/api/gas-stations/${regionCode}`);
-    }
-  }, [regionCode]);
 
   // Fetch all stations when using location
   useEffect(() => {
@@ -134,8 +146,8 @@ export default function Home(): JSX.Element {
 
   // Handle location button click
   const handleLocationClick = () => {
+    if (!regionCode) return; // Require region selection
     setUseLocation(true);
-    setRegionCode('');
     setSearchTerm('');
     getCurrentLocation();
   };
@@ -156,7 +168,7 @@ export default function Home(): JSX.Element {
         <LocationButton
           onClick={handleLocationClick}
           loading={locationLoading}
-          disabled={useLocation && !latitude}
+          disabled={!regionCode || (useLocation && !latitude)}
         />
         {(error || locationError) && <p style={{ color: 'red' }}>{error}</p>}
         {!useLocation && (
@@ -169,19 +181,28 @@ export default function Home(): JSX.Element {
         )}
         <ClearButton clearSelections={clearSelections} />
       </div>
-      {useLocation && latitude && longitude && filteredStations.length > 0 && (
-        <div className={styles.locationInfo}>
-          <p>
-            Mostrando gasolineras en un radio de <span>3km</span> de tu
-            ubicación actual.
-          </p>
-          <p>
-            Encontradas: <span>{filteredStations.length} gasolineras.</span>
-          </p>
-        </div>
-      )}
+      {!loading &&
+        useLocation &&
+        latitude &&
+        longitude &&
+        filteredStations.length > 0 && (
+          <div className={styles.locationInfo}>
+            <p>
+              Mostrando gasolineras en un radio de <span>3km</span> de tu
+              ubicación actual.
+            </p>
+            <p>
+              Encontradas: <span>{filteredStations.length} gasolineras.</span>
+            </p>
+          </div>
+        )}
       {loading ? (
-        <h3 className={styles.loading}>Cargando...</h3>
+        <h3 className={styles.loading}>
+          <span className={styles.loadingIcon}>
+            <FontAwesomeIcon icon={faSpinner} spin />
+          </span>
+          <span className={styles.loadingText}>Cargando...</span>
+        </h3>
       ) : (
         <div className={styles.cardsContainer}>
           {currentItems.map((station, index) => (
