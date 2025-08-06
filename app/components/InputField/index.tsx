@@ -6,6 +6,7 @@ type InputProps = {
   placeholder: string;
   searchTerm: string;
   onInputChange: (searchTerm: string) => void;
+  disabled?: boolean;
 };
 
 /**
@@ -23,6 +24,7 @@ export function InputField({
   placeholder,
   searchTerm,
   onInputChange,
+  disabled = true,
 }: InputProps): JSX.Element {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -40,6 +42,7 @@ export function InputField({
       value={searchTerm}
       onChange={handleChange}
       autoComplete="on"
+      disabled={disabled}
     />
   );
 }

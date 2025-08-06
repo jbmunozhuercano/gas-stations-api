@@ -70,6 +70,9 @@ export default function Home(): JSX.Element {
     try {
       const response = await axios.get(url);
       setStations(response.data.ListaEESSPrecio);
+      console.log(
+        `Fetched ${response.data.ListaEESSPrecio.length} stations from ${url}`
+      );
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
@@ -140,7 +143,7 @@ export default function Home(): JSX.Element {
   // Fetch all stations when using location
   useEffect(() => {
     if (useLocation && latitude && longitude) {
-      fetchStations('/api/gas-stations');
+      fetchStations(`/api/gas-stations/${regionCode}`);
     }
   }, [useLocation, latitude, longitude]);
 
@@ -177,6 +180,7 @@ export default function Home(): JSX.Element {
             placeholder="Introduce el municipio_"
             searchTerm={searchTerm}
             onInputChange={setSearchTerm}
+            disabled={!regionCode}
           />
         )}
         <ClearButton clearSelections={clearSelections} />

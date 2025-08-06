@@ -25,3 +25,8 @@
   background-color: var(--color-1);
   color: var(--color-5);
 }
+
+.input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
