@@ -7,6 +7,23 @@ interface GeolocationState {
   loading: boolean;
 }
 
+/**
+ * Custom React hook to retrieve the user's current geolocation.
+ *
+ * @returns {Object} An object containing:
+ * - `latitude`: The latitude coordinate, or `null` if not available.
+ * - `longitude`: The longitude coordinate, or `null` if not available.
+ * - `error`: An error message if geolocation fails, or `null` if no error.
+ * - `loading`: A boolean indicating if the geolocation request is in progress.
+ * - `getCurrentLocation`: A function to trigger the geolocation request.
+ *
+ * @example
+ * const { latitude, longitude, error, loading, getCurrentLocation } = useGeolocation();
+ *
+ * To request location:
+ * getCurrentLocation();
+ */
+
 export function useGeolocation() {
   const [location, setLocation] = useState<GeolocationState>({
     latitude: null,
