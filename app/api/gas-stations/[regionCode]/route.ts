@@ -1,3 +1,9 @@
+import fetch from 'node-fetch';
+
+interface Params {
+  regionCode: string;
+}
+
 /**
  * Handles GET requests to fetch gas station data for a specific region.
  *
@@ -14,12 +20,6 @@
  * Example usage in a Next.js API route:
  * export { GET } from './route';
  */
-
-import fetch from 'node-fetch';
-
-interface Params {
-  regionCode: string;
-}
 
 export async function GET(
   request: Request,

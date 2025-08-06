@@ -1,3 +1,5 @@
+import fetch from 'node-fetch';
+
 /**
  * Handles GET requests to fetch gas station price data for the previous day
  * from the Spanish Ministry of Industry, Commerce and Tourism's public API.
@@ -9,8 +11,6 @@
  *
  * @returns {Promise<Response>} A promise that resolves to a Response object containing the fetched data or an error message.
  */
-
-import fetch from 'node-fetch';
 
 export async function GET() {
   const date = new Date();
