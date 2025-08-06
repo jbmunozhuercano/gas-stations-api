@@ -1,11 +1,11 @@
-import { JSX } from 'react';
-import style from './Footer.module.css';
-
 /**
  * The Footer component displays the footer of the app.
  *
  * @returns {JSX.Element} The Footer component.
  */
+
+import { JSX } from 'react';
+import style from './Footer.module.css';
 
 const actualYear = new Date().getFullYear();
 

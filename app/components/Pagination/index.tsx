@@ -1,3 +1,13 @@
+/**
+ * Generates an array of page numbers to be displayed in the pagination component.
+ *
+ * @param {number} totalItems - The total number of items.
+ * @param {number} itemsPerPage - The number of items per page.
+ * @param {number} currentPage - The current page number.
+ * @param {number} [maxPageNumbers=5] - The maximum number of page numbers to display.
+ * @returns {number[]} An array of page numbers to be displayed.
+ */
+
 import { JSX } from 'react';
 import styles from './Pagination.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -28,15 +38,6 @@ type PaginationProps = {
   itemsPerPage: number;
 };
 
-/**
- * Generates an array of page numbers to be displayed in the pagination component.
- *
- * @param {number} totalItems - The total number of items.
- * @param {number} itemsPerPage - The number of items per page.
- * @param {number} currentPage - The current page number.
- * @param {number} [maxPageNumbers=5] - The maximum number of page numbers to display.
- * @returns {number[]} An array of page numbers to be displayed.
- */
 const getPageNumbers = (
   totalItems: number,
   itemsPerPage: number,

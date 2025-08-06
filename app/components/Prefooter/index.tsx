@@ -1,3 +1,9 @@
+/**
+ * The SeoText component displays the SEO text for the app.
+ *
+ * @returns {JSX.Element} The SeoText component.
+ */
+
 import { JSX } from 'react';
 import styles from './Prefooter.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,11 +16,6 @@ import {
   faBullhorn,
 } from '@fortawesome/free-solid-svg-icons';
 
-/**
- * The SeoText component displays the SEO text for the app.
- *
- * @returns {JSX.Element} The SeoText component.
- */
 export function SeoText(): JSX.Element {
   return (
     <section className={styles.preFooter}>

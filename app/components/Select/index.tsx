@@ -1,7 +1,3 @@
-import { JSX, useEffect, useState } from 'react';
-import axios from 'axios';
-import styles from './Select.module.css';
-
 /**
  * The Select component is a dropdown that allows the user to select a region
  * of Spain.
@@ -12,6 +8,10 @@ import styles from './Select.module.css';
  *
  * @returns {JSX.Element} The Select component.
  */
+
+import { JSX, useEffect, useState } from 'react';
+import axios from 'axios';
+import styles from './Select.module.css';
 
 type SelectProps = {
   regionCode: string;

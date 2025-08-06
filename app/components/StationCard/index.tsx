@@ -1,3 +1,11 @@
+/**
+ * Generates a gas station card component with all the elements.
+ *
+ * @param {StationCardProps} props - The props for the StationCard component.
+ * @param {Station} props.station - The gas station data to display.
+ * @returns {JSX.Element} The StationCard component.
+ */
+
 import { JSX } from 'react';
 import { motion } from 'motion/react';
 import styles from './StationCard.module.css';
@@ -22,13 +30,6 @@ interface StationCardProps {
   showDistance?: boolean; // Optional prop to show distance
 }
 
-/**
- * Generates a gas station card component with all the elements.
- *
- * @param {StationCardProps} props - The props for the StationCard component.
- * @param {Station} props.station - The gas station data to display.
- * @returns {JSX.Element} The StationCard component.
- */
 export function StationCard({
   station,
   loading,
