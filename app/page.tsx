@@ -132,6 +132,7 @@ export default function Home(): JSX.Element {
     }
   }, [useLocation, latitude, longitude]);
 
+  // Handle location button click
   const handleLocationClick = () => {
     setUseLocation(true);
     setRegionCode('');
