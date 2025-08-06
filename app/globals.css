@@ -51,10 +51,10 @@ h1 {
   font-size: 2.244rem;
 }
 h2 {
-  font-size: 2.122rem;
+  font-size: 1.984rem;
 }
 h3 {
-  font-size: 2.074rem;
+  font-size: 1.874rem;
 }
 h4 {
   font-size: 1.728rem;
@@ -126,5 +126,8 @@ body {
   }
   h2 {
     font-size: 2.488rem;
+  }
+  h3 {
+    font-size: 2.074rem;
   }
 }
