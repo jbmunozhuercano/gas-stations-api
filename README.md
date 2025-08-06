@@ -30,8 +30,9 @@ This application displays information about gas stations in Spain, including the
 ### Features
 
 - **Fetch Gas Stations**: Fetches gas station data from an external API.
-- **Filter by Municipality**: Allows users to filter gas stations by municipality.
 - **Filter by Region**: Allows users to filter gas stations by autonomous community.
+- **Filter by Geolocation**: Users can allow the app to access their device's location to find and display gas stations near them.
+- **Filter by Municipality**: Allows users to filter gas stations by municipality.
 - **Pagination**: Displays gas stations in a paginated format.
 - **Clear Filters**: Provides a button to clear all filters.
 
