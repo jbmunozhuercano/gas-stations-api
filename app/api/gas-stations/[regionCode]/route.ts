@@ -4,6 +4,23 @@ interface Params {
   regionCode: string;
 }
 
+/**
+ * Handles GET requests to fetch gas station data for a specific region.
+ *
+ * @param request - The incoming HTTP request object.
+ * @param params - An object containing a promise that resolves to the route parameters, including `regionCode`.
+ * @returns A promise that resolves to a `Response` object containing the gas station data in JSON format.
+ *
+ * @remarks
+ * - Fetches data from the Spanish Ministry of Industry, Energy and Tourism's public API.
+ * - Adds caching headers to the response for improved performance.
+ * - Returns a 500 status code with an error message if the fetch operation fails.
+ *
+ * @example
+ * Example usage in a Next.js API route:
+ * export { GET } from './route';
+ */
+
 export async function GET(
   request: Request,
   { params }: { params: Promise<Params> }

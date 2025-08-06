@@ -15,6 +15,7 @@ import {
  *
  * @returns {JSX.Element} The SeoText component.
  */
+
 export function SeoText(): JSX.Element {
   return (
     <section className={styles.preFooter}>

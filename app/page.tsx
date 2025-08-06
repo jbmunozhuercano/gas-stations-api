@@ -6,8 +6,11 @@ import styles from './page.module.css';
 import { Select } from './components/Select';
 import { InputField } from './components/InputField';
 import { ClearButton } from './components/ClearButton';
+import { LocationButton } from './components/LocationButton';
 import { StationCard } from './components/StationCard';
 import { Pagination } from './components/Pagination';
+import { useGeolocation } from './hooks/useGeolocation';
+import { filterStationsByDistance } from './utils/distance';
 
 // Interface representing a gas station.
 interface Station {
@@ -36,6 +39,15 @@ export default function Home(): JSX.Element {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [useLocation, setUseLocation] = useState(false);
+
+  const {
+    latitude,
+    longitude,
+    error: locationError,
+    loading: locationLoading,
+    getCurrentLocation,
+  } = useGeolocation();
 
   // Calculate the indices for the current items to display
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -86,10 +98,25 @@ export default function Home(): JSX.Element {
 
   // Filter stations whenever the search term or stations data changes
   useEffect(() => {
-    if (stations.length > 0) {
+    if (useLocation && latitude && longitude && stations.length > 0) {
+      const nearbyStations = filterStationsByDistance(
+        stations,
+        latitude,
+        longitude,
+        3
+      );
+      setFilteredStations(nearbyStations);
+    } else if (stations.length > 0 && !useLocation) {
       debouncedFilterStations(stations, searchTerm);
     }
-  }, [searchTerm, stations, debouncedFilterStations]);
+  }, [
+    useLocation,
+    latitude,
+    longitude,
+    stations,
+    searchTerm,
+    debouncedFilterStations,
+  ]);
 
   // Fetch stations data for the selected community code
   useEffect(() => {
@@ -98,32 +125,72 @@ export default function Home(): JSX.Element {
     }
   }, [regionCode]);
 
+  // Fetch all stations when using location
+  useEffect(() => {
+    if (useLocation && latitude && longitude) {
+      fetchStations('/api/gas-stations');
+    }
+  }, [useLocation, latitude, longitude]);
+
+  // Handle location button click
+  const handleLocationClick = () => {
+    setUseLocation(true);
+    setRegionCode('');
+    setSearchTerm('');
+    getCurrentLocation();
+  };
+
   // Clears all selections and resets the state
   const clearSelections = () => {
     setRegionCode('');
     setSearchTerm('');
+    setUseLocation(false);
     setStations(stations);
+    setFilteredStations([]);
   };
 
   return (
     <main className={styles.container}>
       <div className={styles.listHeader}>
         <Select regionCode={regionCode} setRegionCode={setRegionCode} />
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <InputField
-          type="text"
-          placeholder="Introduce el municipio"
-          searchTerm={searchTerm}
-          onInputChange={setSearchTerm}
+        <LocationButton
+          onClick={handleLocationClick}
+          loading={locationLoading}
+          disabled={useLocation && !latitude}
         />
+        {(error || locationError) && <p style={{ color: 'red' }}>{error}</p>}
+        {!useLocation && (
+          <InputField
+            type="text"
+            placeholder="Introduce el municipio_"
+            searchTerm={searchTerm}
+            onInputChange={setSearchTerm}
+          />
+        )}
         <ClearButton clearSelections={clearSelections} />
       </div>
+      {useLocation && latitude && longitude && filteredStations.length > 0 && (
+        <div className={styles.locationInfo}>
+          <p>
+            Mostrando gasolineras en un radio de <span>3km</span> de tu
+            ubicación actual.
+          </p>
+          <p>
+            Encontradas: <span>{filteredStations.length} gasolineras.</span>
+          </p>
+        </div>
+      )}
       {loading ? (
         <h3 className={styles.loading}>Cargando...</h3>
       ) : (
         <div className={styles.cardsContainer}>
           {currentItems.map((station, index) => (
-            <StationCard key={index} station={station} loading={loading} />
+            <StationCard
+              key={index}
+              station={station}
+              loading={loading}
+              showDistance={useLocation}
+            />
           ))}
         </div>
       )}

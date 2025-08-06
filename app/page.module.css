@@ -1,6 +1,6 @@
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 1em;
 }
@@ -25,6 +25,24 @@
   text-align: center;
   animation: loadingAnimation 1.5s infinite;
   opacity: 1;
+}
+
+.locationInfo {
+  padding: 1em 0.5em;
+  text-align: center;
+  color: var(--color-5);
+  margin: 1em 0 1.5em;
+  background-color: rgba(37, 66, 82, 0.9);
+  border-radius: 1em;
+  box-shadow: 2px 2px 3px 2px var(--color-2);
+}
+
+.locationInfo p {
+  font-size: 1.3em;
+}
+
+.locationInfo span {
+  font-weight: 700;
 }
 
 @keyframes loadingAnimation {

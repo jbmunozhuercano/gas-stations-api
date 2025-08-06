@@ -1,5 +1,6 @@
 import { JSX } from 'react';
 import styles from './Header.module.css';
+
 /**
  * The Header component displays the title of the app and the date of the last
  * update.
