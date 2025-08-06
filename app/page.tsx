@@ -160,7 +160,6 @@ export default function Home(): JSX.Element {
     setRegionCode('');
     setSearchTerm('');
     setUseLocation(false);
-    setStations(stations);
     setFilteredStations([]);
   };
 
