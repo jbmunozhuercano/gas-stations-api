@@ -1,12 +1,3 @@
-/**
- * A button component that triggers a location-based action, such as fetching the user's current location.
- *
- * @param onClick - Callback function to be called when the button is clicked.
- * @param loading - Boolean indicating whether the location is currently being fetched.
- * @param disabled - Optional boolean to disable the button.
- * @returns A button element with a location icon and dynamic label based on loading state.
- */
-
 import { JSX } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
@@ -19,13 +10,12 @@ interface LocationButtonProps {
 }
 
 /**
- * The PcInput component is an input field that allows the user to filter stations by postal code.
+ * A button component that triggers a location-based action, such as fetching the user's current location.
  *
- * @param {Object} props - The props object.
- * @param {string} props.postalCode - The current postal code value.
- * @param {function} props.setPostalCode - A function to update the postal code value.
- *
- * @returns {React.JSX.Element} The PcInput component.
+ * @param onClick - Callback function to be called when the button is clicked.
+ * @param loading - Boolean indicating whether the location is currently being fetched.
+ * @param disabled - Optional boolean to disable the button.
+ * @returns A button element with a location icon and dynamic label based on loading state.
  */
 
 export function LocationButton({
