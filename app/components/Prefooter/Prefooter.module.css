@@ -1,7 +1,7 @@
 .preFooter {
   width: 100%;
   background-color: var(--color-6);
-  margin: 2.5em 0 0;
+  margin: 0;
 }
 .preFooter .seoText__inner {
   max-width: 960px;

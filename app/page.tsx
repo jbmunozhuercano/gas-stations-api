@@ -134,7 +134,7 @@ export default function Home(): JSX.Element {
     if (useLocation && latitude && longitude) {
       fetchStations(`/api/gas-stations/${regionCode}`);
     }
-  }, [useLocation, latitude, longitude]);
+  }, [useLocation, latitude, longitude, regionCode]);
 
   // Handle location button click
   const handleLocationClick = () => {
@@ -170,7 +170,7 @@ export default function Home(): JSX.Element {
         <LocationButton
           onClick={handleLocationClick}
           loading={locationLoading}
-          disabled={!regionCode || (useLocation && !latitude)}
+          disabled={!regionCode || (useLocation && !latitude && !longitude)}
         />
         {(error || locationError) && <p style={{ color: 'red' }}>{error}</p>}
         {!useLocation && (
@@ -183,22 +183,23 @@ export default function Home(): JSX.Element {
           />
         )}
         <ClearButton clearSelections={clearSelections} />
+        {!loading &&
+          useLocation &&
+          latitude &&
+          longitude &&
+          filteredStations.length > 0 && (
+            <div className={styles.locationInfo}>
+              <p>
+                Mostrando gasolineras en un radio de <span>3km</span> de tu
+                ubicación actual.
+              </p>
+              <p>
+                Encontradas: <span>{filteredStations.length} gasolineras.</span>
+              </p>
+            </div>
+          )}
       </div>
-      {!loading &&
-        useLocation &&
-        latitude &&
-        longitude &&
-        filteredStations.length > 0 && (
-          <div className={styles.locationInfo}>
-            <p>
-              Mostrando gasolineras en un radio de <span>3km</span> de tu
-              ubicación actual.
-            </p>
-            <p>
-              Encontradas: <span>{filteredStations.length} gasolineras.</span>
-            </p>
-          </div>
-        )}
+
       <GasStationsMap
         stations={filteredStations}
         center={mapCenter}
