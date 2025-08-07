@@ -3,16 +3,15 @@ import { useState, useEffect, useMemo, JSX } from 'react';
 import axios from 'axios';
 import debounce from 'lodash/debounce';
 import styles from './page.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import 'leaflet/dist/leaflet.css';
 import { Select } from './components/Select';
 import { InputField } from './components/InputField';
 import { ClearButton } from './components/ClearButton';
 import { LocationButton } from './components/LocationButton';
-import { StationCard } from './components/StationCard';
-import { Pagination } from './components/Pagination';
 import { useGeolocation } from './hooks/useGeolocation';
 import { filterStationsByDistance } from './utils/distance';
+import { GasStationsMap } from './components/GasStationsMap';
+import { REGION_CENTERS } from './components/GasStationsMap/regionCenters';
 
 // Interface representing a gas station.
 interface Station {
@@ -33,14 +32,12 @@ interface Station {
  * @returns {JSX.Element} The rendered component.
  */
 export default function Home(): JSX.Element {
-  const itemsPerPage = 20; // Number of items to display per page
   const [regionCode, setRegionCode] = useState('');
   const [stations, setStations] = useState<Station[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredStations, setFilteredStations] = useState<Station[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
   const [useLocation, setUseLocation] = useState(false);
 
   const {
@@ -50,14 +47,6 @@ export default function Home(): JSX.Element {
     loading: locationLoading,
     getCurrentLocation,
   } = useGeolocation();
-
-  // Calculate the indices for the current items to display
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredStations.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
 
   /**
    * Fetches stations data from the API.
@@ -163,6 +152,17 @@ export default function Home(): JSX.Element {
     setFilteredStations([]);
   };
 
+  const mapCenter =
+    regionCode && REGION_CENTERS[regionCode]
+      ? REGION_CENTERS[regionCode]
+      : [40.4168, -3.7038]; // Default center (Madrid)
+
+  const defaultZoom = 6;
+  const regionZoom = 7;
+
+  const zoom =
+    regionCode && REGION_CENTERS[regionCode] ? regionZoom : defaultZoom;
+
   return (
     <main className={styles.container}>
       <div className={styles.listHeader}>
@@ -199,33 +199,11 @@ export default function Home(): JSX.Element {
             </p>
           </div>
         )}
-      {loading ? (
-        <h3 className={styles.loading}>
-          <span className={styles.loadingIcon}>
-            <FontAwesomeIcon icon={faSpinner} spin />
-          </span>
-          <span className={styles.loadingText}>Cargando...</span>
-        </h3>
-      ) : (
-        <div className={styles.cardsContainer}>
-          {currentItems.map((station, index) => (
-            <StationCard
-              key={index}
-              station={station}
-              loading={loading}
-              showDistance={useLocation}
-            />
-          ))}
-        </div>
-      )}
-      {itemsPerPage < filteredStations.length && (
-        <Pagination
-          filteredStations={filteredStations}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          itemsPerPage={itemsPerPage}
-        />
-      )}
+      <GasStationsMap
+        stations={filteredStations}
+        center={mapCenter}
+        zoom={zoom}
+      />
     </main>
   );
 }
