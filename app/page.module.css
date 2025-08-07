@@ -24,7 +24,7 @@
 }
 
 .loading {
-  font-size: 1.5em;
+  font-size: 1.5rem;
   color: var(--success-color);
   text-align: center;
   animation: loadingAnimation 1.5s infinite;
@@ -38,7 +38,7 @@
 .locationInfo {
   width: 100%;
   max-width: 960px;
-  padding: 1em;
+  padding: 0.25em;
   text-align: center;
   color: var(--color-5);
   margin: 0 1em;
@@ -48,7 +48,7 @@
 }
 
 .locationInfo p {
-  font-size: 1.3em;
+  font-size: 1rem;
 }
 
 .locationInfo span {
@@ -67,5 +67,14 @@
   }
   100% {
     opacity: 1;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .locationInfo {
+    padding: 1em;
+  }
+  .locationInfo p {
+    font-size: 1.3rem;
   }
 }
