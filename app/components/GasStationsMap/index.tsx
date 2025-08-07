@@ -35,7 +35,7 @@ export function GasStationsMap({
     <MapContainer
       center={center}
       zoom={zoom}
-      style={{ height: '660px', width: '100%' }}
+      style={{ height: '690px', width: '100%' }}
       key={center.toString() + zoom} // Ensures map recenters and zooms when changed
     >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
