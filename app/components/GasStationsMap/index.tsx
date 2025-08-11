@@ -31,12 +31,14 @@ interface GasStation {
 interface GasStationsMapProps {
   stations: GasStation[];
   center: LatLngExpression;
+  showDistance: boolean;
   zoom: number;
 }
 
 export default function GasStationsMap({
   stations,
   center,
+  showDistance,
   zoom,
 }: GasStationsMapProps) {
   return (
@@ -54,7 +56,7 @@ export default function GasStationsMap({
         return (
           <Marker key={idx} position={[lat, lon]}>
             <Popup>
-              <StationCard station={station} showDistance={false} />
+              <StationCard station={station} showDistance={showDistance} />
             </Popup>
           </Marker>
         );

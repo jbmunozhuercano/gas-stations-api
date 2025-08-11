@@ -172,6 +172,8 @@ export default function Home(): JSX.Element {
       ? regionZoom
       : defaultZoom;
 
+  const showDistance = useLocation && latitude && longitude ? true : false;
+
   return (
     <main className={styles.container}>
       <div className={styles.listHeader}>
@@ -204,6 +206,7 @@ export default function Home(): JSX.Element {
       <GasStationsMap
         stations={filteredStations}
         center={mapCenter}
+        showDistance={showDistance}
         zoom={zoom}
       />
     </main>
