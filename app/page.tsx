@@ -8,6 +8,7 @@ import { Select } from './components/Select';
 import { InputField } from './components/InputField';
 import { ClearButton } from './components/ClearButton';
 import { LocationButton } from './components/LocationButton';
+import { LocationInfo } from './components/LocationInfo';
 import { useGeolocation } from './hooks/useGeolocation';
 import { filterStationsByDistance } from './utils/distance';
 import { GasStationsMap } from './components/GasStationsMap';
@@ -129,19 +130,13 @@ export default function Home(): JSX.Element {
     regionCode,
   ]);
 
-  // Fetch all stations when using location
-  useEffect(() => {
-    if (useLocation && latitude && longitude) {
-      fetchStations(`/api/gas-stations/${regionCode}`);
-    }
-  }, [useLocation, latitude, longitude, regionCode]);
-
   // Handle location button click
   const handleLocationClick = () => {
     if (!regionCode) return; // Require region selection
     setUseLocation(true);
     setSearchTerm('');
     getCurrentLocation();
+    fetchStations(`/api/gas-stations/${regionCode}`);
   };
 
   // Clears all selections and resets the state
@@ -188,15 +183,7 @@ export default function Home(): JSX.Element {
           latitude &&
           longitude &&
           filteredStations.length > 0 && (
-            <div className={styles.locationInfo}>
-              <p>
-                Mostrando gasolineras en un radio de <span>3km</span> de tu
-                ubicación actual.
-              </p>
-              <p>
-                Encontradas: <span>{filteredStations.length} gasolineras.</span>
-              </p>
-            </div>
+            <LocationInfo count={filteredStations.length} />
           )}
       </div>
 
