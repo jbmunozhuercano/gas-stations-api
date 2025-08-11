@@ -17,7 +17,7 @@ export function Header(): JSX.Element {
 
   return (
     <header className={styles.header}>
-      <h1>Precio combustible Estaciones de Servicio en España</h1>
+      <h1>Precio combustible Estaciones de Servicio de España</h1>
       <h2>
         <span>Fecha actualización:</span> {today}
       </h2>
