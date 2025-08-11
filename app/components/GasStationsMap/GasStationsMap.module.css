@@ -1,0 +1,11 @@
+:global(.leaflet-popup-content-wrapper) {
+  background-color: var(--color-1);
+}
+
+:global(.leaflet-popup-close-button span) {
+  color: var(--color-5);
+}
+
+:global(.leaflet-popup-tip) {
+  background: var(--color-1);
+}
