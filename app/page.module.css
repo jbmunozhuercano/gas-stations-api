@@ -56,6 +56,7 @@
 
 @media screen and (min-width: 768px) {
   .listHeader {
+    padding: 0 2em;
     bottom: auto;
     top: 0;
   }
