@@ -1,6 +1,6 @@
 .button {
   width: 100%;
-  max-width: 180px;
+  max-width: 165px;
   background-color: var(--color-1);
   border: 2px solid var(--color-3);
   color: var(--color-5);
@@ -29,6 +29,12 @@
 .button svg {
   width: 15px;
   height: 20px;
+}
+
+@media screen and (min-width: 400px) {
+  .button {
+    max-width: 180px;
+  }
 }
 
 @media screen and (min-width: 768px) {

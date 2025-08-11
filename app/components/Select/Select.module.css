@@ -1,7 +1,7 @@
 .select {
   font-family: var(--main-font);
   width: 100%;
-  max-width: 180px;
+  max-width: 165px;
   padding: 9px 12px;
   border-radius: 12px;
   background-color: var(--color-1);
@@ -16,6 +16,12 @@
 
 .select:focus {
   border-color: var(--success-color);
+}
+
+@media screen and (min-width: 400px) {
+  .select {
+    max-width: 180px;
+  }
 }
 
 @media screen and (min-width: 768px) {
