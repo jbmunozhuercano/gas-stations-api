@@ -3,9 +3,6 @@ import type { LatLngExpression } from 'leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { StationCard } from '../StationCard';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGasPump } from '@fortawesome/free-solid-svg-icons';
-import { renderToStaticMarkup } from 'react-dom/server';
 
 // Fix default icon issue
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -16,19 +13,6 @@ L.Icon.Default.mergeOptions({
   iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
   shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
 });
-/* 
-// Create a custom FontAwesome icon for Leaflet
-const gasIcon = new L.DivIcon({
-  html: renderToStaticMarkup(
-    <FontAwesomeIcon
-      icon={faGasPump}
-      style={{ color: '#e37239', fontSize: '1rem' }}
-    />
-  ),
-  className: '', // Remove default styles
-  iconSize: [32, 32],
-  iconAnchor: [16, 32],
-}); */
 
 interface GasStation {
   Latitud: string;
