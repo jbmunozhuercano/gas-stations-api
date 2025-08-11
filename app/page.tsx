@@ -152,7 +152,7 @@ export default function Home(): JSX.Element {
     setFilteredStations([]);
   };
 
-  const mapCenter =
+  const mapCenter: [number, number] =
     regionCode && REGION_CENTERS[regionCode]
       ? REGION_CENTERS[regionCode]
       : [40.4168, -3.7038]; // Default center (Madrid)
