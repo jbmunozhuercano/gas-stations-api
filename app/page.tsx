@@ -148,15 +148,22 @@ export default function Home(): JSX.Element {
   };
 
   const mapCenter: [number, number] =
-    regionCode && REGION_CENTERS[regionCode]
+    useLocation && latitude && longitude
+      ? [latitude, longitude]
+      : regionCode && REGION_CENTERS[regionCode]
       ? REGION_CENTERS[regionCode]
       : [40.4168, -3.7038]; // Default center (Madrid)
 
   const defaultZoom = 6;
   const regionZoom = 7;
+  const locationZoom = 12; // or any zoom level you prefer for GPS
 
   const zoom =
-    regionCode && REGION_CENTERS[regionCode] ? regionZoom : defaultZoom;
+    useLocation && latitude && longitude
+      ? locationZoom
+      : regionCode && REGION_CENTERS[regionCode]
+      ? regionZoom
+      : defaultZoom;
 
   return (
     <main className={styles.container}>
