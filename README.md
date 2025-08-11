@@ -1,7 +1,7 @@
 # Description
 
 App to show the prices of the gas stations in Spain.
-The data is optain from https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/help.<br/>It uses next.js and React.js.
+The data is obtained from https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/help.<br/>It uses Next.js and React.js.
 
 ## Demo
 
@@ -25,7 +25,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## App Specifications
 
-This application displays information about gas stations in Spain, including their location and fuel prices. The data is fetched from an external API and displayed in a paginated format.
+This application displays information about gas stations in Spain, including their location and fuel prices. The data is fetched from an external API and displayed on an interactive map.
 
 ### Features
 
@@ -33,25 +33,32 @@ This application displays information about gas stations in Spain, including the
 - **Filter by Region**: Allows users to filter gas stations by autonomous community.
 - **Filter by Geolocation**: Users can allow the app to access their device's location to find and display gas stations near them.
 - **Filter by Municipality**: Allows users to filter gas stations by municipality.
-- **Pagination**: Displays gas stations in a paginated format.
 - **Clear Filters**: Provides a button to clear all filters.
+- **Interactive Map**: Gas stations are displayed as markers on a map using react-leaflet.
+- **Map Centering & Zoom**: The map automatically centers and zooms to the user's GPS location when available.
 
 ### Components
 
 - **Header**: Displays the title of the app and the date of the last update.
 - **Select**: Dropdown component to select the community code.
-- **PcInput**: Input field component to enter the postal code.
+- **InputField**: Input field component to enter the municipality.
 - **ClearButton**: Button component to clear all selections.
 - **StationCard**: Displays information about a single gas station.
-- **Pagination**: Handles the pagination of the gas station list.
 - **Prefooter**: Component displayed before the main footer section.
 - **Footer**: Bottom section component with additional information and links.
+- **GasStationsMap**: Displays gas stations on a map with markers and popups using react-leaflet.
+- **LocationButton**: Button to trigger geolocation and center the map.
 
 ### API Endpoints
 
 - **/api/gas-stations**: Fetches all gas stations.
 - **/api/gas-stations/[regionCode]**: Fetches gas stations for a specific community.
 - **/api/region**: Fetches all autonomous communities (regions) data.
+
+### Map Libraries
+
+- **react-leaflet**: Used for rendering interactive maps in React.
+- **leaflet**: Core mapping library for map rendering and marker management.
 
 ### Styling
 
