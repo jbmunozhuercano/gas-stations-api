@@ -2,6 +2,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import type { LatLngExpression } from 'leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import styles from './GasStationsMap.module.css';
 import { StationCard } from '../StationCard';
 
 // Fix default icon issue
@@ -42,7 +43,7 @@ export function GasStationsMap({
     <MapContainer
       center={center}
       zoom={zoom}
-      style={{ height: '720px', width: '100%' }}
+      className={styles.mapContainer}
       key={center.toString() + zoom} // Ensures map recenters and zooms when changed
     >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
