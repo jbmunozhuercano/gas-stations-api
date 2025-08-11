@@ -2,7 +2,6 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import type { LatLngExpression } from 'leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import styles from './GasStationsMap.module.css';
 import { StationCard } from '../StationCard';
 
 // Fix default icon issue
@@ -53,7 +52,7 @@ export function GasStationsMap({
         if (isNaN(lat) || isNaN(lon)) return null;
         return (
           <Marker key={idx} position={[lat, lon]}>
-            <Popup className={styles.popup}>
+            <Popup>
               <StationCard station={station} showDistance={false} />
             </Popup>
           </Marker>

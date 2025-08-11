@@ -38,27 +38,6 @@
   margin-right: 0.25em;
 }
 
-.locationInfo {
-  width: 100%;
-  max-width: 960px;
-  padding: 0.5em;
-  text-align: center;
-  color: var(--color-5);
-  margin: 0 1em;
-  background-color: rgba(37, 66, 82, 0.9);
-  border-radius: 1em;
-  box-shadow: 2px 2px 3px 2px var(--color-2);
-  order: -1;
-}
-
-.locationInfo p {
-  font-size: 1rem;
-}
-
-.locationInfo span {
-  font-weight: 700;
-}
-
 @keyframes loadingAnimation {
   0% {
     opacity: 0;
@@ -78,12 +57,5 @@
   .listHeader {
     bottom: auto;
     top: 0;
-  }
-  .locationInfo {
-    order: 4;
-    padding: 1em;
-  }
-  .locationInfo p {
-    font-size: 1.3rem;
   }
 }
