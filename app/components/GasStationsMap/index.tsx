@@ -34,7 +34,7 @@ interface GasStationsMapProps {
   zoom: number;
 }
 
-export function GasStationsMap({
+export default function GasStationsMap({
   stations,
   center,
   zoom,

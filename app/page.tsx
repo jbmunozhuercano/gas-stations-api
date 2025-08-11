@@ -11,8 +11,15 @@ import { LocationButton } from './components/LocationButton';
 import { LocationInfo } from './components/LocationInfo';
 import { useGeolocation } from './hooks/useGeolocation';
 import { filterStationsByDistance } from './utils/distance';
-import { GasStationsMap } from './components/GasStationsMap';
-import { REGION_CENTERS } from './components/GasStationsMap/regionCenters';
+import { REGION_CENTERS } from './constants/regionCenters';
+import dynamic from 'next/dynamic';
+
+const GasStationsMap = dynamic(
+  () => import('./components/GasStationsMap').then((mod) => mod.default),
+  {
+    ssr: false,
+  }
+);
 
 // Interface representing a gas station.
 interface Station {
