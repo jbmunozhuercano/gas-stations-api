@@ -1,7 +1,18 @@
+:global(.leaflet-map-pane) {
+  z-index: 1 !important;
+}
+:global(.leaflet-popup-pane) {
+  z-index: 9999 !important;
+}
 :global(.leaflet-popup-content-wrapper) {
+  width: 280px;
   background-color: var(--color-1);
 }
 
+:global(.leaflet-popup-content) {
+  width: 250px !important;
+  margin: 1em;
+}
 :global(.leaflet-popup-close-button span) {
   color: var(--color-5);
 }

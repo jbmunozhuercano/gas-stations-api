@@ -54,11 +54,7 @@ export function GasStationsMap({
         return (
           <Marker key={idx} position={[lat, lon]}>
             <Popup className={styles.popup}>
-              <StationCard
-                station={station}
-                loading={false}
-                showDistance={false}
-              />
+              <StationCard station={station} showDistance={false} />
             </Popup>
           </Marker>
         );
