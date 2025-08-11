@@ -6,7 +6,7 @@
   color: var(--color-5);
   background-color: var(--color-1);
   text-transform: uppercase;
-  font-size: 1em;
+  font-size: 0.95em;
   font-weight: 700;
   border: 2px solid var(--color-3);
   cursor: pointer;
@@ -39,6 +39,6 @@
 @media screen and (min-width: 768px) {
   .input {
     max-width: 220px;
-    font-size: 1.1em;
+    font-size: 1.1rem;
   }
 }

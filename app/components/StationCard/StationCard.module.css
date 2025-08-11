@@ -21,10 +21,11 @@
 }
 .card dl dt,
 .card dl dd {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   border-bottom: 1px dashed var(--color-3);
   margin: 0;
   padding: 0.25em 0 0.065em;
+  margin: 0.25em 0;
 }
 .card dl dt {
   width: 35%;
@@ -52,7 +53,7 @@
   color: var(--color-1);
 }
 .link h5 {
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   color: var(--color-5);
   padding: 0.065em 0.25em;
   margin: 0;
@@ -72,4 +73,12 @@
 .locationInfo p {
   margin: 0.25em 0;
   font-weight: 700;
+}
+
+@media screen and (min-width: 768px) {
+  .card dl dt,
+  .card dl dd {
+    font-size: 0.8rem;
+    margin: 0.065em 0;
+  }
 }
