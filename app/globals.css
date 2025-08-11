@@ -129,6 +129,7 @@ body .leaflet-popup-content {
 }
 body .leaflet-popup-close-button span {
   color: var(--color-5);
+  font-size: 1.25rem;
 }
 
 body .leaflet-popup-tip {
