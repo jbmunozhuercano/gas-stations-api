@@ -1,5 +1,4 @@
 import { JSX } from 'react';
-import { motion } from 'motion/react';
 import styles from './StationCard.module.css';
 
 interface Station {
@@ -18,7 +17,6 @@ interface Station {
 
 interface StationCardProps {
   station: Station;
-  loading: boolean;
   showDistance?: boolean; // Optional prop to show distance
 }
 
@@ -32,20 +30,10 @@ interface StationCardProps {
 
 export function StationCard({
   station,
-  loading,
   showDistance = false, // Default to not showing distance
 }: StationCardProps): JSX.Element {
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.8, y: 30 }}
-      animate={!loading ? { opacity: 1, scale: 1, y: 0 } : {}}
-      transition={{
-        duration: 0.6,
-        ease: [0.22, 1, 0.36, 1], // Custom bounce effect
-      }}
-      whileHover={{ scale: 1.025 }} // Slight hover effect
-      className={styles.card}
-    >
+    <div className={styles.card}>
       <h4>{station.Rótulo}</h4>
       <dl>
         <dt>Municipio</dt>
@@ -106,6 +94,6 @@ export function StationCard({
       >
         <h5>Google Maps</h5>
       </a>
-    </motion.div>
+    </div>
   );
 }

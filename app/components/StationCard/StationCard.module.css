@@ -3,14 +3,11 @@
   flex-direction: column;
   width: 100%;
   height: 100%;
-  padding: 1rem;
-  border-radius: 1em;
-  background-color: var(--color-1);
-  box-shadow: 2px 2px 3px 2px var(--color-2);
   margin: 0 0 1em;
   color: var(--color-5);
 }
 .card h4 {
+  font-size: 1rem;
   letter-spacing: 0.035em;
   text-align: center;
   padding: 0 0 0.25em;
@@ -24,6 +21,7 @@
 }
 .card dl dt,
 .card dl dd {
+  font-size: 0.8rem;
   border-bottom: 1px dashed var(--color-3);
   margin: 0;
   padding: 0.25em 0 0.065em;
@@ -42,9 +40,10 @@
   display: block;
   text-align: center;
   border: 1px solid var(--color-3);
+  color: var(--color-3);
   padding: 0.25em 1em;
   border-radius: 6px;
-  margin: auto auto 0.5em;
+  margin: 1em auto 0.5em;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
@@ -53,10 +52,14 @@
   color: var(--color-1);
 }
 .link h5 {
+  font-size: 1.1rem;
+  color: var(--color-5);
   padding: 0.065em 0.25em;
   margin: 0;
 }
-
+.link:hover h5 {
+  color: var(--color-1);
+}
 .locationInfo {
   text-align: center;
   margin: 0 0 1.6666em;
