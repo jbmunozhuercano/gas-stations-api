@@ -22,7 +22,9 @@ const GasStationsMap = dynamic(
   }
 );
 
-// Interface representing a gas station.
+/**
+ * Interface representing a gas station.
+ */
 interface Station {
   Municipio: string;
   Rótulo: string;
@@ -38,6 +40,7 @@ interface Station {
 
 /**
  * Home component that displays a list of gas stations with filtering and pagination.
+ * Handles region selection, geolocation, and fuel type selection.
  * @returns {JSX.Element} The rendered component.
  */
 export default function Home(): JSX.Element {
@@ -49,6 +52,7 @@ export default function Home(): JSX.Element {
   const [error, setError] = useState('');
   const [useLocation, setUseLocation] = useState(false);
 
+  // Custom hook for geolocation
   const {
     latitude,
     longitude,
@@ -58,7 +62,7 @@ export default function Home(): JSX.Element {
   } = useGeolocation();
 
   /**
-   * Fetches stations data from the API.
+   * Fetches stations data from the API and updates state.
    * @param {string} url - The API endpoint to fetch data from.
    */
   const fetchStations = async (url: string) => {
@@ -99,7 +103,9 @@ export default function Home(): JSX.Element {
     }, 300);
   }, [setFilteredStations]);
 
-  // Fetch stations for the selected region
+  /**
+   * Effect to fetch stations when the region changes.
+   */
   useEffect(() => {
     if (regionCode) {
       fetchStations(`/api/gas-stations/${regionCode}`);
@@ -111,13 +117,16 @@ export default function Home(): JSX.Element {
     }
   }, [regionCode]);
 
-  // Filter stations by geolocation or municipality
+  /**
+   * Effect to filter stations by geolocation or municipality.
+   */
   useEffect(() => {
     if (!regionCode || stations.length === 0) {
       setFilteredStations([]);
       return;
     }
     if (useLocation && latitude && longitude) {
+      // Filter stations by distance if geolocation is enabled
       const nearbyStations = filterStationsByDistance(
         stations,
         latitude,
@@ -126,6 +135,7 @@ export default function Home(): JSX.Element {
       );
       setFilteredStations(nearbyStations);
     } else {
+      // Filter stations by municipality search term
       debouncedFilterStations(stations, searchTerm);
     }
   }, [
@@ -138,7 +148,9 @@ export default function Home(): JSX.Element {
     regionCode,
   ]);
 
-  // Handle location button click
+  /**
+   * Handles location button click to enable geolocation and fetch stations.
+   */
   const handleLocationClick = () => {
     if (!regionCode) return; // Require region selection
     setUseLocation(true);
@@ -147,7 +159,9 @@ export default function Home(): JSX.Element {
     fetchStations(`/api/gas-stations/${regionCode}`);
   };
 
-  // Clears all selections and resets the state
+  /**
+   * Clears all selections and resets the state.
+   */
   const clearSelections = () => {
     setRegionCode('');
     setSearchTerm('');
@@ -155,6 +169,9 @@ export default function Home(): JSX.Element {
     setFilteredStations([]);
   };
 
+  /**
+   * Calculates the map center based on location or region.
+   */
   const mapCenter: [number, number] =
     useLocation && latitude && longitude
       ? [latitude, longitude]
@@ -166,6 +183,9 @@ export default function Home(): JSX.Element {
   const regionZoom = 7;
   const locationZoom = 12; // or any zoom level you prefer for GPS
 
+  /**
+   * Calculates the zoom level based on location or region.
+   */
   const zoom =
     useLocation && latitude && longitude
       ? locationZoom
@@ -173,8 +193,14 @@ export default function Home(): JSX.Element {
       ? regionZoom
       : defaultZoom;
 
+  /**
+   * Determines whether to show distance information.
+   */
   const showDistance = useLocation && latitude && longitude ? true : false;
 
+  /**
+   * List of available fuel types for selection.
+   */
   const FUEL_TYPES: { key: keyof Station; label: string }[] = [
     { key: 'Precio Gasolina 95 E5', label: 'Gasolina 95 E5' },
     { key: 'Precio Gasolina 98 E5', label: 'Gasolina 98 E5' },
@@ -182,10 +208,19 @@ export default function Home(): JSX.Element {
     { key: 'Precio Gasoleo Premium', label: 'Gasóleo Premium' },
   ];
 
+  /**
+   * State for the selected fuel type.
+   */
   const [selectedFuel, setSelectedFuel] = useState<keyof Station>(
     FUEL_TYPES[0].key
   );
 
+  /**
+   * Calculates the average price for the selected fuel type.
+   * @param stations - Array of stations.
+   * @param priceKey - Selected fuel price key.
+   * @returns Average price as a number.
+   */
   const getAveragePrice = (stations: Station[], priceKey: keyof Station) => {
     const prices = stations
       .map((s) => parseFloat(s[priceKey].replace(',', '.')))
@@ -194,6 +229,9 @@ export default function Home(): JSX.Element {
     return prices.reduce((a, b) => a + b, 0) / prices.length;
   };
 
+  /**
+   * Memoized value for the average price of the selected fuel type.
+   */
   const averagePrice = useMemo(
     () => getAveragePrice(filteredStations, selectedFuel as keyof Station),
     [filteredStations, selectedFuel]
