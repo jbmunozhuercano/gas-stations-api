@@ -1,7 +1,6 @@
 .select {
   font-family: var(--main-font);
-  width: 100%;
-  max-width: 165px;
+  width: 180px;
   padding: 9px 12px;
   border-radius: 12px;
   background-color: var(--color-1);
