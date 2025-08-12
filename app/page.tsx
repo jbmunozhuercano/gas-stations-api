@@ -175,14 +175,16 @@ export default function Home(): JSX.Element {
 
   const showDistance = useLocation && latitude && longitude ? true : false;
 
-  const FUEL_TYPES = [
+  const FUEL_TYPES: { key: keyof Station; label: string }[] = [
     { key: 'Precio Gasolina 95 E5', label: 'Gasolina 95 E5' },
     { key: 'Precio Gasolina 98 E5', label: 'Gasolina 98 E5' },
     { key: 'Precio Gasoleo A', label: 'Gasóleo A' },
     { key: 'Precio Gasoleo Premium', label: 'Gasóleo Premium' },
   ];
 
-  const [selectedFuel, setSelectedFuel] = useState(FUEL_TYPES[0].key);
+  const [selectedFuel, setSelectedFuel] = useState<keyof Station>(
+    FUEL_TYPES[0].key
+  );
 
   const getAveragePrice = (stations: Station[], priceKey: keyof Station) => {
     const prices = stations
@@ -217,7 +219,7 @@ export default function Home(): JSX.Element {
           />
         )}
         <GasTypeSelector
-          priceKey={selectedFuel}
+          priceKey={selectedFuel as string}
           onChange={(key) => setSelectedFuel(key)}
         />
         <ClearButton clearSelections={clearSelections} />
@@ -235,7 +237,7 @@ export default function Home(): JSX.Element {
         center={mapCenter}
         showDistance={showDistance}
         zoom={zoom}
-        priceKey={selectedFuel}
+        priceKey={selectedFuel as keyof Station}
         averagePrice={averagePrice}
       />
     </main>
