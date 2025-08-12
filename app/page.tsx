@@ -220,7 +220,7 @@ export default function Home(): JSX.Element {
         )}
         <GasTypeSelector
           priceKey={selectedFuel as string}
-          onChange={(key) => setSelectedFuel(key)}
+          onChange={(key) => setSelectedFuel(key as keyof Station)}
         />
         <ClearButton clearSelections={clearSelections} />
         {!loading &&
