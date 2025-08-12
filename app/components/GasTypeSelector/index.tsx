@@ -1,6 +1,14 @@
 import { JSX } from 'react';
 import sytles from './GasTypeSelector.module.css';
 
+/**
+ * GasTypeSelector component allows the user to select the type of fuel for price comparison.
+ *
+ * @param {Object} props - The props for GasTypeSelector.
+ * @param {string} props.priceKey - The currently selected fuel price key.
+ * @param {(key: string) => void} props.onChange - Callback function to handle fuel type change.
+ * @returns {JSX.Element} The rendered GasTypeSelector component.
+ */
 export function GasTypeSelector({
   priceKey,
   onChange,
