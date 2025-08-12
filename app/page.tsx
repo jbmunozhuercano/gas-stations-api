@@ -6,8 +6,9 @@ import styles from './page.module.css';
 import 'leaflet/dist/leaflet.css';
 import { Select } from './components/Select';
 import { InputField } from './components/InputField';
-import { ClearButton } from './components/ClearButton';
+import { GasTypeSelector } from './components/GasTypeSelector';
 import { LocationButton } from './components/LocationButton';
+import { ClearButton } from './components/ClearButton';
 import { LocationInfo } from './components/LocationInfo';
 import { useGeolocation } from './hooks/useGeolocation';
 import { filterStationsByDistance } from './utils/distance';
@@ -68,7 +69,7 @@ export default function Home(): JSX.Element {
       const response = await axios.get(url);
       setStations(response.data.ListaEESSPrecio);
       console.log(
-        `Fetched ${response.data.ListaEESSPrecio.length} stations from ${url}`
+        `Mostrando ${response.data.ListaEESSPrecio.length} estaciones desde ${url}`
       );
     } catch (err) {
       if (err instanceof Error) {
@@ -174,6 +175,28 @@ export default function Home(): JSX.Element {
 
   const showDistance = useLocation && latitude && longitude ? true : false;
 
+  const FUEL_TYPES = [
+    { key: 'Precio Gasolina 95 E5', label: 'Gasolina 95 E5' },
+    { key: 'Precio Gasolina 98 E5', label: 'Gasolina 98 E5' },
+    { key: 'Precio Gasoleo A', label: 'Gasóleo A' },
+    { key: 'Precio Gasoleo Premium', label: 'Gasóleo Premium' },
+  ];
+
+  const [selectedFuel, setSelectedFuel] = useState(FUEL_TYPES[0].key);
+
+  const getAveragePrice = (stations: Station[], priceKey: keyof Station) => {
+    const prices = stations
+      .map((s) => parseFloat(s[priceKey].replace(',', '.')))
+      .filter((p) => !isNaN(p));
+    if (prices.length === 0) return 0;
+    return prices.reduce((a, b) => a + b, 0) / prices.length;
+  };
+
+  const averagePrice = useMemo(
+    () => getAveragePrice(filteredStations, selectedFuel as keyof Station),
+    [filteredStations, selectedFuel]
+  );
+
   return (
     <main className={styles.container}>
       <div className={styles.listHeader}>
@@ -193,6 +216,10 @@ export default function Home(): JSX.Element {
             disabled={!regionCode}
           />
         )}
+        <GasTypeSelector
+          priceKey={selectedFuel}
+          onChange={(key) => setSelectedFuel(key)}
+        />
         <ClearButton clearSelections={clearSelections} />
         {!loading &&
           useLocation &&
@@ -208,6 +235,8 @@ export default function Home(): JSX.Element {
         center={mapCenter}
         showDistance={showDistance}
         zoom={zoom}
+        priceKey={selectedFuel}
+        averagePrice={averagePrice}
       />
     </main>
   );
