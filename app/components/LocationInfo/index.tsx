@@ -34,7 +34,7 @@ export function LocationInfo({
       </p>
       <p>
         Precio medio para <span>{selectedFuel}</span> es de
-        <span>&nbsp;{averagePrice.toFixed(2)} €</span>
+        <span>&nbsp;{averagePrice.toFixed(2).replace('.', ',')} €</span>
       </p>
     </div>
   );
