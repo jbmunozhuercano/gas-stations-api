@@ -266,6 +266,8 @@ export default function Home(): JSX.Element {
           <LocationInfo
             count={filteredStations.length}
             useLocation={useLocation}
+            selectedFuel={selectedFuel}
+            averagePrice={averagePrice}
           />
         )}
       </div>
