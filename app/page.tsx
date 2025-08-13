@@ -261,13 +261,13 @@ export default function Home(): JSX.Element {
           onChange={(key) => setSelectedFuel(key as keyof Station)}
         />
         <ClearButton clearSelections={clearSelections} />
-        {!loading &&
-          useLocation &&
-          latitude &&
-          longitude &&
-          filteredStations.length > 0 && (
-            <LocationInfo count={filteredStations.length} />
-          )}
+
+        {!loading && filteredStations.length > 0 && (
+          <LocationInfo
+            count={filteredStations.length}
+            useLocation={useLocation}
+          />
+        )}
       </div>
 
       <GasStationsMap

@@ -1,7 +1,13 @@
 import { useEffect, useState } from 'react';
 import styles from './LocationInfo.module.css';
 
-export function LocationInfo({ count }: { count: number }) {
+export function LocationInfo({
+  count,
+  useLocation,
+}: {
+  count: number;
+  useLocation: boolean;
+}) {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
@@ -13,10 +19,12 @@ export function LocationInfo({ count }: { count: number }) {
 
   return (
     <div className={styles.locationInfo}>
-      <p>
-        Mostrando gasolineras en un radio de <span>3km</span> de tu ubicación
-        actual.
-      </p>
+      {useLocation && (
+        <p>
+          Mostrando gasolineras en un radio de <span>3km</span> de tu ubicación
+          actual.
+        </p>
+      )}
       <p>
         Encontradas: <span>{count} gasolineras.</span>
       </p>
