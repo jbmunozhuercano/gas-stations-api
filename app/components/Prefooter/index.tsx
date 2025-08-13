@@ -67,6 +67,31 @@ export function SeoText(): JSX.Element {
           &nbsp;<strong>No pagues de más</strong>. Encuentra la gasolinera más
           económica y empieza a ahorrar hoy mismo.
         </p>
+        <h3>
+          <FontAwesomeIcon icon={faGasPump} color="#f9982f" /> ¿Qué significan
+          los colores de los marcadores en el mapa?
+        </h3>
+        <ul>
+          <li>
+            <span style={{ color: '#2ecc40', fontWeight: 700 }}>Verde</span>:
+            Precio por debajo de la media para el tipo de combustible
+            seleccionado.
+          </li>
+          <li>
+            <span style={{ color: '#ffd700', fontWeight: 700 }}>Amarillo</span>:
+            Precio igual a la media para el tipo de combustible seleccionado.
+          </li>
+          <li>
+            <span style={{ color: '#ff4136', fontWeight: 700 }}>Rojo</span>:
+            Precio por encima de la media para el tipo de combustible
+            seleccionado.
+          </li>
+        </ul>
+        <p>
+          Puedes elegir el tipo de combustible y los colores de los marcadores
+          se actualizarán automáticamente para mostrarte dónde repostar más
+          barato.
+        </p>
       </div>
     </section>
   );
