@@ -1,7 +1,7 @@
 # Description
 
 App to show the prices of the gas stations in Spain.
-The data is obtained from https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/help.<br/>It uses Next.js and React.js.
+The data is obtained from https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/help.<br/>It uses **Next.js** and **React.js**.
 
 ## Demo
 
