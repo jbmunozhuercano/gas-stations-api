@@ -28,8 +28,9 @@ export function LocationButton({
       className={styles.button}
       onClick={onClick}
       disabled={disabled || loading}
+      aria-label={loading ? 'Obteniendo ubicación...' : 'Buscar gasolineras cerca de mí'}
     >
-      <FontAwesomeIcon icon={faLocationDot} />
+      <FontAwesomeIcon icon={faLocationDot} aria-hidden="true" />
       {loading ? 'Obteniendo ubicación...' : 'Cerca de mí'}
     </button>
   );

@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useMemo, JSX } from 'react';
+import { useState, useEffect, useMemo, useCallback, JSX } from 'react';
 import axios from 'axios';
 import debounce from 'lodash/debounce';
 import styles from './page.module.css';
@@ -39,6 +39,16 @@ interface Station {
 }
 
 /**
+ * List of available fuel types for selection.
+ */
+const FUEL_TYPES: { key: keyof Station; label: string }[] = [
+  { key: 'Precio Gasolina 95 E5', label: 'Gasolina 95 E5' },
+  { key: 'Precio Gasolina 98 E5', label: 'Gasolina 98 E5' },
+  { key: 'Precio Gasoleo A', label: 'Gasóleo A' },
+  { key: 'Precio Gasoleo Premium', label: 'Gasóleo Premium' },
+];
+
+/**
  * Home component that displays a list of gas stations with filtering and pagination.
  * Handles region selection, geolocation, and fuel type selection.
  * @returns {JSX.Element} The rendered component.
@@ -63,18 +73,14 @@ export default function Home(): JSX.Element {
 
   /**
    * Fetches stations data from the API and updates state.
-   * @param {string} url - The API endpoint to fetch data from.
    */
-  const fetchStations = async (url: string) => {
+  const fetchStations = useCallback(async (url: string) => {
     setLoading(true);
     setError('');
 
     try {
       const response = await axios.get(url);
       setStations(response.data.ListaEESSPrecio);
-      console.log(
-        `Mostrando ${response.data.ListaEESSPrecio.length} estaciones desde ${url}`
-      );
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
@@ -84,12 +90,10 @@ export default function Home(): JSX.Element {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   /**
    * Debounced function to filter stations based on the search term.
-   * @param {Station[]} stations - The list of stations to filter.
-   * @param {string} municipality - The municipality to filter by.
    */
   const debouncedFilterStations = useMemo(() => {
     return debounce((stations: Station[], municipality: string) => {
@@ -101,7 +105,7 @@ export default function Home(): JSX.Element {
         )
       );
     }, 300);
-  }, [setFilteredStations]);
+  }, []);
 
   /**
    * Effect to fetch stations when the region changes.
@@ -115,7 +119,7 @@ export default function Home(): JSX.Element {
       setStations([]);
       setFilteredStations([]);
     }
-  }, [regionCode]);
+  }, [regionCode, fetchStations]);
 
   /**
    * Effect to filter stations by geolocation or municipality.
@@ -199,16 +203,6 @@ export default function Home(): JSX.Element {
   const showDistance = useLocation && latitude && longitude ? true : false;
 
   /**
-   * List of available fuel types for selection.
-   */
-  const FUEL_TYPES: { key: keyof Station; label: string }[] = [
-    { key: 'Precio Gasolina 95 E5', label: 'Gasolina 95 E5' },
-    { key: 'Precio Gasolina 98 E5', label: 'Gasolina 98 E5' },
-    { key: 'Precio Gasoleo A', label: 'Gasóleo A' },
-    { key: 'Precio Gasoleo Premium', label: 'Gasóleo Premium' },
-  ];
-
-  /**
    * State for the selected fuel type.
    */
   const [selectedFuel, setSelectedFuel] = useState<keyof Station>(
@@ -238,7 +232,7 @@ export default function Home(): JSX.Element {
   );
 
   return (
-    <main className={styles.container}>
+    <main>
       <div className={styles.listHeader}>
         <Select regionCode={regionCode} setRegionCode={setRegionCode} />
         <LocationButton
@@ -261,15 +255,6 @@ export default function Home(): JSX.Element {
           onChange={(key) => setSelectedFuel(key as keyof Station)}
         />
         <ClearButton clearSelections={clearSelections} />
-
-        {!loading && filteredStations.length > 0 && (
-          <LocationInfo
-            count={filteredStations.length}
-            useLocation={useLocation}
-            selectedFuel={selectedFuel}
-            averagePrice={averagePrice}
-          />
-        )}
       </div>
 
       <GasStationsMap
@@ -280,6 +265,15 @@ export default function Home(): JSX.Element {
         priceKey={selectedFuel as keyof Station}
         averagePrice={averagePrice}
       />
+
+      {!loading && filteredStations.length > 0 && (
+        <LocationInfo
+          count={filteredStations.length}
+          useLocation={useLocation}
+          selectedFuel={selectedFuel}
+          averagePrice={averagePrice}
+        />
+      )}
     </main>
   );
 }

@@ -19,9 +19,11 @@ export function GasTypeSelector({
   return (
     <div className={sytles.container}>
       <select
+        id="fuel-type-select"
         className={sytles.select}
         value={priceKey}
         onChange={(e) => onChange(e.target.value)}
+        aria-label="Selecciona tipo de combustible"
       >
         <option value="Precio Gasoleo A">Gasóleo A</option>
         <option value="Precio Gasoleo Premium">Gasóleo Premium</option>

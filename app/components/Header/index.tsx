@@ -19,7 +19,10 @@ export function Header(): JSX.Element {
     <header className={styles.header}>
       <h1>Precio combustible Estaciones de Servicio de España</h1>
       <h2>
-        <span>Fecha actualización:</span> {today}
+        <span>Fecha actualización:</span>{' '}
+        <time dateTime={new Date().toISOString().split('T')[0]} suppressHydrationWarning>
+          {today}
+        </time>
       </h2>
     </header>
   );
