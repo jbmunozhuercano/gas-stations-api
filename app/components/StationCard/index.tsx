@@ -1,6 +1,13 @@
 import { JSX } from 'react';
 import styles from './StationCard.module.css';
 
+function sanitizeHtml(html: string): string {
+  return html
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/&lt;br\s*\/?&gt;/gi, '<br />');
+}
+
 interface Station {
   Municipio: string;
   Rótulo: string;
@@ -45,7 +52,7 @@ export function StationCard({
         <dt>Horario</dt>
         <dd
           dangerouslySetInnerHTML={{
-            __html: station.Horario.replace(';', '<br />'),
+            __html: sanitizeHtml(station.Horario.replace(';', '<br />')),
           }}
         ></dd>
 
@@ -90,7 +97,9 @@ export function StationCard({
           ',',
           '.'
         )},${station['Longitud (WGS84)'].replace(',', '.')}`}
-        target="blank"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Abrir ${station.Rótulo} en Google Maps`}
       >
         <h5>Google Maps</h5>
       </a>

@@ -43,9 +43,11 @@ export function Select({
 
   return (
     <select
+      id="region-select"
       className={styles.select}
       value={regionCode}
       onChange={(e) => setRegionCode(e.target.value)}
+      aria-label="Selecciona una comunidad autónoma"
     >
       <option value="">Selecciona una comunidad autónoma</option>
       {communities.map((community) => (

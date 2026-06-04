@@ -18,7 +18,11 @@ export function ClearButton({
   clearSelections,
 }: ClearButtonProps): JSX.Element {
   return (
-    <button className={styles.button} onClick={clearSelections}>
+    <button
+      className={styles.button}
+      onClick={clearSelections}
+      aria-label="Limpiar todas las selecciones"
+    >
       Limpiar selección
     </button>
   );

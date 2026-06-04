@@ -21,7 +21,7 @@ export function SeoText(): JSX.Element {
     <section className={styles.preFooter}>
       <div className={styles.seoText__inner}>
         <h2>
-          <FontAwesomeIcon icon={faGasPump} color="#f9982f" /> Precios de
+          <FontAwesomeIcon icon={faGasPump} color="#f9982f" aria-hidden="true" /> Precios de
           Gasolina y Diésel en España - Encuentra la Gasolinera Más Barata Cerca
           de Ti
         </h2>
@@ -31,30 +31,30 @@ export function SeoText(): JSX.Element {
           <strong>precio de la gasolina y el diésel</strong> en todas las
           estaciones de servicio del país. Ahorra en cada repostaje con nuestra
           herramienta fácil y rápida.{' '}
-          <FontAwesomeIcon icon={faCarSide} color="#f9982f" />
+          <FontAwesomeIcon icon={faCarSide} color="#f9982f" aria-hidden="true" />
         </p>
 
         <h3>
-          <FontAwesomeIcon icon={faMagnifyingGlass} color="#f9982f" /> ¿Qué
+          <FontAwesomeIcon icon={faMagnifyingGlass} color="#f9982f" aria-hidden="true" /> ¿Qué
           puedes hacer en nuestra web?
         </h3>
         <ul>
           <li>
-            <FontAwesomeIcon icon={faSquareCheck} color="#f9982f" /> Comparar
+            <FontAwesomeIcon icon={faSquareCheck} color="#f9982f" aria-hidden="true" /> Comparar
             precios de gasolina y diésel por municipio.
           </li>
           <li>
-            <FontAwesomeIcon icon={faSquareCheck} color="#f9982f" /> Ver
+            <FontAwesomeIcon icon={faSquareCheck} color="#f9982f" aria-hidden="true" /> Ver
             ubicaciones y horarios de cada gasolinera.
           </li>
           <li>
-            <FontAwesomeIcon icon={faSquareCheck} color="#f9982f" /> Encontrar
+            <FontAwesomeIcon icon={faSquareCheck} color="#f9982f" aria-hidden="true" /> Encontrar
             las mejores ofertas en tu ruta.
           </li>
         </ul>
 
         <h3>
-          <FontAwesomeIcon icon={faThumbTack} color="#f9982f" /> Datos
+          <FontAwesomeIcon icon={faThumbTack} color="#f9982f" aria-hidden="true" /> Datos
           actualizados a diario
         </h3>
         <p>
@@ -63,12 +63,12 @@ export function SeoText(): JSX.Element {
           precio.
         </p>
         <p>
-          <FontAwesomeIcon icon={faBullhorn} color="#f9982f" />
+          <FontAwesomeIcon icon={faBullhorn} color="#f9982f" aria-hidden="true" />
           &nbsp;<strong>No pagues de más</strong>. Encuentra la gasolinera más
           económica y empieza a ahorrar hoy mismo.
         </p>
         <h3>
-          <FontAwesomeIcon icon={faGasPump} color="#f9982f" /> ¿Qué significan
+          <FontAwesomeIcon icon={faGasPump} color="#f9982f" aria-hidden="true" /> ¿Qué significan
           los colores de los marcadores en el mapa?
         </h3>
         <ul>

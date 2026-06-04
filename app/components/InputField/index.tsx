@@ -36,6 +36,7 @@ export function InputField({
 
   return (
     <input
+      id="municipality-input"
       className={styles.input}
       type={type}
       placeholder={placeholder}
@@ -43,6 +44,7 @@ export function InputField({
       onChange={handleChange}
       autoComplete="on"
       disabled={disabled}
+      aria-label="Buscar por municipio"
     />
   );
 }
