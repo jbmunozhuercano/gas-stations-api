@@ -6,7 +6,6 @@ import styles from './GasStationsMap.module.css';
 import { StationCard } from '../StationCard';
 
 // Fix default icon issue
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl:
