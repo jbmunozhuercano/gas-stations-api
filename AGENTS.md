@@ -11,9 +11,12 @@ npm run dev          # Dev server with Turbopack (--turbopack)
 npm run build        # Production build (use to verify changes)
 npm run start        # Production server
 npm run lint         # ESLint (next/core-web-vitals + next/typescript)
+npm test             # Run tests in watch mode (Vitest)
+npm run test:ui      # Run tests with UI
+npm run test:coverage # Run tests with coverage report
 ```
 
-No test framework is configured. No typecheck script exists — `npm run build` is the only full verification step. No formatter is configured.
+Testing framework: **Vitest** with **React Testing Library**. Test files are in `__tests__/` directories alongside the code they test.
 
 ## Architecture
 
