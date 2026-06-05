@@ -44,6 +44,10 @@ Testing framework: **Vitest** with **React Testing Library**. Test files are in 
 - No monorepo — single package only.
 - No CI/CD config, no pre-commit hooks.
 
+## Design System
+
+For colors, typography, components, and layout rules, refer to [DESIGN.md](./DESIGN.md).
+
 ## Skills
 
 Located in `.agents/skills/`. Load with the skill tool when a task matches.
