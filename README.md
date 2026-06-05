@@ -23,6 +23,32 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Testing
+
+This project uses **Vitest** for testing with **React Testing Library** for component tests.
+
+### Running Tests
+
+```bash
+npm test           # Run tests in watch mode
+npm run test:ui    # Run tests with UI
+npm run test:coverage # Run tests with coverage report
+```
+
+### Test Structure
+
+- `app/utils/__tests__/` - Unit tests for utility functions
+- `app/hooks/__tests__/` - Tests for custom hooks
+- `app/components/*/__tests__/` - Component tests
+- `app/api/*/__tests__/` - API route tests
+
+### Writing Tests
+
+- Tests are written in TypeScript
+- Use `@testing-library/react` for component tests
+- Mock external API calls with `vi.mock()`
+- Use `@testing-library/jest-dom` for DOM assertions
+
 ## App Specifications
 
 This application displays information about gas stations in Spain, including their location and fuel prices. The data is fetched from an external API and displayed on an interactive map.
