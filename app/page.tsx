@@ -1,6 +1,5 @@
 'use client';
 import { useState, useEffect, useMemo, useCallback, JSX } from 'react';
-import axios from 'axios';
 import debounce from 'lodash/debounce';
 import styles from './page.module.css';
 import 'leaflet/dist/leaflet.css';
@@ -15,28 +14,14 @@ import { filterStationsByDistance } from './utils/distance';
 import { REGION_CENTERS } from './constants/regionCenters';
 import dynamic from 'next/dynamic';
 
+import type { Station } from './types/station';
+
 const GasStationsMap = dynamic(
   () => import('./components/GasStationsMap').then((mod) => mod.default),
   {
     ssr: false,
   }
 );
-
-/**
- * Interface representing a gas station.
- */
-interface Station {
-  Municipio: string;
-  Rótulo: string;
-  'C.P.': string;
-  Horario: string;
-  Latitud: string;
-  'Longitud (WGS84)': string;
-  'Precio Gasolina 95 E5': string;
-  'Precio Gasolina 98 E5': string;
-  'Precio Gasoleo A': string;
-  'Precio Gasoleo Premium': string;
-}
 
 /**
  * List of available fuel types for selection.
@@ -79,8 +64,10 @@ export default function Home(): JSX.Element {
     setError('');
 
     try {
-      const response = await axios.get(url);
-      setStations(response.data.ListaEESSPrecio);
+      const response = await fetch(url);
+      if (!response.ok) throw new Error('Error al obtener datos');
+      const data = await response.json();
+      setStations(data.ListaEESSPrecio);
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
@@ -156,11 +143,10 @@ export default function Home(): JSX.Element {
    * Handles location button click to enable geolocation and fetch stations.
    */
   const handleLocationClick = () => {
-    if (!regionCode) return; // Require region selection
+    if (!regionCode) return;
     setUseLocation(true);
     setSearchTerm('');
     getCurrentLocation();
-    fetchStations(`/api/gas-stations/${regionCode}`);
   };
 
   /**
@@ -217,7 +203,7 @@ export default function Home(): JSX.Element {
    */
   const getAveragePrice = (stations: Station[], priceKey: keyof Station) => {
     const prices = stations
-      .map((s) => parseFloat(s[priceKey].replace(',', '.')))
+      .map((s) => parseFloat(String(s[priceKey] ?? '').replace(',', '.')))
       .filter((p) => !isNaN(p));
     if (prices.length === 0) return 0;
     return prices.reduce((a, b) => a + b, 0) / prices.length;
