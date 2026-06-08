@@ -4,6 +4,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import styles from './GasStationsMap.module.css';
 import { StationCard } from '../StationCard';
+import type { Station } from '../../types/station';
 
 // Fix default icon issue
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -14,25 +15,12 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
 });
 
-interface GasStation {
-  Latitud: string;
-  'Longitud (WGS84)': string;
-  Rótulo: string;
-  Municipio: string;
-  'C.P.': string;
-  Horario: string;
-  'Precio Gasoleo A': string;
-  'Precio Gasoleo Premium': string;
-  'Precio Gasolina 95 E5': string;
-  'Precio Gasolina 98 E5': string;
-}
-
 interface GasStationsMapProps {
-  stations: GasStation[];
+  stations: Station[];
   center: LatLngExpression;
   showDistance: boolean;
   zoom: number;
-  priceKey: keyof GasStation;
+  priceKey: keyof Station;
   averagePrice: number;
 }
 
@@ -84,7 +72,7 @@ export default function GasStationsMap({
       {stations.map((station, idx) => {
         const lat = parseFloat(station.Latitud.replace(',', '.'));
         const lon = parseFloat(station['Longitud (WGS84)'].replace(',', '.'));
-        const price = parseFloat(station[priceKey].replace(',', '.'));
+        const price = parseFloat(String(station[priceKey] ?? '').replace(',', '.'));
         if (isNaN(lat) || isNaN(lon) || isNaN(price)) return null;
 
         const EPSILON = 0.001; // tolerance for floating point comparison

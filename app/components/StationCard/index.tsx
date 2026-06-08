@@ -1,5 +1,6 @@
 import { JSX } from 'react';
 import styles from './StationCard.module.css';
+import type { Station } from '../../types/station';
 
 function sanitizeHtml(html: string): string {
   return html
@@ -8,23 +9,9 @@ function sanitizeHtml(html: string): string {
     .replace(/&lt;br\s*\/?&gt;/gi, '<br />');
 }
 
-interface Station {
-  Municipio: string;
-  Rótulo: string;
-  'C.P.': string;
-  Horario: string;
-  Latitud: string;
-  'Longitud (WGS84)': string;
-  'Precio Gasoleo A': string;
-  'Precio Gasoleo Premium': string;
-  'Precio Gasolina 95 E5': string;
-  'Precio Gasolina 98 E5': string;
-  distance?: number; // Optional distance property
-}
-
 interface StationCardProps {
   station: Station;
-  showDistance?: boolean; // Optional prop to show distance
+  showDistance?: boolean;
 }
 
 /**
