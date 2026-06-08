@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 interface GeolocationState {
   latitude: number | null;
@@ -32,7 +32,7 @@ export function useGeolocation() {
     loading: false,
   });
 
-  const getCurrentLocation = () => {
+  const getCurrentLocation = useCallback(() => {
     if (!navigator.geolocation) {
       setLocation((prev) => ({
         ...prev,
@@ -78,7 +78,7 @@ export function useGeolocation() {
         maximumAge: 300000, // 5 minutes
       }
     );
-  };
+  }, []);
 
   return { ...location, getCurrentLocation };
 }
