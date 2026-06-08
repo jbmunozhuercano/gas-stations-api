@@ -92,6 +92,11 @@ button {
   cursor: pointer;
 }
 
+:focus-visible {
+  outline: 2px solid var(--success-color);
+  outline-offset: 2px;
+}
+
 header {
   grid-area: header;
 }
@@ -118,6 +123,10 @@ body {
 }
 
 /* Styles for the leaflet component */
+
+body .leaflet-popup {
+  z-index: 1100 !important;
+}
 
 body .leaflet-popup-content-wrapper {
   width: 280px;

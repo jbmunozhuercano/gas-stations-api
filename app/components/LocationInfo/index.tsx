@@ -4,25 +4,26 @@ import styles from './LocationInfo.module.css';
 export function LocationInfo({
   count,
   useLocation,
-  selectedFuel,
+  selectedFuelLabel,
   averagePrice,
 }: {
   count: number;
   useLocation: boolean;
-  selectedFuel?: string;
+  selectedFuelLabel?: string;
   averagePrice: number;
 }) {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setVisible(false), 3000);
+    setVisible(true);
+    const timer = setTimeout(() => setVisible(false), 5000);
     return () => clearTimeout(timer);
-  }, []);
+  }, [count, useLocation, selectedFuelLabel, averagePrice]);
 
   if (!visible) return null;
 
   return (
-    <div className={styles.locationInfo}>
+    <div className={styles.locationInfo} role="status" aria-live="polite">
       {useLocation && (
         <p>
           Mostrando gasolineras en un radio de <span>3km</span> de tu ubicación
@@ -33,7 +34,7 @@ export function LocationInfo({
         Encontradas: <span>{count} gasolineras.</span>
       </p>
       <p>
-        Precio medio para <span>{selectedFuel}</span> es de
+        Precio medio para <span>{selectedFuelLabel}</span> es de
         <span>&nbsp;{averagePrice.toFixed(2).replace('.', ',')} €</span>
       </p>
     </div>

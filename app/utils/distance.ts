@@ -1,3 +1,5 @@
+import type { Station } from '../types/station';
+
 /**
  * Calculate the distance between two coordinates using the Haversine formula
  * @param lat1 - Latitude of first point
@@ -42,37 +44,19 @@ function toRad(value: number): number {
  * @returns Filtered stations with distance information
  */
 export function filterStationsByDistance(
-  stations: any[],
+  stations: Station[],
   userLat: number,
   userLon: number,
   radius: number = 3
 ) {
-  console.log(`=== DISTANCE FILTERING DEBUG ===`);
-  console.log(
-    `Filtering ${stations.length} stations within ${radius}km radius`
-  );
-  console.log(`User location: ${userLat}, ${userLon}`);
-
-  let withinRadius = 0;
-
-  const filteredStations = stations
-    .map((station, index) => {
+  return stations
+    .map((station) => {
       const stationLat = parseFloat(station.Latitud.replace(',', '.'));
       const stationLon = parseFloat(
         station['Longitud (WGS84)'].replace(',', '.')
       );
 
-      if (isNaN(stationLat) || isNaN(stationLon)) {
-        if (index < 5) {
-          // Log first 5 invalid stations
-          console.log(`Invalid coordinates for station ${index}:`, {
-            lat: station.Latitud,
-            lon: station['Longitud (WGS84)'],
-            name: station.Rótulo,
-          });
-        }
-        return null;
-      }
+      if (isNaN(stationLat) || isNaN(stationLon)) return null;
 
       const distance = calculateDistance(
         userLat,
@@ -81,42 +65,10 @@ export function filterStationsByDistance(
         stationLon
       );
 
-      const isWithinRadius = distance <= radius;
-      if (isWithinRadius) {
-        withinRadius++;
-        if (withinRadius <= 5) {
-          // Log first 5 stations within radius
-          console.log(`Station within radius:`, {
-            name: station.Rótulo,
-            distance: distance,
-            lat: stationLat,
-            lon: stationLon,
-          });
-        }
-      }
+      if (distance > radius) return null;
 
-      return {
-        ...station,
-        distance,
-      };
+      return { ...station, distance };
     })
-    .filter((station) => station !== null && station.distance <= radius)
-    .sort((a, b) => a.distance - b.distance);
-
-  console.log(`=== FILTERING RESULTS ===`);
-  console.log(`Within ${radius}km radius: ${withinRadius}`);
-  console.log(`Final filtered count: ${filteredStations.length}`);
-
-  if (filteredStations.length > 0) {
-    console.log(
-      `Closest station: ${filteredStations[0].Rótulo} at ${filteredStations[0].distance}km`
-    );
-    console.log(
-      `Farthest station: ${
-        filteredStations[filteredStations.length - 1].Rótulo
-      } at ${filteredStations[filteredStations.length - 1].distance}km`
-    );
-  }
-
-  return filteredStations;
+    .filter((s) => s !== null)
+    .sort((a, b) => a!.distance - b!.distance);
 }

@@ -3,8 +3,6 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Select } from '..';
 
-vi.mock('axios');
-
 const mockCommunities = [
   { IDCCAA: '01', CCAA: 'Andalucía' },
   { IDCCAA: '02', CCAA: 'Aragón' },
@@ -14,6 +12,10 @@ const mockCommunities = [
 describe('Select', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.spyOn(global, 'fetch').mockResolvedValue({
+      ok: true,
+      json: () => Promise.resolve(mockCommunities),
+    } as Response);
   });
 
   afterEach(() => {
@@ -28,11 +30,6 @@ describe('Select', () => {
   });
 
   it('fetches and renders communities on mount', async () => {
-    const axios = await import('axios');
-    vi.mocked(axios.default.get).mockResolvedValueOnce({
-      data: mockCommunities,
-    });
-
     render(<Select regionCode="" setRegionCode={() => {}} />);
 
     await waitFor(() => {
@@ -44,10 +41,6 @@ describe('Select', () => {
 
   it('calls setRegionCode when option is selected', async () => {
     const setRegionCode = vi.fn();
-    const axios = await import('axios');
-    vi.mocked(axios.default.get).mockResolvedValueOnce({
-      data: mockCommunities,
-    });
 
     render(<Select regionCode="" setRegionCode={setRegionCode} />);
 
@@ -69,11 +62,6 @@ describe('Select', () => {
   });
 
   it('displays selected value', async () => {
-    const axios = await import('axios');
-    vi.mocked(axios.default.get).mockResolvedValueOnce({
-      data: mockCommunities,
-    });
-
     render(<Select regionCode="01" setRegionCode={() => {}} />);
 
     await waitFor(() => {

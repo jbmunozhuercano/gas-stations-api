@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://gas-stations-api-hazel.vercel.app/sitemap.xml

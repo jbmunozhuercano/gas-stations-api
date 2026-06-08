@@ -1,5 +1,5 @@
 import { JSX } from 'react';
-import sytles from './GasTypeSelector.module.css';
+import styles from './GasTypeSelector.module.css';
 
 /**
  * GasTypeSelector component allows the user to select the type of fuel for price comparison.
@@ -17,10 +17,10 @@ export function GasTypeSelector({
   onChange: (key: string) => void;
 }): JSX.Element {
   return (
-    <div className={sytles.container}>
+    <div className={styles.container}>
       <select
         id="fuel-type-select"
-        className={sytles.select}
+        className={styles.select}
         value={priceKey}
         onChange={(e) => onChange(e.target.value)}
         aria-label="Selecciona tipo de combustible"
