@@ -31,16 +31,28 @@ export const metadata: Metadata = {
     siteName: 'Precio Gasolineras España',
     locale: 'es_ES',
     type: 'website',
+    images: [
+      {
+        url: 'https://gas-stations-api-hazel.vercel.app/og.png',
+        width: 1200,
+        height: 630,
+        alt: 'Precio Gasolineras España',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Precio Gasolineras España',
     description:
       'Consulta los precios de gasolina y diésel en estaciones de servicio de España.',
+    images: ['https://gas-stations-api-hazel.vercel.app/og.png'],
   },
   robots: {
     index: true,
     follow: true,
+  },
+  alternates: {
+    canonical: 'https://gas-stations-api-hazel.vercel.app',
   },
 };
 
@@ -49,8 +61,30 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'Precio Gasolineras España',
+    url: 'https://gas-stations-api-hazel.vercel.app',
+    description:
+      'Consulta los precios de gasolina y diésel en estaciones de servicio de España.',
+    applicationCategory: 'UtilityApplication',
+    operatingSystem: 'Web',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'EUR',
+    },
+  };
+
   return (
     <html lang="es" className={smoochSans.className}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body>
         <Header />
         {children}
