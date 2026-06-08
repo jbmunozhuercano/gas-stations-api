@@ -34,3 +34,18 @@
 .preFooter .seoText__inner li svg {
   margin-right: 0.25em;
 }
+
+.color-green {
+  color: #2ecc40;
+  font-weight: 700;
+}
+
+.color-yellow {
+  color: #ffd700;
+  font-weight: 700;
+}
+
+.color-red {
+  color: #ff4136;
+  font-weight: 700;
+}

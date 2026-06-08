@@ -73,16 +73,16 @@ export function SeoText(): JSX.Element {
         </h3>
         <ul>
           <li>
-            <span style={{ color: '#2ecc40', fontWeight: 700 }}>Verde</span>:
+            <span className={styles['color-green']}>Verde</span>:
             Precio por debajo de la media para el tipo de combustible
             seleccionado.
           </li>
           <li>
-            <span style={{ color: '#ffd700', fontWeight: 700 }}>Amarillo</span>:
+            <span className={styles['color-yellow']}>Amarillo</span>:
             Precio igual a la media para el tipo de combustible seleccionado.
           </li>
           <li>
-            <span style={{ color: '#ff4136', fontWeight: 700 }}>Rojo</span>:
+            <span className={styles['color-red']}>Rojo</span>:
             Precio por encima de la media para el tipo de combustible
             seleccionado.
           </li>

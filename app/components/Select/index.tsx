@@ -1,5 +1,4 @@
 import { JSX, useEffect, useState } from 'react';
-import axios from 'axios';
 import styles from './Select.module.css';
 
 type SelectProps = {
@@ -34,8 +33,9 @@ export function Select({
 
   const fetchCommunities = async () => {
     try {
-      const response = await axios.get('/api/region/');
-      setCommunities(response.data);
+      const response = await fetch('/api/region/');
+      const data = await response.json();
+      setCommunities(data);
     } catch (error) {
       console.error('Error fetching communities:', error);
     }
