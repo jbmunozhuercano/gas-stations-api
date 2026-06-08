@@ -220,8 +220,8 @@ export default function Home(): JSX.Element {
   const selectedFuelLabel = FUEL_TYPES.find((f) => f.key === selectedFuel)?.label;
 
   return (
-    <main>
-      <div className={styles.listHeader}>
+    <main id="main-content">
+      <nav className={styles.listHeader} aria-label="Filtros de búsqueda">
         <Select regionCode={regionCode} setRegionCode={setRegionCode} />
         <LocationButton
           onClick={handleLocationClick}
@@ -229,7 +229,7 @@ export default function Home(): JSX.Element {
           disabled={!regionCode || (useLocation && !latitude && !longitude)}
         />
         {(error || locationError) && (
-          <p className={styles.error}>{error || locationError}</p>
+          <p className={styles.error} role="alert">{error || locationError}</p>
         )}
         {!useLocation && (
           <InputField
@@ -245,7 +245,7 @@ export default function Home(): JSX.Element {
           onChange={(key) => setSelectedFuel(key as keyof Station)}
         />
         <ClearButton clearSelections={clearSelections} />
-      </div>
+      </nav>
 
       <GasStationsMap
         stations={filteredStations}

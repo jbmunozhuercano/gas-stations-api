@@ -15,14 +15,15 @@ export function LocationInfo({
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setVisible(false), 3000);
+    setVisible(true);
+    const timer = setTimeout(() => setVisible(false), 5000);
     return () => clearTimeout(timer);
-  }, []);
+  }, [count, useLocation, selectedFuelLabel, averagePrice]);
 
   if (!visible) return null;
 
   return (
-    <div className={styles.locationInfo}>
+    <div className={styles.locationInfo} role="status" aria-live="polite">
       {useLocation && (
         <p>
           Mostrando gasolineras en un radio de <span>3km</span> de tu ubicación
