@@ -231,6 +231,8 @@ export default function Home(): JSX.Element {
     [filteredStations, selectedFuel]
   );
 
+  const selectedFuelLabel = FUEL_TYPES.find((f) => f.key === selectedFuel)?.label;
+
   return (
     <main>
       <div className={styles.listHeader}>
@@ -240,11 +242,13 @@ export default function Home(): JSX.Element {
           loading={locationLoading}
           disabled={!regionCode || (useLocation && !latitude && !longitude)}
         />
-        {(error || locationError) && <p style={{ color: 'red' }}>{error}</p>}
+        {(error || locationError) && (
+          <p className={styles.error}>{error || locationError}</p>
+        )}
         {!useLocation && (
           <InputField
             type="text"
-            placeholder="Introduce el municipio_"
+            placeholder="Introduce el municipio"
             searchTerm={searchTerm}
             onInputChange={setSearchTerm}
             disabled={!regionCode}
@@ -270,7 +274,7 @@ export default function Home(): JSX.Element {
         <LocationInfo
           count={filteredStations.length}
           useLocation={useLocation}
-          selectedFuel={selectedFuel}
+          selectedFuelLabel={selectedFuelLabel}
           averagePrice={averagePrice}
         />
       )}

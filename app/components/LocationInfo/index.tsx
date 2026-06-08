@@ -4,12 +4,12 @@ import styles from './LocationInfo.module.css';
 export function LocationInfo({
   count,
   useLocation,
-  selectedFuel,
+  selectedFuelLabel,
   averagePrice,
 }: {
   count: number;
   useLocation: boolean;
-  selectedFuel?: string;
+  selectedFuelLabel?: string;
   averagePrice: number;
 }) {
   const [visible, setVisible] = useState(true);
@@ -33,7 +33,7 @@ export function LocationInfo({
         Encontradas: <span>{count} gasolineras.</span>
       </p>
       <p>
-        Precio medio para <span>{selectedFuel}</span> es de
+        Precio medio para <span>{selectedFuelLabel}</span> es de
         <span>&nbsp;{averagePrice.toFixed(2).replace('.', ',')} €</span>
       </p>
     </div>
