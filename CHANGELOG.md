@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.1.8](https://github.com/jbmunozhuercano/gas-stations-api/compare/gas-stations-api-v2.1.7...gas-stations-api-v2.1.8) (2026-06-16)
+
+
+### Bug Fixes
+
+* add name attribute and specific autoComplete for mobile autocomplete ([7aea2cb](https://github.com/jbmunozhuercano/gas-stations-api/commit/7aea2cbaf02861c18bf79905894b94540cba5ba5))
+* allow spaces in municipality input for mobile autocomplete ([6a92d54](https://github.com/jbmunozhuercano/gas-stations-api/commit/6a92d54e943d999bcc05aa4416fb40bc9500d91a))
+
 ## [2.1.7](https://github.com/jbmunozhuercano/gas-stations-api/compare/gas-stations-api-v2.1.6...gas-stations-api-v2.1.7) (2026-06-16)
 
 
