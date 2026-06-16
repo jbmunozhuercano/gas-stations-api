@@ -39,10 +39,11 @@ export function InputField({
       id="municipality-input"
       className={styles.input}
       type={type}
+      name="municipality"
       placeholder={placeholder}
       value={searchTerm}
       onChange={handleChange}
-      autoComplete="on"
+      autoComplete="address-level2"
       disabled={disabled}
       aria-label="Buscar por municipio"
     />
