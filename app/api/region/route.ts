@@ -31,7 +31,7 @@ export async function GET(): Promise<Response> {
   } catch (error) {
     console.error('API fetch failed:', error);
     return Response.json(
-      { error: 'Failed to fetch community data' },
+      { error: 'Error al obtener datos de comunidades' },
       { status: 500 }
     );
   }

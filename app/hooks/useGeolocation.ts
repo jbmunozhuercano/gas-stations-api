@@ -32,11 +32,15 @@ export function useGeolocation() {
     loading: false,
   });
 
+  const clearError = useCallback(() => {
+    setLocation((prev) => ({ ...prev, error: null }));
+  }, []);
+
   const getCurrentLocation = useCallback(() => {
     if (!navigator.geolocation) {
       setLocation((prev) => ({
         ...prev,
-        error: 'Geolocation is not supported by this browser',
+        error: 'Tu navegador no soporta geolocalización',
         loading: false,
       }));
       return;
@@ -54,16 +58,16 @@ export function useGeolocation() {
         });
       },
       (error) => {
-        let errorMessage = 'Unable to retrieve your location';
+        let errorMessage = 'No se pudo obtener tu ubicación';
         switch (error.code) {
           case error.PERMISSION_DENIED:
-            errorMessage = 'Location access denied by user';
+            errorMessage = 'Ubicación denegada por el usuario';
             break;
           case error.POSITION_UNAVAILABLE:
-            errorMessage = 'Location information is unavailable';
+            errorMessage = 'Información de ubicación no disponible';
             break;
           case error.TIMEOUT:
-            errorMessage = 'Location request timed out';
+            errorMessage = 'La solicitud de ubicación ha expirado';
             break;
         }
         setLocation((prev) => ({
@@ -80,5 +84,5 @@ export function useGeolocation() {
     );
   }, []);
 
-  return { ...location, getCurrentLocation };
+  return { ...location, getCurrentLocation, clearError };
 }

@@ -31,6 +31,6 @@ export async function GET() {
     });
   } catch (error) {
     console.error(error);
-    return Response.json({ error: 'Failed to fetch data' }, { status: 500 });
+    return Response.json({ error: 'Error al obtener los datos' }, { status: 500 });
   }
 }

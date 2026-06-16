@@ -20,6 +20,13 @@
   font-weight: 700;
   font-size: 0.9rem;
   padding: 0.5em;
+  order: -1;
+}
+
+@media screen and (min-width: 768px) {
+  .error {
+    order: 1;
+  }
 }
 
 @media screen and (min-width: 768px) {

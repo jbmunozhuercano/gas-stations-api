@@ -83,7 +83,7 @@ describe('GET /api/gas-stations/[regionCode]', () => {
     const data = await response.json();
 
     expect(response.status).toBe(500);
-    expect(data).toEqual({ error: 'Failed to fetch fuel station data' });
+    expect(data).toEqual({ error: 'Error al obtener datos de estaciones de servicio' });
   });
 
   it('passes regionCode to external API URL', async () => {
