@@ -20,7 +20,7 @@ const GasStationsMap = dynamic(
   () => import('./components/GasStationsMap').then((mod) => mod.default),
   {
     ssr: false,
-  }
+  },
 );
 
 /**
@@ -88,8 +88,8 @@ export default function Home(): JSX.Element {
       const term = municipality.trim().toLowerCase();
       setFilteredStations(
         stations.filter((station) =>
-          station['Municipio'].toLocaleLowerCase().includes(term)
-        )
+          station['Municipio'].toLocaleLowerCase().includes(term),
+        ),
       );
     }, 300);
   }, []);
@@ -123,7 +123,7 @@ export default function Home(): JSX.Element {
         stations,
         latitude,
         longitude,
-        3
+        3,
       );
       setFilteredStations(nearbyStations);
     } else {
@@ -185,15 +185,15 @@ export default function Home(): JSX.Element {
     useLocation && latitude && longitude
       ? [latitude, longitude]
       : filteredCenter
-      ? filteredCenter
-      : regionCode && REGION_CENTERS[regionCode]
-      ? REGION_CENTERS[regionCode]
-      : [40.4168, -3.7038]; // Default center (Madrid)
+        ? filteredCenter
+        : regionCode && REGION_CENTERS[regionCode]
+          ? REGION_CENTERS[regionCode]
+          : [40.4168, -3.7038]; // Default center (Madrid)
 
   const defaultZoom = 6;
   const regionZoom = 7;
   const locationZoom = 12;
-  const municipalityZoom = 8;
+  const municipalityZoom = 10;
 
   /**
    * Calculates the zoom level based on location or region.
@@ -202,10 +202,10 @@ export default function Home(): JSX.Element {
     useLocation && latitude && longitude
       ? locationZoom
       : searchTerm
-      ? municipalityZoom
-      : regionCode && REGION_CENTERS[regionCode]
-      ? regionZoom
-      : defaultZoom;
+        ? municipalityZoom
+        : regionCode && REGION_CENTERS[regionCode]
+          ? regionZoom
+          : defaultZoom;
 
   /**
    * Determines whether to show distance information.
@@ -216,7 +216,7 @@ export default function Home(): JSX.Element {
    * State for the selected fuel type.
    */
   const [selectedFuel, setSelectedFuel] = useState<keyof Station>(
-    FUEL_TYPES[0].key
+    FUEL_TYPES[0].key,
   );
 
   /**
@@ -238,10 +238,12 @@ export default function Home(): JSX.Element {
    */
   const averagePrice = useMemo(
     () => getAveragePrice(filteredStations, selectedFuel as keyof Station),
-    [filteredStations, selectedFuel]
+    [filteredStations, selectedFuel],
   );
 
-  const selectedFuelLabel = FUEL_TYPES.find((f) => f.key === selectedFuel)?.label;
+  const selectedFuelLabel = FUEL_TYPES.find(
+    (f) => f.key === selectedFuel,
+  )?.label;
 
   return (
     <main id="main-content">
@@ -275,7 +277,9 @@ export default function Home(): JSX.Element {
       </nav>
 
       {(error || locationError) && (
-        <p className={styles.error} role="alert">{error || locationError}</p>
+        <p className={styles.error} role="alert">
+          {error || locationError}
+        </p>
       )}
 
       <GasStationsMap
