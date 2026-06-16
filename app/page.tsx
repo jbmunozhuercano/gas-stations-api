@@ -162,11 +162,13 @@ export default function Home(): JSX.Element {
   };
 
   /**
-   * Calculates the map center based on location or region.
+   * Calculates the map center based on location, search results, or region.
    */
   const mapCenter: [number, number] =
     useLocation && latitude && longitude
       ? [latitude, longitude]
+      : filteredCenter
+      ? filteredCenter
       : regionCode && REGION_CENTERS[regionCode]
       ? REGION_CENTERS[regionCode]
       : [40.4168, -3.7038]; // Default center (Madrid)
@@ -218,6 +220,23 @@ export default function Home(): JSX.Element {
     () => getAveragePrice(filteredStations, selectedFuel as keyof Station),
     [filteredStations, selectedFuel]
   );
+
+  /**
+   * Calculates the center of filtered stations for map positioning.
+   */
+  const filteredCenter = useMemo<[number, number] | null>(() => {
+    if (filteredStations.length === 0) return null;
+    const coords = filteredStations
+      .map((s) => ({
+        lat: parseFloat(s.Latitud.replace(',', '.')),
+        lon: parseFloat(s['Longitud (WGS84)'].replace(',', '.')),
+      }))
+      .filter((c) => !isNaN(c.lat) && !isNaN(c.lon));
+    if (coords.length === 0) return null;
+    const avgLat = coords.reduce((sum, c) => sum + c.lat, 0) / coords.length;
+    const avgLon = coords.reduce((sum, c) => sum + c.lon, 0) / coords.length;
+    return [avgLat, avgLon];
+  }, [filteredStations]);
 
   const selectedFuelLabel = FUEL_TYPES.find((f) => f.key === selectedFuel)?.label;
 
