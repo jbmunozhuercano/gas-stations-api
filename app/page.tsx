@@ -85,11 +85,10 @@ export default function Home(): JSX.Element {
    */
   const debouncedFilterStations = useMemo(() => {
     return debounce((stations: Station[], municipality: string) => {
+      const term = municipality.trim().toLowerCase();
       setFilteredStations(
         stations.filter((station) =>
-          station['Municipio']
-            .toLocaleLowerCase()
-            .includes(municipality.toLowerCase())
+          station['Municipio'].toLocaleLowerCase().includes(term)
         )
       );
     }, 300);
