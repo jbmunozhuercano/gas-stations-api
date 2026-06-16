@@ -100,4 +100,21 @@ describe('InputField', () => {
     );
     expect(screen.getByRole('textbox')).toHaveValue('Valencia');
   });
+
+  it('trims trailing spaces from input', () => {
+    const onInputChange = vi.fn();
+    render(
+      <InputField
+        type="text"
+        placeholder="Introduce el municipio_"
+        searchTerm=""
+        onInputChange={onInputChange}
+      />
+    );
+
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: 'Alicante ' },
+    });
+    expect(onInputChange).toHaveBeenCalledWith('Alicante');
+  });
 });
