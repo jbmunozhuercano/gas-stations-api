@@ -193,7 +193,7 @@ export default function Home(): JSX.Element {
   const defaultZoom = 6;
   const regionZoom = 7;
   const locationZoom = 12;
-  const municipalityZoom = 10;
+  const municipalityZoom = 8;
 
   /**
    * Calculates the zoom level based on location or region.
