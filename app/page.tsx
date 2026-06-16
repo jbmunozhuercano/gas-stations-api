@@ -192,7 +192,8 @@ export default function Home(): JSX.Element {
 
   const defaultZoom = 6;
   const regionZoom = 7;
-  const locationZoom = 12; // or any zoom level you prefer for GPS
+  const locationZoom = 12;
+  const municipalityZoom = 13;
 
   /**
    * Calculates the zoom level based on location or region.
@@ -200,6 +201,8 @@ export default function Home(): JSX.Element {
   const zoom =
     useLocation && latitude && longitude
       ? locationZoom
+      : filteredCenter
+      ? municipalityZoom
       : regionCode && REGION_CENTERS[regionCode]
       ? regionZoom
       : defaultZoom;
