@@ -11,12 +11,14 @@
 
 @media screen and (orientation: landscape) and (min-width: 1024px) {
   .mapContainer {
-    height: 720px;
+    height: 100%;
+    flex: 1;
   }
 }
 
 @media screen and (orientation: portrait) and (min-width: 1024px) {
   .mapContainer {
     height: 100%;
+    flex: 1;
   }
 }
