@@ -21,8 +21,8 @@
   width: auto;
   max-width: 90%;
   text-align: center;
-  color: var(--color-5);
-  background-color: var(--color-3);
+  color: #fff;
+  background-color: #ff4136;
   font-weight: 700;
   font-size: 0.9rem;
   padding: 10px 20px;
