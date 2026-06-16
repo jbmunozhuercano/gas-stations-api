@@ -54,6 +54,9 @@ describe('useGeolocation', () => {
   it('handles permission denied error', async () => {
     const mockError = {
       code: 1, // PERMISSION_DENIED
+      PERMISSION_DENIED: 1,
+      POSITION_UNAVAILABLE: 2,
+      TIMEOUT: 3,
       message: 'User denied Geolocation',
     };
 
@@ -71,13 +74,16 @@ describe('useGeolocation', () => {
 
     expect(result.current.latitude).toBeNull();
     expect(result.current.longitude).toBeNull();
-    expect(result.current.error).toBe('Unable to retrieve your location');
+    expect(result.current.error).toBe('Ubicación denegada por el usuario');
     expect(result.current.loading).toBe(false);
   });
 
   it('handles position unavailable error', async () => {
     const mockError = {
       code: 2, // POSITION_UNAVAILABLE
+      PERMISSION_DENIED: 1,
+      POSITION_UNAVAILABLE: 2,
+      TIMEOUT: 3,
       message: 'Position unavailable',
     };
 
@@ -93,12 +99,15 @@ describe('useGeolocation', () => {
       result.current.getCurrentLocation();
     });
 
-    expect(result.current.error).toBe('Unable to retrieve your location');
+    expect(result.current.error).toBe('Información de ubicación no disponible');
   });
 
   it('handles timeout error', async () => {
     const mockError = {
       code: 3, // TIMEOUT
+      PERMISSION_DENIED: 1,
+      POSITION_UNAVAILABLE: 2,
+      TIMEOUT: 3,
       message: 'Timeout',
     };
 
@@ -114,7 +123,7 @@ describe('useGeolocation', () => {
       result.current.getCurrentLocation();
     });
 
-    expect(result.current.error).toBe('Unable to retrieve your location');
+    expect(result.current.error).toBe('La solicitud de ubicación ha expirado');
   });
 
   it('handles unsupported browser', async () => {
@@ -128,7 +137,7 @@ describe('useGeolocation', () => {
     });
 
     expect(result.current.error).toBe(
-      'Geolocation is not supported by this browser'
+      'Tu navegador no soporta geolocalización'
     );
   });
 

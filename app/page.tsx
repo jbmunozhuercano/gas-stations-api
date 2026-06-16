@@ -54,6 +54,7 @@ export default function Home(): JSX.Element {
     error: locationError,
     loading: locationLoading,
     getCurrentLocation,
+    clearError,
   } = useGeolocation();
 
   /**
@@ -102,11 +103,12 @@ export default function Home(): JSX.Element {
       fetchStations(`/api/gas-stations/${regionCode}`);
       setUseLocation(false); // Reset geolocation when region changes
       setSearchTerm(''); // Reset search term when region changes
+      clearError(); // Clear any geolocation error
     } else {
       setStations([]);
       setFilteredStations([]);
     }
-  }, [regionCode, fetchStations]);
+  }, [regionCode, fetchStations, clearError]);
 
   /**
    * Effect to filter stations by geolocation or municipality.
@@ -157,6 +159,7 @@ export default function Home(): JSX.Element {
     setSearchTerm('');
     setUseLocation(false);
     setFilteredStations([]);
+    clearError();
   };
 
   /**
@@ -228,24 +231,31 @@ export default function Home(): JSX.Element {
           loading={locationLoading}
           disabled={!regionCode || (useLocation && !latitude && !longitude)}
         />
-        {(error || locationError) && (
-          <p className={styles.error} role="alert">{error || locationError}</p>
-        )}
         {!useLocation && (
           <InputField
             type="text"
             placeholder="Introduce el municipio"
             searchTerm={searchTerm}
-            onInputChange={setSearchTerm}
+            onInputChange={(value) => {
+              setSearchTerm(value);
+              clearError();
+            }}
             disabled={!regionCode}
           />
         )}
         <GasTypeSelector
           priceKey={selectedFuel as string}
-          onChange={(key) => setSelectedFuel(key as keyof Station)}
+          onChange={(key) => {
+            setSelectedFuel(key as keyof Station);
+            clearError();
+          }}
         />
         <ClearButton clearSelections={clearSelections} />
       </nav>
+
+      {(error || locationError) && (
+        <p className={styles.error} role="alert">{error || locationError}</p>
+      )}
 
       <GasStationsMap
         stations={filteredStations}

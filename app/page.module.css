@@ -14,15 +14,30 @@
 }
 
 .error {
-  width: 100%;
+  position: absolute;
+  bottom: calc(4.5em + 44px);
+  left: 18px;
+  right: 18px;
+  width: calc(100vw - 36px);
+  max-width: 460px;
+  padding: 10px 0.5em;
+  box-sizing: border-box;
   text-align: center;
-  color: var(--color-3);
+  color: var(--error-color);
+  background-color: var(--error-bg);
   font-weight: 700;
   font-size: 0.9rem;
-  padding: 0.5em;
+  border-radius: 12px;
+  border: 2px solid var(--error-bd);
+  z-index: 1001;
 }
 
 @media screen and (min-width: 768px) {
+  .error {
+    bottom: auto;
+    top: calc(1em + 44px + 16px);
+    margin-left: calc((100vw - 460px) / 2);
+  }
   .listHeader {
     padding: 0 2em;
     bottom: auto;

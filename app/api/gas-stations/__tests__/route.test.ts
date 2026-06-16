@@ -57,7 +57,7 @@ describe('GET /api/gas-stations', () => {
     const data = await response.json();
 
     expect(response.status).toBe(500);
-    expect(data).toEqual({ error: 'Failed to fetch data' });
+    expect(data).toEqual({ error: 'Error al obtener los datos' });
   });
 
   it('fetches data for yesterday\'s date', async () => {

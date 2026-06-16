@@ -42,7 +42,7 @@ export async function GET(
   } catch (error) {
     console.error('API fetch failed:', error);
     return Response.json(
-      { error: 'Failed to fetch fuel station data' },
+      { error: 'Error al obtener datos de estaciones de servicio' },
       { status: 500 }
     );
   }

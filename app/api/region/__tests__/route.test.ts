@@ -70,6 +70,6 @@ describe('GET /api/region', () => {
     const data = await response.json();
 
     expect(response.status).toBe(500);
-    expect(data).toEqual({ error: 'Failed to fetch community data' });
+    expect(data).toEqual({ error: 'Error al obtener datos de comunidades' });
   });
 });
