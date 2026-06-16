@@ -14,22 +14,24 @@
 }
 
 .error {
+  position: absolute;
+  bottom: calc(0.5em + 44px);
+  left: 0;
+  right: 0;
   width: 100%;
   text-align: center;
   color: var(--color-3);
   font-weight: 700;
   font-size: 0.9rem;
   padding: 0.5em;
-  order: -1;
+  z-index: 1001;
 }
 
 @media screen and (min-width: 768px) {
   .error {
-    order: 1;
+    bottom: auto;
+    top: calc(1em + 44px + 16px);
   }
-}
-
-@media screen and (min-width: 768px) {
   .listHeader {
     padding: 0 2em;
     bottom: auto;
