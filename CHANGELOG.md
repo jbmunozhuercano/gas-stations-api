@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.1.7](https://github.com/jbmunozhuercano/gas-stations-api/compare/gas-stations-api-v2.1.6...gas-stations-api-v2.1.7) (2026-06-16)
+
+
+### Bug Fixes
+
+* map fills viewport height on desktop ([9a1a567](https://github.com/jbmunozhuercano/gas-stations-api/commit/9a1a5677a669597a2e799500f3a6a5e6ef5f4d34))
+* position error message absolute so it doesn't shrink the map ([1fd7903](https://github.com/jbmunozhuercano/gas-stations-api/commit/1fd79032fa31a6783f2b282d2eabc6d09b0ef0fa))
+* translate error messages to Spanish, fix error position and auto-dismiss ([118429c](https://github.com/jbmunozhuercano/gas-stations-api/commit/118429c95771d63408f421f70c3f2d396d49552e))
+
 ## [2.1.6](https://github.com/jbmunozhuercano/gas-stations-api/compare/gas-stations-api-v2.1.5...gas-stations-api-v2.1.6) (2026-06-08)
 
 
