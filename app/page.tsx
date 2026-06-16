@@ -20,7 +20,7 @@ const GasStationsMap = dynamic(
   () => import('./components/GasStationsMap').then((mod) => mod.default),
   {
     ssr: false,
-  }
+  },
 );
 
 /**
@@ -85,12 +85,11 @@ export default function Home(): JSX.Element {
    */
   const debouncedFilterStations = useMemo(() => {
     return debounce((stations: Station[], municipality: string) => {
+      const term = municipality.trim().toLowerCase();
       setFilteredStations(
         stations.filter((station) =>
-          station['Municipio']
-            .toLocaleLowerCase()
-            .includes(municipality.toLowerCase())
-        )
+          station['Municipio'].toLocaleLowerCase().includes(term),
+        ),
       );
     }, 300);
   }, []);
@@ -124,7 +123,7 @@ export default function Home(): JSX.Element {
         stations,
         latitude,
         longitude,
-        3
+        3,
       );
       setFilteredStations(nearbyStations);
     } else {
@@ -163,18 +162,38 @@ export default function Home(): JSX.Element {
   };
 
   /**
-   * Calculates the map center based on location or region.
+   * Calculates the center of filtered stations for map positioning.
+   */
+  const filteredCenter = useMemo<[number, number] | null>(() => {
+    if (filteredStations.length === 0) return null;
+    const coords = filteredStations
+      .map((s) => ({
+        lat: parseFloat(s.Latitud.replace(',', '.')),
+        lon: parseFloat(s['Longitud (WGS84)'].replace(',', '.')),
+      }))
+      .filter((c) => !isNaN(c.lat) && !isNaN(c.lon));
+    if (coords.length === 0) return null;
+    const avgLat = coords.reduce((sum, c) => sum + c.lat, 0) / coords.length;
+    const avgLon = coords.reduce((sum, c) => sum + c.lon, 0) / coords.length;
+    return [avgLat, avgLon];
+  }, [filteredStations]);
+
+  /**
+   * Calculates the map center based on location, search results, or region.
    */
   const mapCenter: [number, number] =
     useLocation && latitude && longitude
       ? [latitude, longitude]
-      : regionCode && REGION_CENTERS[regionCode]
-      ? REGION_CENTERS[regionCode]
-      : [40.4168, -3.7038]; // Default center (Madrid)
+      : filteredCenter
+        ? filteredCenter
+        : regionCode && REGION_CENTERS[regionCode]
+          ? REGION_CENTERS[regionCode]
+          : [40.4168, -3.7038]; // Default center (Madrid)
 
   const defaultZoom = 6;
   const regionZoom = 7;
-  const locationZoom = 12; // or any zoom level you prefer for GPS
+  const locationZoom = 12;
+  const municipalityZoom = 10;
 
   /**
    * Calculates the zoom level based on location or region.
@@ -182,9 +201,11 @@ export default function Home(): JSX.Element {
   const zoom =
     useLocation && latitude && longitude
       ? locationZoom
-      : regionCode && REGION_CENTERS[regionCode]
-      ? regionZoom
-      : defaultZoom;
+      : searchTerm
+        ? municipalityZoom
+        : regionCode && REGION_CENTERS[regionCode]
+          ? regionZoom
+          : defaultZoom;
 
   /**
    * Determines whether to show distance information.
@@ -195,7 +216,7 @@ export default function Home(): JSX.Element {
    * State for the selected fuel type.
    */
   const [selectedFuel, setSelectedFuel] = useState<keyof Station>(
-    FUEL_TYPES[0].key
+    FUEL_TYPES[0].key,
   );
 
   /**
@@ -217,10 +238,12 @@ export default function Home(): JSX.Element {
    */
   const averagePrice = useMemo(
     () => getAveragePrice(filteredStations, selectedFuel as keyof Station),
-    [filteredStations, selectedFuel]
+    [filteredStations, selectedFuel],
   );
 
-  const selectedFuelLabel = FUEL_TYPES.find((f) => f.key === selectedFuel)?.label;
+  const selectedFuelLabel = FUEL_TYPES.find(
+    (f) => f.key === selectedFuel,
+  )?.label;
 
   return (
     <main id="main-content">
@@ -254,7 +277,9 @@ export default function Home(): JSX.Element {
       </nav>
 
       {(error || locationError) && (
-        <p className={styles.error} role="alert">{error || locationError}</p>
+        <p className={styles.error} role="alert">
+          {error || locationError}
+        </p>
       )}
 
       <GasStationsMap

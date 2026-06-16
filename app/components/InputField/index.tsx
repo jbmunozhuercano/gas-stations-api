@@ -30,7 +30,7 @@ export function InputField({
     const value = e.target.value;
     const regex = /^[a-zA-ZáéíóúñüÁÉÍÓÚÑÜ\s]*$/;
     if (regex.test(value)) {
-      onInputChange(value);
+      onInputChange(value.trim());
     }
   };
 
