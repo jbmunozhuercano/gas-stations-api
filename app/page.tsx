@@ -201,7 +201,7 @@ export default function Home(): JSX.Element {
   const zoom =
     useLocation && latitude && longitude
       ? locationZoom
-      : filteredCenter
+      : searchTerm
       ? municipalityZoom
       : regionCode && REGION_CENTERS[regionCode]
       ? regionZoom
