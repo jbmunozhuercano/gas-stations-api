@@ -5,6 +5,9 @@
   --secondary-color: #212529;
   --grey-color: #cacaca;
   --success-color: #00a36c;
+  --error-color: #721c24;
+  --error-bg: #f8d7da;
+  --error-bd: #f5c6cb;
   --color-1: #254252;
   --color-2: rgba(23, 28, 45, 0.5);
   --color-3: #e37239;
@@ -21,8 +24,9 @@
 }
 
 body {
-  font-family: var(--main-font), 'Lucida Sans', 'Lucida Sans Regular',
-    'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family:
+    var(--main-font), 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-weight: 400;
   font-size: 1em;
   line-height: 1.6;
