@@ -28,7 +28,7 @@ export function InputField({
 }: InputProps): JSX.Element {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    const regex = /^[a-zA-ZáéíóúñüÁÉÍÓÚÑÜ]*$/;
+    const regex = /^[a-zA-ZáéíóúñüÁÉÍÓÚÑÜ\s]*$/;
     if (regex.test(value)) {
       onInputChange(value);
     }
