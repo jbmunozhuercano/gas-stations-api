@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.2.0](https://github.com/jbmunozhuercano/gas-stations-api/compare/gas-stations-api-v2.1.8...gas-stations-api-v2.2.0) (2026-06-16)
+
+
+### Features
+
+* center map on municipality when searching by location ([ef384db](https://github.com/jbmunozhuercano/gas-stations-api/commit/ef384db1613e029139b5791284285b956fee84df))
+* zoom level 13 when centering map on municipality search ([e1c9ec8](https://github.com/jbmunozhuercano/gas-stations-api/commit/e1c9ec825aab7e701574c170ae864f29caf82f30))
+
+
+### Bug Fixes
+
+* move filteredCenter before mapCenter to fix initialization error ([490bb64](https://github.com/jbmunozhuercano/gas-stations-api/commit/490bb64e71fc43b419ac23a6b9b35e5a580e1965))
+* only zoom to 13 when municipality field is filled, not on region change ([537723f](https://github.com/jbmunozhuercano/gas-stations-api/commit/537723fe7b1cae93b99a771c98b5a69f7d845ceb))
+* trim trailing space from municipality input on mobile autocomplete ([fb23dbc](https://github.com/jbmunozhuercano/gas-stations-api/commit/fb23dbcbb30130b9a763a015570196564f6f7494))
+
 ## [2.1.8](https://github.com/jbmunozhuercano/gas-stations-api/compare/gas-stations-api-v2.1.7...gas-stations-api-v2.1.8) (2026-06-16)
 
 
