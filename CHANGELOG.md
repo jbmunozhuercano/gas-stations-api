@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.2.1](https://github.com/jbmunozhuercano/gas-stations-api/compare/gas-stations-api-v2.2.0...gas-stations-api-v2.2.1) (2026-06-17)
+
+
+### Miscellaneous
+
+* upgrade Next.js to 16.2.9 ([6a8b36a](https://github.com/jbmunozhuercano/gas-stations-api/commit/6a8b36a847394ecc814dcb9438758a606c72634a))
+* upgrade Next.js to 16.2.9 ([be88218](https://github.com/jbmunozhuercano/gas-stations-api/commit/be88218404b81c99e23f7b1d748349da79cfe4b6))
+
 ## [2.2.0](https://github.com/jbmunozhuercano/gas-stations-api/compare/gas-stations-api-v2.1.8...gas-stations-api-v2.2.0) (2026-06-16)
 
 
