@@ -66,6 +66,8 @@ This application displays information about gas stations in Spain, including the
   - **Green**: Price below average for the selected fuel type.
   - **Yellow**: Price equal to the average for the selected fuel type.
   - **Red**: Price above average for the selected fuel type.
+  - **Gray**: Gas station is currently closed based on its opening hours.
+- **Opening Hours Detection**: Parses the `Horario` field to determine if a station is open or closed based on Spain local time (Europe/Madrid). Handles midnight-crossing schedules (e.g. 06:00-02:00).
 - **Fuel Type Selection**: Users can select the fuel type (Gasolina 95, Gasolina 98, Gasóleo A, Gasóleo Premium) and the price colors update accordingly.
 
 ### Components
@@ -77,7 +79,7 @@ This application displays information about gas stations in Spain, including the
 - **StationCard**: Displays information about a single gas station.
 - **Prefooter**: Component displayed before the main footer section.
 - **Footer**: Bottom section component with additional information and links.
-- **GasStationsMap**: Displays gas stations on a map with markers and popups using react-leaflet. Marker color reflects price compared to average for the selected fuel type.
+- **GasStationsMap**: Displays gas stations on a map with markers and popups using react-leaflet. Marker color reflects price compared to average for the selected fuel type, or gray if the station is closed.
 - **LocationButton**: Button to trigger geolocation and center the map.
 - **GasTypeSelector**: Dropdown to select the fuel type and update price colors on the map.
 
