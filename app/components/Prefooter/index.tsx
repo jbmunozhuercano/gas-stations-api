@@ -86,6 +86,10 @@ export function SeoText(): JSX.Element {
             Precio por encima de la media para el tipo de combustible
             seleccionado.
           </li>
+          <li>
+            <span className={styles['color-grey']}>Gris</span>:
+            La gasolinera está cerrada en ese momento.
+          </li>
         </ul>
         <p>
           Puedes elegir el tipo de combustible y los colores de los marcadores

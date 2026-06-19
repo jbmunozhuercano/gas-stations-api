@@ -5,6 +5,7 @@ import 'leaflet/dist/leaflet.css';
 import styles from './GasStationsMap.module.css';
 import { StationCard } from '../StationCard';
 import type { Station } from '../../types/station';
+import { isStationOpen } from '../../utils/stationHours';
 
 // Fix default icon issue
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -52,6 +53,15 @@ const redIcon = new L.Icon({
   popupAnchor: [1, -34],
   shadowSize: [41, 41],
 });
+const greyIcon = new L.Icon({
+  iconUrl:
+    'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-grey.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
 
 export default function GasStationsMap({
   stations,
@@ -75,12 +85,18 @@ export default function GasStationsMap({
         const price = parseFloat(String(station[priceKey] ?? '').replace(',', '.'));
         if (isNaN(lat) || isNaN(lon) || isNaN(price)) return null;
 
-        const EPSILON = 0.001; // tolerance for floating point comparison
+        const EPSILON = 0.001;
+
+        const isOpen = isStationOpen(station.Horario);
 
         let icon = yellowIcon;
-        if (price < averagePrice - EPSILON) icon = greenIcon;
-        else if (price > averagePrice + EPSILON) icon = redIcon;
-        // If price === averagePrice, keep yellowIcon
+        if (isOpen === false) {
+          icon = greyIcon;
+        } else if (price < averagePrice - EPSILON) {
+          icon = greenIcon;
+        } else if (price > averagePrice + EPSILON) {
+          icon = redIcon;
+        }
 
         return (
           <Marker key={idx} position={[lat, lon]} icon={icon}>

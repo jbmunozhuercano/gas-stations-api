@@ -1,6 +1,7 @@
 import { JSX } from 'react';
 import styles from './StationCard.module.css';
 import type { Station } from '../../types/station';
+import { isStationOpen } from '../../utils/stationHours';
 
 function sanitizeHtml(html: string): string {
   return html
@@ -24,11 +25,18 @@ interface StationCardProps {
 
 export function StationCard({
   station,
-  showDistance = false, // Default to not showing distance
+  showDistance = false,
 }: StationCardProps): JSX.Element {
+  const isOpen = isStationOpen(station.Horario);
+
   return (
     <div className={styles.card}>
-      <h4>{station.Rótulo}</h4>
+      <h4>
+        {station.Rótulo}
+        {isOpen === false && (
+          <span className={styles.closed}> Cerrada</span>
+        )}
+      </h4>
       <dl>
         <dt>Municipio</dt>
         <dd>{station.Municipio}</dd>
@@ -79,7 +87,7 @@ export function StationCard({
         )}
       </dl>
       <a
-        className={styles.link}
+        className={`${styles.link} ${isOpen === false ? styles.linkDisabled : ''}`}
         href={`https://www.google.es/maps/place/${station.Latitud.replace(
           ',',
           '.'
@@ -87,6 +95,8 @@ export function StationCard({
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`Abrir ${station.Rótulo} en Google Maps`}
+        aria-disabled={isOpen === false}
+        tabIndex={isOpen === false ? -1 : 0}
       >
         <h5>Google Maps</h5>
       </a>

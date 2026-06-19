@@ -2,15 +2,15 @@
 
 ## Project
 
-Next.js 15 (App Router) + React 19 + TypeScript. Displays Spanish gas station prices from a government API (`sedeaplicaciones.minetur.gob.es`). Deployed on Vercel. UI is in Spanish (`lang="es"`).
+Next.js 16 (App Router) + React 19 + TypeScript. Displays Spanish gas station prices from a government API (`sedeaplicaciones.minetur.gob.es`). Deployed on Vercel. UI is in Spanish (`lang="es"`).
 
 ## Commands
 
 ```bash
-npm run dev          # Dev server with Turbopack (--turbopack)
+npm run dev          # Dev server (Turbopack is default in v16)
 npm run build        # Production build (use to verify changes)
 npm run start        # Production server
-npm run lint         # ESLint (next/core-web-vitals + next/typescript)
+npm run lint         # ESLint (eslint-config-next flat config)
 npm test             # Run tests in watch mode (Vitest)
 npm run test:ui      # Run tests with UI
 npm run test:coverage # Run tests with coverage report
@@ -36,6 +36,7 @@ Testing framework: **Vitest** with **React Testing Library**. Test files are in 
 - **Date-based API** — `/api/gas-stations` uses yesterday's date. The external API only provides historical data.
 - **API routes use `node-fetch`** — not Next.js built-in `fetch`. Keep this consistent.
 - **No env files** — No `.env` required. All data is fetched from public APIs at runtime.
+- **Opening hours** — `app/utils/stationHours.ts` parses `Horario` field to determine open/closed status. Uses `Europe/Madrid` timezone. Handles midnight-crossing schedules (e.g. `06:00-02:00`). Stations with unknown/empty `Horario` keep price-based pin color.
 
 ## Conventions
 
