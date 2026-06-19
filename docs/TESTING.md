@@ -35,6 +35,7 @@ This document outlines the recommended testing strategy for the gas-stations-api
 |------|------|------------|
 | `calculateDistance()` | `app/utils/distance.ts` | Same point returns 0; known cities return correct distance; handles edge cases (antimeridian, poles) |
 | `filterStationsByDistance()` | `app/utils/distance.ts` | Filters within radius; sorts by distance; handles invalid coordinates; returns empty array for no matches |
+| `isStationOpen()` | `app/utils/stationHours.ts` | Returns null for empty/null input; returns true for "24h"; parses L-D schedules; handles midnight-crossing (06:00-02:00); returns false for unknown day format |
 | `REGION_CENTERS` | `app/constants/regionCenters.ts` | All 19 regions have valid coordinates; coordinates are within Spain bounds |
 
 ### 2. Hook Tests

@@ -22,6 +22,17 @@ https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburan
 
 **Nota:** La fecha más reciente es siempre la del día anterior.
 
+### Campo Horario
+
+El campo `Horario` contiene el horario de apertura de la gasolinera en formato de texto libre. Formatos comunes:
+
+- `"L-D: 06:30-22:00"` — Lunes a Domingo, mismo horario
+- `"L-V: 06:00-22:00; S: 07:00-22:00; D: 07:30-22:00"` — Horarios diferentes por día
+- `"06:00-02:00"` — Horario que cruza medianoche (cierra a las 2:00 AM del día siguiente)
+- `"24h"` — Apertura las 24 horas
+
+Los códigos de días son: `L` (Lunes), `M` (Martes), `X` (Miércoles), `J` (Jueves), `V` (Viernes), `S` (Sábado), `D` (Domingo).
+
 ### IDs de las Comunidades Autónomas
 
 A continuación se listan los IDs de las Comunidades Autónomas:
