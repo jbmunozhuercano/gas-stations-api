@@ -34,7 +34,7 @@ export function StationCard({
       <h4>
         {station.Rótulo}
         {isOpen === false && (
-          <span className={styles.closed}> — Cerrada</span>
+          <span className={styles.closed}> Cerrada</span>
         )}
       </h4>
       <dl>
