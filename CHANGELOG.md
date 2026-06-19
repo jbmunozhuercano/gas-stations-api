@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.3.0](https://github.com/jbmunozhuercano/gas-stations-api/compare/gas-stations-api-v2.2.1...gas-stations-api-v2.3.0) (2026-06-19)
+
+
+### Features
+
+* add opening hours feature with gray pin for closed gas stations ([85f4ef0](https://github.com/jbmunozhuercano/gas-stations-api/commit/85f4ef073be47635b39d365f263ed2826d5d7bdc))
+* disable Google Maps button when gas station is closed ([71abacb](https://github.com/jbmunozhuercano/gas-stations-api/commit/71abacbd4e6ab4bc728e1e864761bdb91687b7e0))
+* show 'Cerrada' in red on popup when gas station is closed ([ffab3b0](https://github.com/jbmunozhuercano/gas-stations-api/commit/ffab3b0cccc4d427ce3e84e0617fdc1d09c6562f))
+
+
+### Documentation
+
+* add opening hours feature to README ([1e930f3](https://github.com/jbmunozhuercano/gas-stations-api/commit/1e930f32374dd815727061db0729df6d5ccf6aef))
+* update documentation with opening hours feature ([e547dc7](https://github.com/jbmunozhuercano/gas-stations-api/commit/e547dc7eb977e7a3c0bbd1a0efe9fc45d6ef9343))
+
 ## [2.2.1](https://github.com/jbmunozhuercano/gas-stations-api/compare/gas-stations-api-v2.2.0...gas-stations-api-v2.2.1) (2026-06-17)
 
 
