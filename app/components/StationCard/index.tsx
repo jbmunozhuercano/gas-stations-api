@@ -87,7 +87,7 @@ export function StationCard({
         )}
       </dl>
       <a
-        className={styles.link}
+        className={`${styles.link} ${isOpen === false ? styles.linkDisabled : ''}`}
         href={`https://www.google.es/maps/place/${station.Latitud.replace(
           ',',
           '.'
@@ -95,6 +95,8 @@ export function StationCard({
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`Abrir ${station.Rótulo} en Google Maps`}
+        aria-disabled={isOpen === false}
+        tabIndex={isOpen === false ? -1 : 0}
       >
         <h5>Google Maps</h5>
       </a>
