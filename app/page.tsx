@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useMemo, useCallback, JSX } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef, JSX } from 'react';
 import debounce from 'lodash/debounce';
 import styles from './page.module.css';
 import 'leaflet/dist/leaflet.css';
@@ -48,6 +48,12 @@ export default function Home(): JSX.Element {
   const [error, setError] = useState('');
   const [useLocation, setUseLocation] = useState(false);
   const [focusedStation, setFocusedStation] = useState<Station | null>(null);
+  const mapRowRef = useRef<HTMLDivElement>(null);
+
+  const handleStationClick = (station: Station) => {
+    setFocusedStation(station);
+    mapRowRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   // Custom hook for geolocation
   const {
@@ -257,7 +263,7 @@ export default function Home(): JSX.Element {
         </p>
       )}
 
-      <div className={styles.mapRow}>
+      <div className={styles.mapRow} ref={mapRowRef}>
         <nav className={styles.listHeader} aria-label="Filtros de búsqueda">
           <Select regionCode={regionCode} setRegionCode={setRegionCode} />
           <LocationButton
@@ -301,7 +307,7 @@ export default function Home(): JSX.Element {
           selectedFuel={selectedFuel as string}
           searchTerm={searchTerm}
           useLocation={useLocation}
-          onStationClick={setFocusedStation}
+          onStationClick={handleStationClick}
         />
         {!loading && filteredStations.length > 0 && (
           <LocationInfo
