@@ -9,6 +9,7 @@ import { GasTypeSelector } from './components/GasTypeSelector';
 import { LocationButton } from './components/LocationButton';
 import { ClearButton } from './components/ClearButton';
 import { LocationInfo } from './components/LocationInfo';
+import { StationList } from './components/StationList';
 import { useGeolocation } from './hooks/useGeolocation';
 import { filterStationsByDistance } from './utils/distance';
 import { REGION_CENTERS } from './constants/regionCenters';
@@ -282,14 +283,20 @@ export default function Home(): JSX.Element {
         </p>
       )}
 
-      <GasStationsMap
-        stations={filteredStations}
-        center={mapCenter}
-        showDistance={showDistance}
-        zoom={zoom}
-        priceKey={selectedFuel as keyof Station}
-        averagePrice={averagePrice}
-      />
+      <div className={styles.mapRow}>
+        <StationList
+          stations={filteredStations}
+          selectedFuel={selectedFuel as string}
+        />
+        <GasStationsMap
+          stations={filteredStations}
+          center={mapCenter}
+          showDistance={showDistance}
+          zoom={zoom}
+          priceKey={selectedFuel as keyof Station}
+          averagePrice={averagePrice}
+        />
+      </div>
 
       {!loading && filteredStations.length > 0 && (
         <LocationInfo

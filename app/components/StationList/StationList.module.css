@@ -1,0 +1,108 @@
+.listContainer {
+  display: none;
+}
+
+@media screen and (min-width: 768px) {
+  .listContainer {
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+    min-width: 320px;
+    padding: 0.5em;
+    overflow-y: auto;
+    color: var(--color-5);
+  }
+}
+
+.title {
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 0.5em 0;
+  margin: 0 0 0.5em;
+  border-bottom: 2px solid var(--color-3);
+  color: var(--color-5);
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5em 0;
+  border-bottom: 1px dashed var(--color-3);
+}
+
+.itemHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5em;
+}
+
+.name {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.035em;
+  margin: 0;
+}
+
+.closed {
+  color: #ff4136;
+  font-weight: 700;
+  font-size: 0.7rem;
+  margin-left: 0.25em;
+}
+
+.pinLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  color: var(--color-3);
+  transition: color 0.3s ease-in-out;
+}
+
+.pinLink:hover {
+  color: var(--color-4);
+}
+
+.pinLinkDisabled {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.pinIcon {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.details {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5em;
+}
+
+.horario {
+  font-size: 0.65rem;
+  color: var(--color-5);
+  opacity: 0.85;
+  flex: 1;
+}
+
+.price {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-4);
+  white-space: nowrap;
+}
+
+.noPrice {
+  font-size: 0.7rem;
+  color: var(--color-5);
+  opacity: 0.5;
+  white-space: nowrap;
+}
