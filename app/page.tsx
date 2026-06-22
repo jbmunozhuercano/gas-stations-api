@@ -280,7 +280,7 @@ export default function Home(): JSX.Element {
                 setSearchTerm(value);
                 clearError();
                 setTimeout(() => {
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  mapRowRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }, 150);
               }}
               disabled={!regionCode}
