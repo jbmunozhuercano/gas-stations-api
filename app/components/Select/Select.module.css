@@ -35,5 +35,7 @@
     width: 100%;
     max-width: 280px;
     font-size: 1.1rem;
+    order: 0;
+    border-width: 2px;
   }
 }

@@ -51,5 +51,19 @@
 @media screen and (min-width: 768px) {
   .button {
     font-size: 1.1rem;
+    width: 100%;
+    max-width: 165px;
+    height: auto;
+    padding: 10px 12px;
+    gap: 6px;
+    order: 0;
+    border-width: 2px;
+  }
+  .label {
+    display: inline;
+  }
+  .button svg {
+    width: 15px;
+    height: 15px;
   }
 }

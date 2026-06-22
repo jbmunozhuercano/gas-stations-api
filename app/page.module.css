@@ -69,8 +69,11 @@
     margin-left: calc((100vw - 460px) / 2);
   }
   .listHeader {
+    position: absolute;
     padding: 0 2em;
     gap: 16px;
     margin: 1em auto;
+    flex-wrap: wrap;
+    background-color: transparent;
   }
 }
