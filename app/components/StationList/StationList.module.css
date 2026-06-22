@@ -35,7 +35,6 @@
   transition: background-color 0.3s ease-in-out;
   cursor: pointer;
   gap: 0.5em;
-  overflow: hidden;
 }
 
 .item:last-child {
@@ -70,9 +69,6 @@
   width: 33%;
   flex-shrink: 0;
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .price {
@@ -83,8 +79,6 @@
   width: 33%;
   flex-shrink: 0;
   text-align: right;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .noPrice {
@@ -95,6 +89,4 @@
   width: 33%;
   flex-shrink: 0;
   text-align: right;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
