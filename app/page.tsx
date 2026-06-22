@@ -287,6 +287,8 @@ export default function Home(): JSX.Element {
         <StationList
           stations={filteredStations}
           selectedFuel={selectedFuel as string}
+          searchTerm={searchTerm}
+          useLocation={useLocation}
         />
         <GasStationsMap
           stations={filteredStations}

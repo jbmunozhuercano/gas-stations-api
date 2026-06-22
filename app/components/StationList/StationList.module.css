@@ -14,8 +14,6 @@
     overflow-y: auto;
     z-index: 1000;
     color: var(--color-5);
-    background-color: var(--color-6);
-    border-radius: 12px;
     margin: 0.5em;
     padding: 0.5em;
   }
@@ -46,48 +44,21 @@
   text-transform: uppercase;
   letter-spacing: 0.035em;
   margin: 0 0 0.25em;
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
+  width: 100%;
 }
 
 .closed {
   color: #ff4136;
   font-weight: 700;
   font-size: 0.65rem;
-}
-
-.pinLink {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 32px;
-  height: 32px;
-  color: var(--color-3);
-  transition: color 0.3s ease-in-out;
-}
-
-.pinLink:hover {
-  color: var(--color-4);
-}
-
-.pinLinkDisabled {
-  opacity: 0.4;
-  pointer-events: none;
-  cursor: not-allowed;
-}
-
-.pinIcon {
-  width: 28px;
-  height: 28px;
-  fill: currentColor;
+  margin-left: 0.25em;
 }
 
 .details {
   display: flex;
   align-items: center;
   gap: 0.5em;
+  width: 100%;
 }
 
 .horario {
@@ -109,4 +80,31 @@
   color: var(--color-5);
   opacity: 0.5;
   white-space: nowrap;
+}
+
+.pinLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  color: var(--color-3);
+  transition: color 0.3s ease-in-out;
+}
+
+.pinLink:hover {
+  color: var(--color-4);
+}
+
+.pinLinkDisabled {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.pinIcon {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
 }

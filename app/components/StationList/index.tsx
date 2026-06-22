@@ -6,6 +6,8 @@ import { isStationOpen } from '../../utils/stationHours';
 interface StationListProps {
   stations: Station[];
   selectedFuel: string;
+  searchTerm: string;
+  useLocation: boolean;
 }
 
 function sanitizeHtml(html: string): string {
@@ -18,6 +20,8 @@ function sanitizeHtml(html: string): string {
 export function StationList({
   stations,
   selectedFuel,
+  searchTerm,
+  useLocation,
 }: StationListProps): JSX.Element {
   const sortedStations = useMemo(() => {
     return [...stations].sort((a, b) => {
@@ -36,7 +40,9 @@ export function StationList({
     });
   }, [stations, selectedFuel]);
 
-  if (sortedStations.length === 0) return <></>;
+  const isVisible = (searchTerm.trim() !== '' || useLocation) && sortedStations.length > 0;
+
+  if (!isVisible) return <></>;
 
   return (
     <div className={styles.listContainer}>
@@ -53,6 +59,21 @@ export function StationList({
               {station.Rótulo}
               {isOpen === false && (
                 <span className={styles.closed}>Cerrada</span>
+              )}
+            </div>
+            <div className={styles.details}>
+              <span
+                className={styles.horario}
+                dangerouslySetInnerHTML={{
+                  __html: sanitizeHtml(
+                    station.Horario.replace(';', ' '),
+                  ),
+                }}
+              />
+              {!isNaN(priceNum) ? (
+                <span className={styles.price}>{price}€</span>
+              ) : (
+                <span className={styles.noPrice}>N/D</span>
               )}
               <a
                 className={`${styles.pinLink} ${isOpen === false ? styles.pinLinkDisabled : ''}`}
@@ -71,21 +92,6 @@ export function StationList({
                   <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                 </svg>
               </a>
-            </div>
-            <div className={styles.details}>
-              <span
-                className={styles.horario}
-                dangerouslySetInnerHTML={{
-                  __html: sanitizeHtml(
-                    station.Horario.replace(';', ' '),
-                  ),
-                }}
-              />
-              {!isNaN(priceNum) ? (
-                <span className={styles.price}>{price}€</span>
-              ) : (
-                <span className={styles.noPrice}>N/D</span>
-              )}
             </div>
           </div>
         );
