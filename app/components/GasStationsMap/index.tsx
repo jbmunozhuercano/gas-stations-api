@@ -67,11 +67,12 @@ const greyIcon = new L.Icon({
 
 function MapController({
   focusedStation,
+  markerRefs,
 }: {
   focusedStation: Station | null;
+  markerRefs: React.MutableRefObject<Map<string, L.Marker>>;
 }) {
   const map = useMap();
-  const markerRefs = useRef<Map<string, L.Marker>>(new Map());
 
   useEffect(() => {
     if (!focusedStation) return;
@@ -87,9 +88,11 @@ function MapController({
     const key = `${focusedStation.Rótulo}-${focusedStation.Latitud}`;
     const marker = markerRefs.current.get(key);
     if (marker) {
-      marker.openPopup();
+      setTimeout(() => {
+        marker.openPopup();
+      }, 600);
     }
-  }, [focusedStation, map]);
+  }, [focusedStation, map, markerRefs]);
 
   return null;
 }
@@ -113,7 +116,7 @@ export default function GasStationsMap({
       key={center.toString() + zoom}
     >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      <MapController focusedStation={focusedStation} />
+      <MapController focusedStation={focusedStation} markerRefs={markerRefs} />
       {stations.map((station, idx) => {
         const lat = parseFloat(station.Latitud.replace(',', '.'));
         const lon = parseFloat(station['Longitud (WGS84)'].replace(',', '.'));
