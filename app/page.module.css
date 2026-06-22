@@ -51,6 +51,7 @@
     right: 0;
     display: grid;
     grid-template-columns: 1fr 1fr 44px 44px;
+    grid-template-rows: auto auto;
     align-items: center;
     gap: 6px;
     padding: 8px;

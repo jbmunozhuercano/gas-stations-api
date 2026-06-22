@@ -40,6 +40,8 @@
     font-size: 0.7rem;
     gap: 0;
     justify-content: center;
+    grid-column: 3 / 4;
+    grid-row: 2;
   }
   .label {
     display: none;
