@@ -34,11 +34,11 @@
 @media screen and (max-width: 767px) {
   .input {
     max-width: none;
-    width: 100%;
+    width: 50%;
     padding: 9px 8px;
     font-size: 0.65rem;
-    grid-column: 2 / 3;
-    grid-row: 1;
+    order: 2;
+    box-sizing: border-box;
   }
 }
 

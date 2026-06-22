@@ -23,8 +23,9 @@
 
 @media screen and (max-width: 767px) {
   .container {
-    grid-column: 1 / 3;
-    grid-row: 2;
+    width: 50%;
+    order: 3;
+    box-sizing: border-box;
   }
   .select {
     width: 100%;
