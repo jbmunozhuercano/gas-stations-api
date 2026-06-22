@@ -12,6 +12,7 @@
     z-index: 1;
     color: var(--color-5);
     padding: 0.5em;
+    padding-bottom: 4.5em;
     background-color: rgba(15, 25, 35, 0.95);
   }
 }

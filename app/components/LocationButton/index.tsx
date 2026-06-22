@@ -9,15 +9,6 @@ interface LocationButtonProps {
   disabled?: boolean;
 }
 
-/**
- * A button component that triggers a location-based action, such as fetching the user's current location.
- *
- * @param onClick - Callback function to be called when the button is clicked.
- * @param loading - Boolean indicating whether the location is currently being fetched.
- * @param disabled - Optional boolean to disable the button.
- * @returns A button element with a location icon and dynamic label based on loading state.
- */
-
 export function LocationButton({
   onClick,
   loading,
@@ -31,7 +22,7 @@ export function LocationButton({
       aria-label={loading ? 'Obteniendo ubicación...' : 'Buscar gasolineras cerca de mí'}
     >
       <FontAwesomeIcon icon={faLocationDot} aria-hidden="true" />
-      {loading ? 'Obteniendo ubicación...' : 'Cerca de mí'}
+      <span className={styles.label}>{loading ? 'Obteniendo...' : 'Cerca de mí'}</span>
     </button>
   );
 }

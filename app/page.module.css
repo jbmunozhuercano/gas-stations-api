@@ -7,7 +7,7 @@
   align-items: center;
   gap: 8px;
   margin: 0 auto;
-  padding: 0.5em 0.5em;
+  padding: 0.5em;
   position: absolute;
   top: 0;
   left: 0;
@@ -40,6 +40,29 @@
   width: 100%;
   flex: 1;
   position: relative;
+}
+
+@media screen and (max-width: 767px) {
+  .listHeader {
+    position: fixed;
+    bottom: 0;
+    top: auto;
+    left: 0;
+    right: 0;
+    flex-wrap: nowrap;
+    justify-content: stretch;
+    gap: 6px;
+    padding: 8px;
+    background-color: var(--color-1);
+    border-top: 2px solid var(--color-3);
+    z-index: 1100;
+  }
+  .error {
+    top: auto;
+    bottom: calc(4em + 52px);
+    width: calc(100vw - 36px);
+    margin: 0 18px;
+  }
 }
 
 @media screen and (min-width: 768px) {
