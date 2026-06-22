@@ -52,8 +52,7 @@
     flex-wrap: wrap;
     gap: 6px;
     padding: 8px;
-    background-color: var(--color-1);
-    border-top: 2px solid var(--color-3);
+    background-color: rgba(15, 25, 35, 0.85);
     z-index: 1100;
   }
   .error {
