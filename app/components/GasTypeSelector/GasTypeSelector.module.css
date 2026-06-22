@@ -19,16 +19,9 @@
 
 @media screen and (max-width: 767px) {
   .select {
-    width: auto;
-    flex: 1;
+    width: 100%;
     padding: 9px 6px;
     font-size: 0.65rem;
-  }
-}
-
-@media screen and (min-width: 400px) and (max-width: 767px) {
-  .select {
-    font-size: 0.7rem;
   }
 }
 

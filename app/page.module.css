@@ -49,8 +49,9 @@
     top: auto;
     left: 0;
     right: 0;
-    flex-wrap: nowrap;
-    justify-content: stretch;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: stretch;
     gap: 6px;
     padding: 8px;
     background-color: var(--color-1);

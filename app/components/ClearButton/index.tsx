@@ -1,6 +1,6 @@
 import { JSX } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faEraser } from '@fortawesome/free-solid-svg-icons';
 import styles from './ClearButton.module.css';
 
 type ClearButtonProps = {
@@ -16,7 +16,7 @@ export function ClearButton({
       onClick={clearSelections}
       aria-label="Limpiar todas las selecciones"
     >
-      <FontAwesomeIcon icon={faXmark} aria-hidden="true" />
+      <FontAwesomeIcon icon={faEraser} aria-hidden="true" />
       <span className={styles.label}>Limpiar</span>
     </button>
   );

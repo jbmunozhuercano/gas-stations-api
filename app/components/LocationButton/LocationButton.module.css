@@ -34,7 +34,7 @@
 @media screen and (max-width: 767px) {
   .button {
     max-width: none;
-    flex: 1;
+    width: 100%;
     padding: 10px 8px;
     font-size: 0.7rem;
     gap: 4px;
@@ -45,12 +45,6 @@
   .button svg {
     width: 18px;
     height: 18px;
-  }
-}
-
-@media screen and (min-width: 400px) and (max-width: 767px) {
-  .button {
-    font-size: 0.75rem;
   }
 }
 
