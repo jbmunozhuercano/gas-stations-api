@@ -1,5 +1,5 @@
 .container {
-  display: contents;
+  width: 100%;
 }
 
 .select {
@@ -22,12 +22,14 @@
 }
 
 @media screen and (max-width: 767px) {
+  .container {
+    grid-column: 1 / 3;
+    grid-row: 2;
+  }
   .select {
     width: 100%;
     padding: 9px 6px;
     font-size: 0.65rem;
-    grid-column: 1 / 3;
-    grid-row: 2;
   }
 }
 
