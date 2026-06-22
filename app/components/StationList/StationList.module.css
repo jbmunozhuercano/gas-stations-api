@@ -10,7 +10,7 @@
     top: 3.5em;
     right: 0.5em;
     width: 320px;
-    max-height: calc(100% - 1em);
+    max-height: calc(100% - 4em);
     overflow-y: auto;
     z-index: 1000;
     color: var(--color-5);
@@ -28,6 +28,7 @@
 @media screen and (min-width: 1720px) {
   .listContainer {
     top: 0.5em;
+    max-height: calc(100% - 1em);
   }
 }
 
