@@ -37,7 +37,6 @@
 
 @media screen and (min-width: 768px) {
   .container {
-    width: 100%;
     order: 0;
   }
   .select {
