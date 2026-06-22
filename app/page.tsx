@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useMemo, useCallback, JSX } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef, JSX } from 'react';
 import debounce from 'lodash/debounce';
 import styles from './page.module.css';
 import 'leaflet/dist/leaflet.css';
@@ -9,6 +9,7 @@ import { GasTypeSelector } from './components/GasTypeSelector';
 import { LocationButton } from './components/LocationButton';
 import { ClearButton } from './components/ClearButton';
 import { LocationInfo } from './components/LocationInfo';
+import { StationList } from './components/StationList';
 import { useGeolocation } from './hooks/useGeolocation';
 import { filterStationsByDistance } from './utils/distance';
 import { REGION_CENTERS } from './constants/regionCenters';
@@ -46,6 +47,13 @@ export default function Home(): JSX.Element {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [useLocation, setUseLocation] = useState(false);
+  const [focusedStation, setFocusedStation] = useState<Station | null>(null);
+  const mapRowRef = useRef<HTMLDivElement>(null);
+
+  const handleStationClick = (station: Station) => {
+    setFocusedStation(station);
+    mapRowRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   // Custom hook for geolocation
   const {
@@ -102,6 +110,7 @@ export default function Home(): JSX.Element {
       fetchStations(`/api/gas-stations/${regionCode}`);
       setUseLocation(false); // Reset geolocation when region changes
       setSearchTerm(''); // Reset search term when region changes
+      setFocusedStation(null); // Reset focused station when region changes
       clearError(); // Clear any geolocation error
     } else {
       setStations([]);
@@ -158,6 +167,7 @@ export default function Home(): JSX.Element {
     setSearchTerm('');
     setUseLocation(false);
     setFilteredStations([]);
+    setFocusedStation(null);
     clearError();
   };
 
@@ -247,58 +257,67 @@ export default function Home(): JSX.Element {
 
   return (
     <main id="main-content">
-      <nav className={styles.listHeader} aria-label="Filtros de búsqueda">
-        <Select regionCode={regionCode} setRegionCode={setRegionCode} />
-        <LocationButton
-          onClick={handleLocationClick}
-          loading={locationLoading}
-          disabled={!regionCode || (useLocation && !latitude && !longitude)}
-        />
-        {!useLocation && (
-          <InputField
-            type="text"
-            placeholder="Introduce el municipio"
-            searchTerm={searchTerm}
-            onInputChange={(value) => {
-              setSearchTerm(value);
-              clearError();
-            }}
-            disabled={!regionCode}
-          />
-        )}
-        <GasTypeSelector
-          priceKey={selectedFuel as string}
-          onChange={(key) => {
-            setSelectedFuel(key as keyof Station);
-            clearError();
-          }}
-        />
-        <ClearButton clearSelections={clearSelections} />
-      </nav>
-
       {(error || locationError) && (
         <p className={styles.error} role="alert">
           {error || locationError}
         </p>
       )}
 
-      <GasStationsMap
-        stations={filteredStations}
-        center={mapCenter}
-        showDistance={showDistance}
-        zoom={zoom}
-        priceKey={selectedFuel as keyof Station}
-        averagePrice={averagePrice}
-      />
+      <div className={styles.mapRow} ref={mapRowRef}>
+        <nav className={styles.listHeader} aria-label="Filtros de búsqueda">
+          <Select regionCode={regionCode} setRegionCode={setRegionCode} />
+          <LocationButton
+            onClick={handleLocationClick}
+            loading={locationLoading}
+            disabled={!regionCode || (useLocation && !latitude && !longitude)}
+          />
+          {!useLocation && (
+            <InputField
+              type="text"
+              placeholder="Introduce el municipio"
+              searchTerm={searchTerm}
+              onInputChange={(value) => {
+                setSearchTerm(value);
+                clearError();
+              }}
+              disabled={!regionCode}
+            />
+          )}
+          <GasTypeSelector
+            priceKey={selectedFuel as string}
+            onChange={(key) => {
+              setSelectedFuel(key as keyof Station);
+              clearError();
+            }}
+          />
+          <ClearButton clearSelections={clearSelections} />
+        </nav>
 
-      {!loading && filteredStations.length > 0 && (
-        <LocationInfo
-          count={filteredStations.length}
-          useLocation={useLocation}
-          selectedFuelLabel={selectedFuelLabel}
+        <GasStationsMap
+          stations={filteredStations}
+          center={mapCenter}
+          showDistance={showDistance}
+          zoom={zoom}
+          priceKey={selectedFuel as keyof Station}
           averagePrice={averagePrice}
+          focusedStation={focusedStation}
         />
-      )}
+        <StationList
+          stations={filteredStations}
+          selectedFuel={selectedFuel as string}
+          searchTerm={searchTerm}
+          useLocation={useLocation}
+          onStationClick={handleStationClick}
+        />
+        {!loading && filteredStations.length > 0 && (
+          <LocationInfo
+            count={filteredStations.length}
+            useLocation={useLocation}
+            selectedFuelLabel={selectedFuelLabel}
+            averagePrice={averagePrice}
+          />
+        )}
+      </div>
     </main>
   );
 }

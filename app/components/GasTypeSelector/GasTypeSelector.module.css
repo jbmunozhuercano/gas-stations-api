@@ -1,3 +1,7 @@
+.container {
+  width: auto;
+}
+
 .select {
   font-family: var(--main-font);
   width: 165px;
@@ -17,16 +21,29 @@
   border-color: var(--success-color);
 }
 
-@media screen and (min-width: 400px) {
+@media screen and (max-width: 767px) {
+  .container {
+    width: 49%;
+    order: 3;
+    box-sizing: border-box;
+  }
   .select {
-    width: 180px;
+    width: 100%;
+    padding: 9px 6px;
+    font-size: 0.75rem;
+    border-width: 1px;
   }
 }
 
 @media screen and (min-width: 768px) {
+  .container {
+    width: 100%;
+    order: 0;
+  }
   .select {
     width: 100%;
     max-width: 180px;
     font-size: 1.1rem;
+    border-width: 2px;
   }
 }

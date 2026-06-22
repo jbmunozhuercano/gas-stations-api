@@ -1,0 +1,149 @@
+.listContainer {
+  display: none;
+}
+
+@media screen and (max-width: 1023px) {
+  .listContainer {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    overflow-y: visible;
+    z-index: 1;
+    color: var(--color-5);
+    padding: 0.5em;
+    padding-bottom: 4.5em;
+    background-color: rgba(15, 25, 35, 0.95);
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .listContainer {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 3.5em;
+    right: 0.5em;
+    width: 320px;
+    max-height: calc(100% - 7.5em);
+    overflow-y: auto;
+    z-index: 1000;
+    color: var(--color-5);
+    margin: 0.5em;
+    padding: 0.5em 0.5em 2em;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-behavior: smooth;
+    background: transparent;
+  }
+  .listContainer::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1720px) {
+  .listContainer {
+    top: 0.5em;
+    max-height: calc(100% - 3em);
+  }
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  padding: 0.5em;
+  margin: 0.25em 0;
+  border-bottom: 1px dashed var(--color-3);
+  border-radius: 8px;
+  background-color: var(--color-1);
+  cursor: pointer;
+  gap: 0.5em;
+  flex-shrink: 0;
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+.name {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.035em;
+  margin: 0;
+  width: 38%;
+  flex-shrink: 0;
+}
+
+.closed {
+  color: #ff4136;
+  font-weight: 700;
+  font-size: 0.65rem;
+  margin-left: 0.25em;
+}
+
+.horario {
+  font-size: 0.85rem;
+  color: var(--color-5);
+  opacity: 0.85;
+  width: 38%;
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+.price {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-4);
+  white-space: nowrap;
+  width: 17%;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.noPrice {
+  font-size: 0.7rem;
+  color: var(--color-5);
+  opacity: 0.5;
+  white-space: nowrap;
+  width: 17%;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.scrollIndicator {
+  display: none;
+}
+
+@media screen and (min-width: 1024px) {
+  .scrollIndicator {
+    display: none;
+    position: sticky;
+    bottom: -25px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 0.5em 0;
+    background: linear-gradient(transparent, var(--color-1));
+    pointer-events: none;
+    z-index: 1;
+  }
+  .scrollIndicator.visible {
+    display: block;
+  }
+}
+
+.scrollArrow {
+  display: inline-block;
+  animation: bounceDown 1.2s ease-in-out infinite;
+}
+
+@keyframes bounceDown {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}

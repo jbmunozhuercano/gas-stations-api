@@ -1,18 +1,11 @@
 import { JSX } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEraser } from '@fortawesome/free-solid-svg-icons';
 import styles from './ClearButton.module.css';
 
 type ClearButtonProps = {
   clearSelections: () => void;
 };
-
-/**
- * The ClearButton component is a button that clears the current selections.
- *
- * @param {Object} props - The props object.
- * @param {function} props.clearSelections - A function to clear the current selections.
- *
- * @returns {JSX.Element} The ClearButton component.
- */
 
 export function ClearButton({
   clearSelections,
@@ -23,7 +16,8 @@ export function ClearButton({
       onClick={clearSelections}
       aria-label="Limpiar todas las selecciones"
     >
-      Limpiar selección
+      <FontAwesomeIcon icon={faEraser} aria-hidden="true" />
+      <span className={styles.label}>Limpiar</span>
     </button>
   );
 }
