@@ -279,6 +279,9 @@ export default function Home(): JSX.Element {
               onInputChange={(value) => {
                 setSearchTerm(value);
                 clearError();
+                setTimeout(() => {
+                  mapRowRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 150);
               }}
               disabled={!regionCode}
             />
