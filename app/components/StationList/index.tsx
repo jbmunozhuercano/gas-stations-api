@@ -74,21 +74,19 @@ export function StationList({
                 <span className={styles.closed}>Cerrada</span>
               )}
             </div>
-            <div className={styles.row}>
-              <span
-                className={styles.horario}
-                dangerouslySetInnerHTML={{
-                  __html: sanitizeHtml(
-                    station.Horario.replace(';', ' '),
-                  ),
-                }}
-              />
-              {!isNaN(priceNum) ? (
-                <span className={styles.price}>{price}€</span>
-              ) : (
-                <span className={styles.noPrice}>N/D</span>
-              )}
-            </div>
+            <span
+              className={styles.horario}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeHtml(
+                  station.Horario.replace(';', ' '),
+                ),
+              }}
+            />
+            {!isNaN(priceNum) ? (
+              <span className={styles.price}>{price}€</span>
+            ) : (
+              <span className={styles.noPrice}>N/D</span>
+            )}
           </div>
         );
       })}
