@@ -50,8 +50,8 @@
     left: 0;
     right: 0;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    justify-items: stretch;
+    grid-template-columns: 1fr 1fr 44px 44px;
+    align-items: center;
     gap: 6px;
     padding: 8px;
     background-color: var(--color-1);

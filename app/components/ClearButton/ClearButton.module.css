@@ -29,17 +29,19 @@
 @media screen and (max-width: 767px) {
   .button {
     max-width: none;
-    width: 100%;
-    padding: 10px 8px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
     font-size: 0.7rem;
-    gap: 4px;
+    gap: 0;
+    justify-content: center;
   }
   .label {
     display: none;
   }
   .button svg {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
   }
 }
 
