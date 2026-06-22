@@ -287,13 +287,6 @@ export default function Home(): JSX.Element {
       )}
 
       <div className={styles.mapRow}>
-        <StationList
-          stations={filteredStations}
-          selectedFuel={selectedFuel as string}
-          searchTerm={searchTerm}
-          useLocation={useLocation}
-          onStationClick={setFocusedStation}
-        />
         <GasStationsMap
           stations={filteredStations}
           center={mapCenter}
@@ -302,6 +295,13 @@ export default function Home(): JSX.Element {
           priceKey={selectedFuel as keyof Station}
           averagePrice={averagePrice}
           focusedStation={focusedStation}
+        />
+        <StationList
+          stations={filteredStations}
+          selectedFuel={selectedFuel as string}
+          searchTerm={searchTerm}
+          useLocation={useLocation}
+          onStationClick={setFocusedStation}
         />
       </div>
 
