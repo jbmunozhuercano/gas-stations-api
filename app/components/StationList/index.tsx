@@ -1,4 +1,4 @@
-import { useMemo, JSX } from 'react';
+import { useMemo, useRef, useState, useEffect, JSX } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import styles from './StationList.module.css';
 import type { Station } from '../../types/station';
@@ -26,6 +26,9 @@ export function StationList({
   useLocation,
   onStationClick,
 }: StationListProps): JSX.Element {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [canScroll, setCanScroll] = useState(false);
+
   const sortedStations = useMemo(() => {
     return [...stations].sort((a, b) => {
       const priceA = parseFloat(
@@ -45,15 +48,40 @@ export function StationList({
 
   const isVisible = (searchTerm.trim() !== '' || useLocation) && sortedStations.length > 0;
 
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const checkScroll = () => {
+      setCanScroll(el.scrollHeight > el.clientHeight);
+    };
+
+    checkScroll();
+
+    const observer = new ResizeObserver(checkScroll);
+    observer.observe(el);
+
+    return () => observer.disconnect();
+  }, [sortedStations.length]);
+
+  const handleScroll = () => {
+    const el = containerRef.current;
+    if (!el) return;
+    const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 10;
+    setCanScroll(!atBottom);
+  };
+
   return (
     <AnimatePresence>
       {isVisible && (
         <motion.div
+          ref={containerRef}
           className={styles.listContainer}
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
+          onScroll={handleScroll}
         >
           {sortedStations.map((station, index) => {
             const isOpen = isStationOpen(station.Horario);
@@ -102,6 +130,13 @@ export function StationList({
               </motion.div>
             );
           })}
+          <div className={`${styles.scrollIndicator} ${canScroll ? styles.visible : ''}`}>
+            <span className={styles.scrollArrow}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 4L12 20M12 20L6 14M12 20L18 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </span>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
