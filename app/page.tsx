@@ -251,35 +251,6 @@ export default function Home(): JSX.Element {
 
   return (
     <main id="main-content">
-      <nav className={styles.listHeader} aria-label="Filtros de búsqueda">
-        <Select regionCode={regionCode} setRegionCode={setRegionCode} />
-        <LocationButton
-          onClick={handleLocationClick}
-          loading={locationLoading}
-          disabled={!regionCode || (useLocation && !latitude && !longitude)}
-        />
-        {!useLocation && (
-          <InputField
-            type="text"
-            placeholder="Introduce el municipio"
-            searchTerm={searchTerm}
-            onInputChange={(value) => {
-              setSearchTerm(value);
-              clearError();
-            }}
-            disabled={!regionCode}
-          />
-        )}
-        <GasTypeSelector
-          priceKey={selectedFuel as string}
-          onChange={(key) => {
-            setSelectedFuel(key as keyof Station);
-            clearError();
-          }}
-        />
-        <ClearButton clearSelections={clearSelections} />
-      </nav>
-
       {(error || locationError) && (
         <p className={styles.error} role="alert">
           {error || locationError}
@@ -287,6 +258,35 @@ export default function Home(): JSX.Element {
       )}
 
       <div className={styles.mapRow}>
+        <nav className={styles.listHeader} aria-label="Filtros de búsqueda">
+          <Select regionCode={regionCode} setRegionCode={setRegionCode} />
+          <LocationButton
+            onClick={handleLocationClick}
+            loading={locationLoading}
+            disabled={!regionCode || (useLocation && !latitude && !longitude)}
+          />
+          {!useLocation && (
+            <InputField
+              type="text"
+              placeholder="Introduce el municipio"
+              searchTerm={searchTerm}
+              onInputChange={(value) => {
+                setSearchTerm(value);
+                clearError();
+              }}
+              disabled={!regionCode}
+            />
+          )}
+          <GasTypeSelector
+            priceKey={selectedFuel as string}
+            onChange={(key) => {
+              setSelectedFuel(key as keyof Station);
+              clearError();
+            }}
+          />
+          <ClearButton clearSelections={clearSelections} />
+        </nav>
+
         <GasStationsMap
           stations={filteredStations}
           center={mapCenter}
