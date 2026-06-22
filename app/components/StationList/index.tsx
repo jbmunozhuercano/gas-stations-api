@@ -8,6 +8,7 @@ interface StationListProps {
   selectedFuel: string;
   searchTerm: string;
   useLocation: boolean;
+  onStationClick: (station: Station) => void;
 }
 
 function sanitizeHtml(html: string): string {
@@ -22,6 +23,7 @@ export function StationList({
   selectedFuel,
   searchTerm,
   useLocation,
+  onStationClick,
 }: StationListProps): JSX.Element {
   const sortedStations = useMemo(() => {
     return [...stations].sort((a, b) => {
@@ -50,18 +52,29 @@ export function StationList({
         const isOpen = isStationOpen(station.Horario);
         const price = station[selectedFuel as keyof Station];
         const priceNum = parseFloat(String(price ?? '').replace(',', '.'));
-        const lat = station.Latitud.replace(',', '.');
-        const lon = station['Longitud (WGS84)'].replace(',', '.');
 
         return (
-          <div className={styles.item} key={`${station.Rótulo}-${index}`}>
+          <div
+            className={styles.item}
+            key={`${station.Rótulo}-${index}`}
+            onClick={() => onStationClick(station)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                onStationClick(station);
+              }
+            }}
+            role="button"
+            tabIndex={0}
+            aria-label={`Ver ${station.Rótulo} en el mapa`}
+          >
             <div className={styles.name}>
               {station.Rótulo}
               {isOpen === false && (
                 <span className={styles.closed}>Cerrada</span>
               )}
             </div>
-            <div className={styles.details}>
+            <div className={styles.row}>
               <span
                 className={styles.horario}
                 dangerouslySetInnerHTML={{
@@ -75,23 +88,6 @@ export function StationList({
               ) : (
                 <span className={styles.noPrice}>N/D</span>
               )}
-              <a
-                className={`${styles.pinLink} ${isOpen === false ? styles.pinLinkDisabled : ''}`}
-                href={`https://www.google.es/maps/place/${lat},${lon}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Abrir ${station.Rótulo} en Google Maps`}
-                aria-disabled={isOpen === false}
-                tabIndex={isOpen === false ? -1 : 0}
-              >
-                <svg
-                  className={styles.pinIcon}
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-                </svg>
-              </a>
             </div>
           </div>
         );

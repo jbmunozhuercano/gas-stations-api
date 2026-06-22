@@ -1,4 +1,5 @@
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { useEffect, useRef } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import type { LatLngExpression } from 'leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -23,6 +24,7 @@ interface GasStationsMapProps {
   zoom: number;
   priceKey: keyof Station;
   averagePrice: number;
+  focusedStation: Station | null;
 }
 
 // Custom marker icons
@@ -63,6 +65,35 @@ const greyIcon = new L.Icon({
   shadowSize: [41, 41],
 });
 
+function MapController({
+  focusedStation,
+}: {
+  focusedStation: Station | null;
+}) {
+  const map = useMap();
+  const markerRefs = useRef<Map<string, L.Marker>>(new Map());
+
+  useEffect(() => {
+    if (!focusedStation) return;
+
+    const lat = parseFloat(focusedStation.Latitud.replace(',', '.'));
+    const lon = parseFloat(
+      focusedStation['Longitud (WGS84)'].replace(',', '.'),
+    );
+    if (isNaN(lat) || isNaN(lon)) return;
+
+    map.flyTo([lat, lon], 16, { duration: 0.5 });
+
+    const key = `${focusedStation.Rótulo}-${focusedStation.Latitud}`;
+    const marker = markerRefs.current.get(key);
+    if (marker) {
+      marker.openPopup();
+    }
+  }, [focusedStation, map]);
+
+  return null;
+}
+
 export default function GasStationsMap({
   stations,
   center,
@@ -70,7 +101,10 @@ export default function GasStationsMap({
   zoom,
   priceKey,
   averagePrice,
+  focusedStation,
 }: GasStationsMapProps) {
+  const markerRefs = useRef<Map<string, L.Marker>>(new Map());
+
   return (
     <MapContainer
       center={center}
@@ -79,6 +113,7 @@ export default function GasStationsMap({
       key={center.toString() + zoom}
     >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      <MapController focusedStation={focusedStation} />
       {stations.map((station, idx) => {
         const lat = parseFloat(station.Latitud.replace(',', '.'));
         const lon = parseFloat(station['Longitud (WGS84)'].replace(',', '.'));
@@ -98,8 +133,19 @@ export default function GasStationsMap({
           icon = redIcon;
         }
 
+        const key = `${station.Rótulo}-${station.Latitud}`;
+
         return (
-          <Marker key={idx} position={[lat, lon]} icon={icon}>
+          <Marker
+            key={idx}
+            position={[lat, lon]}
+            icon={icon}
+            ref={(ref) => {
+              if (ref) {
+                markerRefs.current.set(key, ref);
+              }
+            }}
+          >
             <Popup>
               <StationCard station={station} showDistance={showDistance} />
             </Popup>

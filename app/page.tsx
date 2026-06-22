@@ -47,6 +47,7 @@ export default function Home(): JSX.Element {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [useLocation, setUseLocation] = useState(false);
+  const [focusedStation, setFocusedStation] = useState<Station | null>(null);
 
   // Custom hook for geolocation
   const {
@@ -103,6 +104,7 @@ export default function Home(): JSX.Element {
       fetchStations(`/api/gas-stations/${regionCode}`);
       setUseLocation(false); // Reset geolocation when region changes
       setSearchTerm(''); // Reset search term when region changes
+      setFocusedStation(null); // Reset focused station when region changes
       clearError(); // Clear any geolocation error
     } else {
       setStations([]);
@@ -159,6 +161,7 @@ export default function Home(): JSX.Element {
     setSearchTerm('');
     setUseLocation(false);
     setFilteredStations([]);
+    setFocusedStation(null);
     clearError();
   };
 
@@ -289,6 +292,7 @@ export default function Home(): JSX.Element {
           selectedFuel={selectedFuel as string}
           searchTerm={searchTerm}
           useLocation={useLocation}
+          onStationClick={setFocusedStation}
         />
         <GasStationsMap
           stations={filteredStations}
@@ -297,6 +301,7 @@ export default function Home(): JSX.Element {
           zoom={zoom}
           priceKey={selectedFuel as keyof Station}
           averagePrice={averagePrice}
+          focusedStation={focusedStation}
         />
       </div>
 

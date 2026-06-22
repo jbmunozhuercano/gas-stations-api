@@ -8,7 +8,7 @@
     flex-direction: column;
     position: absolute;
     top: 0.5em;
-    left: 0.5em;
+    right: 0.5em;
     width: 320px;
     max-height: 100%;
     overflow-y: auto;
@@ -33,6 +33,7 @@
   border-radius: 8px;
   background-color: var(--color-1);
   transition: background-color 0.3s ease-in-out;
+  cursor: pointer;
 }
 
 .item:last-child {
@@ -41,6 +42,12 @@
 
 .item:hover {
   background-color: var(--color-6);
+}
+
+.row {
+  display: flex;
+  width: 100%;
+  gap: 0.5em;
 }
 
 .name {
@@ -59,18 +66,12 @@
   margin-left: 0.25em;
 }
 
-.details {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
-  width: 100%;
-}
-
 .horario {
   font-size: 0.75rem;
   color: var(--color-5);
   opacity: 0.85;
   flex: 1;
+  min-width: 0;
 }
 
 .price {
@@ -78,6 +79,8 @@
   font-weight: 700;
   color: var(--color-4);
   white-space: nowrap;
+  flex: 1;
+  text-align: center;
 }
 
 .noPrice {
@@ -85,31 +88,6 @@
   color: var(--color-5);
   opacity: 0.5;
   white-space: nowrap;
-}
-
-.pinLink {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 30px;
-  height: 30px;
-  color: var(--color-3);
-  transition: color 0.3s ease-in-out;
-}
-
-.pinLink:hover {
-  color: var(--color-4);
-}
-
-.pinLinkDisabled {
-  opacity: 0.4;
-  pointer-events: none;
-  cursor: not-allowed;
-}
-
-.pinIcon {
-  width: 26px;
-  height: 26px;
-  fill: currentColor;
+  flex: 1;
+  text-align: center;
 }
