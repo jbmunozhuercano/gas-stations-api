@@ -37,6 +37,7 @@
     justify-content: center;
     order: 5;
     box-sizing: border-box;
+    border-width: 1px;
   }
   .label {
     display: none;
