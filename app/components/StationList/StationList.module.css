@@ -6,35 +6,38 @@
   .listContainer {
     display: flex;
     flex-direction: column;
+    position: absolute;
+    top: 0.5em;
+    left: 0.5em;
     width: 320px;
-    min-width: 320px;
-    padding: 0.5em;
+    max-height: 100%;
     overflow-y: auto;
+    z-index: 1000;
     color: var(--color-5);
+    background-color: var(--color-6);
+    border-radius: 12px;
+    margin: 0.5em;
+    padding: 0.5em;
   }
-}
-
-.title {
-  font-size: 0.9rem;
-  text-align: center;
-  padding: 0.5em 0;
-  margin: 0 0 0.5em;
-  border-bottom: 2px solid var(--color-3);
-  color: var(--color-5);
 }
 
 .item {
   display: flex;
   flex-direction: column;
-  padding: 0.5em 0;
+  padding: 0.5em;
+  margin: 0.25em 0;
   border-bottom: 1px dashed var(--color-3);
+  border-radius: 8px;
+  background-color: var(--color-1);
+  transition: background-color 0.3s ease-in-out;
 }
 
-.itemHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5em;
+.item:last-child {
+  border-bottom: none;
+}
+
+.item:hover {
+  background-color: var(--color-6);
 }
 
 .name {
@@ -42,14 +45,16 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.035em;
-  margin: 0;
+  margin: 0 0 0.25em;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
 }
 
 .closed {
   color: #ff4136;
   font-weight: 700;
-  font-size: 0.7rem;
-  margin-left: 0.25em;
+  font-size: 0.65rem;
 }
 
 .pinLink {
@@ -57,8 +62,8 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   color: var(--color-3);
   transition: color 0.3s ease-in-out;
 }
@@ -74,15 +79,14 @@
 }
 
 .pinIcon {
-  width: 20px;
-  height: 20px;
+  width: 28px;
+  height: 28px;
   fill: currentColor;
 }
 
 .details {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
   gap: 0.5em;
 }
 

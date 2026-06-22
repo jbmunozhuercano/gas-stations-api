@@ -40,7 +40,6 @@ export function StationList({
 
   return (
     <div className={styles.listContainer}>
-      <h3 className={styles.title}>Ordenadas por precio</h3>
       {sortedStations.map((station, index) => {
         const isOpen = isStationOpen(station.Horario);
         const price = station[selectedFuel as keyof Station];
@@ -50,13 +49,11 @@ export function StationList({
 
         return (
           <div className={styles.item} key={`${station.Rótulo}-${index}`}>
-            <div className={styles.itemHeader}>
-              <h4 className={styles.name}>
-                {station.Rótulo}
-                {isOpen === false && (
-                  <span className={styles.closed}>Cerrada</span>
-                )}
-              </h4>
+            <div className={styles.name}>
+              {station.Rótulo}
+              {isOpen === false && (
+                <span className={styles.closed}>Cerrada</span>
+              )}
               <a
                 className={`${styles.pinLink} ${isOpen === false ? styles.pinLinkDisabled : ''}`}
                 href={`https://www.google.es/maps/place/${lat},${lon}`}
@@ -80,7 +77,7 @@ export function StationList({
                 className={styles.horario}
                 dangerouslySetInnerHTML={{
                   __html: sanitizeHtml(
-                    station.Horario.replace(';', '<br />'),
+                    station.Horario.replace(';', ' '),
                   ),
                 }}
               />
