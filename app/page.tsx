@@ -150,23 +150,6 @@ export default function Home(): JSX.Element {
   ]);
 
   /**
-   * Scroll to the map when the station list first appears,
-   * so the user sees the map and the beginning of the list.
-   */
-  const prevHasStations = useRef(false);
-  useEffect(() => {
-    const hasStations = filteredStations.length > 0;
-    if (hasStations && !prevHasStations.current) {
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          mapRowRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-      });
-    }
-    prevHasStations.current = hasStations;
-  }, [filteredStations.length]);
-
-  /**
    * Handles location button click to enable geolocation and fetch stations.
    */
   const handleLocationClick = () => {
@@ -296,6 +279,9 @@ export default function Home(): JSX.Element {
               onInputChange={(value) => {
                 setSearchTerm(value);
                 clearError();
+              }}
+              onFocus={() => {
+                mapRowRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }}
               disabled={!regionCode}
             />
