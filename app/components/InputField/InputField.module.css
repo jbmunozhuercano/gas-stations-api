@@ -34,7 +34,7 @@
 @media screen and (max-width: 767px) {
   .input {
     max-width: none;
-    width: 50%;
+    width: 49%;
     padding: 9px 8px;
     font-size: 0.65rem;
     order: 2;

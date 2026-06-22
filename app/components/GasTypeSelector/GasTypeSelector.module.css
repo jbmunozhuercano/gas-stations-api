@@ -23,7 +23,7 @@
 
 @media screen and (max-width: 767px) {
   .container {
-    width: 50%;
+    width: 49%;
     order: 3;
     box-sizing: border-box;
   }
