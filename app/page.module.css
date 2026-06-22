@@ -6,16 +6,18 @@
   justify-content: center;
   align-items: center;
   gap: 8px;
-  margin: 1em auto 0;
-  padding: 0 0.5em;
+  margin: 0 auto;
+  padding: 0.5em 0.5em;
   position: absolute;
-  bottom: 0.5em;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 1001;
 }
 
 .error {
   position: absolute;
-  bottom: calc(4.5em + 44px);
+  top: calc(3.5em + 44px);
   left: 18px;
   right: 18px;
   width: calc(100vw - 36px);
@@ -42,17 +44,12 @@
 
 @media screen and (min-width: 768px) {
   .error {
-    bottom: auto;
     top: calc(1em + 44px + 16px);
     margin-left: calc((100vw - 460px) / 2);
   }
   .listHeader {
     padding: 0 2em;
-    bottom: auto;
     gap: 16px;
-    top: 0;
-    left: 0;
-    right: 0;
     margin: 1em auto;
   }
 }

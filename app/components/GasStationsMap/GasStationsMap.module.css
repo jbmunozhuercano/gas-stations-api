@@ -1,11 +1,11 @@
 .mapContainer {
   width: 100%;
-  height: 480px;
+  height: 380px;
 }
 
 @media (min-width: 400px) {
   .mapContainer {
-    height: 640px;
+    height: 500px;
   }
 }
 
