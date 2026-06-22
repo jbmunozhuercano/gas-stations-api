@@ -35,8 +35,9 @@
   .input {
     max-width: none;
     width: 49%;
+    height: 39px;
     padding: 9px 8px;
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     order: 2;
     box-sizing: border-box;
   }
