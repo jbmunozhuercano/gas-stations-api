@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState, useEffect, JSX } from 'react';
+import { useMemo, useRef, useState, useEffect, useCallback, JSX } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import styles from './StationList.module.css';
 import type { Station } from '../../types/station';
@@ -28,6 +28,15 @@ export function StationList({
 }: StationListProps): JSX.Element {
   const containerRef = useRef<HTMLDivElement>(null);
   const [canScroll, setCanScroll] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1024px)');
+    setIsDesktop(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
 
   const sortedStations = useMemo(() => {
     return [...stations].sort((a, b) => {
@@ -48,21 +57,20 @@ export function StationList({
 
   const isVisible = (searchTerm.trim() !== '' || useLocation) && sortedStations.length > 0;
 
-  useEffect(() => {
+  const checkScroll = useCallback(() => {
     const el = containerRef.current;
     if (!el) return;
+    setCanScroll(el.scrollHeight > el.clientHeight);
+  }, []);
 
-    const checkScroll = () => {
-      setCanScroll(el.scrollHeight > el.clientHeight);
-    };
-
+  useEffect(() => {
     checkScroll();
-
+    const el = containerRef.current;
+    if (!el) return;
     const observer = new ResizeObserver(checkScroll);
     observer.observe(el);
-
     return () => observer.disconnect();
-  }, [sortedStations.length]);
+  }, [sortedStations.length, checkScroll]);
 
   const handleScroll = () => {
     const el = containerRef.current;
@@ -71,15 +79,17 @@ export function StationList({
     setCanScroll(!atBottom);
   };
 
+  const slideOffset = isDesktop ? 50 : 30;
+
   return (
     <AnimatePresence>
       {isVisible && (
         <motion.div
           ref={containerRef}
           className={styles.listContainer}
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: 50 }}
+          initial={{ opacity: 0, y: slideOffset }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: slideOffset }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
           onScroll={handleScroll}
         >
