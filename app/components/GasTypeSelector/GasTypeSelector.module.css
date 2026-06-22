@@ -1,3 +1,7 @@
+.container {
+  display: contents;
+}
+
 .select {
   font-family: var(--main-font);
   width: 165px;
