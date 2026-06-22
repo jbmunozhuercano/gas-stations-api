@@ -279,8 +279,6 @@ export default function Home(): JSX.Element {
               onInputChange={(value) => {
                 setSearchTerm(value);
                 clearError();
-              }}
-              onFocus={() => {
                 setTimeout(() => {
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }, 150);

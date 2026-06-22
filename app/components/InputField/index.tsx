@@ -6,7 +6,6 @@ type InputProps = {
   placeholder: string;
   searchTerm: string;
   onInputChange: (searchTerm: string) => void;
-  onFocus?: () => void;
   disabled?: boolean;
 };
 
@@ -25,7 +24,6 @@ export function InputField({
   placeholder,
   searchTerm,
   onInputChange,
-  onFocus,
   disabled = true,
 }: InputProps): JSX.Element {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +43,6 @@ export function InputField({
       placeholder={placeholder}
       value={searchTerm}
       onChange={handleChange}
-      onFocus={onFocus}
       autoComplete="address-level2"
       disabled={disabled}
       aria-label="Buscar por municipio"
