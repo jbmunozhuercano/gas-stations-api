@@ -157,7 +157,11 @@ export default function Home(): JSX.Element {
   useEffect(() => {
     const hasStations = filteredStations.length > 0;
     if (hasStations && !prevHasStations.current) {
-      mapRowRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          mapRowRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
     }
     prevHasStations.current = hasStations;
   }, [filteredStations.length]);
