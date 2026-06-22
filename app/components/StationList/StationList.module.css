@@ -16,6 +16,11 @@
     color: var(--color-5);
     margin: 0.5em;
     padding: 0.5em;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .listContainer::-webkit-scrollbar {
+    display: none;
   }
 }
 
@@ -62,14 +67,14 @@
 }
 
 .horario {
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   color: var(--color-5);
   opacity: 0.85;
   flex: 1;
 }
 
 .price {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 700;
   color: var(--color-4);
   white-space: nowrap;
@@ -87,8 +92,8 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   color: var(--color-3);
   transition: color 0.3s ease-in-out;
 }
@@ -104,7 +109,7 @@
 }
 
 .pinIcon {
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   fill: currentColor;
 }
