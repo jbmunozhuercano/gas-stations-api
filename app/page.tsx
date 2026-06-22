@@ -281,7 +281,9 @@ export default function Home(): JSX.Element {
                 clearError();
               }}
               onFocus={() => {
-                mapRowRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                setTimeout(() => {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 150);
               }}
               disabled={!regionCode}
             />
