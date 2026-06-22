@@ -303,16 +303,15 @@ export default function Home(): JSX.Element {
           useLocation={useLocation}
           onStationClick={setFocusedStation}
         />
+        {!loading && filteredStations.length > 0 && (
+          <LocationInfo
+            count={filteredStations.length}
+            useLocation={useLocation}
+            selectedFuelLabel={selectedFuelLabel}
+            averagePrice={averagePrice}
+          />
+        )}
       </div>
-
-      {!loading && filteredStations.length > 0 && (
-        <LocationInfo
-          count={filteredStations.length}
-          useLocation={useLocation}
-          selectedFuelLabel={selectedFuelLabel}
-          averagePrice={averagePrice}
-        />
-      )}
     </main>
   );
 }
