@@ -98,7 +98,7 @@ export function StationList({
             return (
               <motion.div
                 className={styles.item}
-                key={`${station.Rótulo}-${station.Latitud}`}
+                key={station.IDEESS}
                 onClick={() => onStationClick(station)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {

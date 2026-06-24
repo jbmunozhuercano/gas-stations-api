@@ -1,4 +1,5 @@
 export interface Station {
+  IDEESS: string;
   Municipio: string;
   Rótulo: string;
   'C.P.': string;
