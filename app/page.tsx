@@ -49,6 +49,7 @@ function getScrollBehavior(): ScrollBehavior {
 export default function Home(): JSX.Element {
   const [regionCode, setRegionCode] = useState('');
   const [stations, setStations] = useState<Station[]>([]);
+  const [inputValue, setInputValue] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -84,6 +85,7 @@ export default function Home(): JSX.Element {
     if (regionCode) {
       fetchStations(`/api/gas-stations/${regionCode}`);
       setUseLocation(false);
+      setInputValue('');
       setSearchTerm('');
       setFocusedStation(null);
       clearError();
@@ -134,12 +136,14 @@ export default function Home(): JSX.Element {
   const handleLocationClick = useCallback(() => {
     if (!regionCode) return;
     setUseLocation(true);
+    setInputValue('');
     setSearchTerm('');
     getCurrentLocation();
   }, [regionCode, getCurrentLocation]);
 
   const clearSelections = useCallback(() => {
     setRegionCode('');
+    setInputValue('');
     setSearchTerm('');
     setUseLocation(false);
     setFocusedStation(null);
@@ -148,6 +152,7 @@ export default function Home(): JSX.Element {
 
   const handleInputChange = useCallback(
     (value: string) => {
+      setInputValue(value);
       debouncedFilter(value);
       clearError();
       setTimeout(() => {
@@ -233,7 +238,7 @@ export default function Home(): JSX.Element {
             <InputField
               type="text"
               placeholder="Introduce el municipio"
-              searchTerm={searchTerm}
+              searchTerm={inputValue}
               onInputChange={handleInputChange}
               disabled={!regionCode}
             />
