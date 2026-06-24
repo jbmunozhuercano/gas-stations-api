@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.4.1](https://github.com/jbmunozhuercano/gas-stations-api/compare/gas-stations-api-v2.4.0...gas-stations-api-v2.4.1) (2026-06-24)
+
+
+### Bug Fixes
+
+* adjust list position for 1024-1069px to avoid header overlap ([c04f184](https://github.com/jbmunozhuercano/gas-stations-api/commit/c04f18466c3101290875b631f0564c43b4118c91))
+* clear stations directly in clearSelections ([e9f0002](https://github.com/jbmunozhuercano/gas-stations-api/commit/e9f00025169c7fea1f4fb7ff528d7676009b0617))
+* constrain list height and map min-height on tablet viewport ([2a52279](https://github.com/jbmunozhuercano/gas-stations-api/commit/2a522792c8d7cae52278c6045e2fcb1431600db1))
+* remove fixed main height on tablet so SEO text follows map ([3832419](https://github.com/jbmunozhuercano/gas-stations-api/commit/38324199e5542ac4a802f872e5b392e278713bf2))
+* separate input value from debounced search term ([7babb36](https://github.com/jbmunozhuercano/gas-stations-api/commit/7babb365af8b0d8675b98f8b6fd72f900e045f98))
+* tablet map same height as mobile, desktop still flex ([c667c81](https://github.com/jbmunozhuercano/gas-stations-api/commit/c667c817a8e9e2d1ef3a055121ba538b00dfb05a))
+
 ## [2.4.0](https://github.com/jbmunozhuercano/gas-stations-api/compare/gas-stations-api-v2.3.0...gas-stations-api-v2.4.0) (2026-06-22)
 
 
