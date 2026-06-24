@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.4.2](https://github.com/jbmunozhuercano/gas-stations-api/compare/gas-stations-api-v2.4.1...gas-stations-api-v2.4.2) (2026-06-24)
+
+
+### Bug Fixes
+
+* cancel debounced filter on clear to prevent phantom stations ([56d675c](https://github.com/jbmunozhuercano/gas-stations-api/commit/56d675ceff128bfb673469de6eb2eaf65e8e47e5))
+* use IDEESS as unique key to prevent duplicate React keys ([cafd214](https://github.com/jbmunozhuercano/gas-stations-api/commit/cafd214afda4112fab38b7d1dfa0950475f20454))
+
 ## [2.4.1](https://github.com/jbmunozhuercano/gas-stations-api/compare/gas-stations-api-v2.4.0...gas-stations-api-v2.4.1) (2026-06-24)
 
 
