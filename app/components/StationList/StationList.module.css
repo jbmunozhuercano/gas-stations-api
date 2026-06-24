@@ -55,6 +55,13 @@
   }
 }
 
+@media screen and (min-width: 1024px) and (max-width: 1069px) {
+  .listContainer {
+    top: 7em;
+    max-height: calc(100% - 9em);
+  }
+}
+
 .item {
   display: flex;
   align-items: center;
