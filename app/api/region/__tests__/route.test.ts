@@ -1,10 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { GET } from '../route';
 
-vi.mock('node-fetch', () => ({
-  default: vi.fn(),
-}));
-
 describe('GET /api/region', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -20,10 +16,10 @@ describe('GET /api/region', () => {
       { IDCCAA: '02', CCAA: 'Aragón' },
     ];
 
-    const fetchModule = await import('node-fetch');
-    vi.mocked(fetchModule.default).mockResolvedValueOnce({
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+      ok: true,
       json: () => Promise.resolve(mockData),
-    } as any);
+    } as Response);
 
     const response = await GET();
     const data = await response.json();
@@ -35,10 +31,10 @@ describe('GET /api/region', () => {
   it('returns correct content-type header', async () => {
     const mockData = [{ IDCCAA: '01', CCAA: 'Andalucía' }];
 
-    const fetchModule = await import('node-fetch');
-    vi.mocked(fetchModule.default).mockResolvedValueOnce({
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+      ok: true,
       json: () => Promise.resolve(mockData),
-    } as any);
+    } as Response);
 
     const response = await GET();
 
@@ -48,10 +44,10 @@ describe('GET /api/region', () => {
   it('returns cache-control header', async () => {
     const mockData = [{ IDCCAA: '01', CCAA: 'Andalucía' }];
 
-    const fetchModule = await import('node-fetch');
-    vi.mocked(fetchModule.default).mockResolvedValueOnce({
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+      ok: true,
       json: () => Promise.resolve(mockData),
-    } as any);
+    } as Response);
 
     const response = await GET();
 
@@ -61,8 +57,7 @@ describe('GET /api/region', () => {
   });
 
   it('returns 500 when external API fails', async () => {
-    const fetchModule = await import('node-fetch');
-    vi.mocked(fetchModule.default).mockRejectedValueOnce(
+    vi.spyOn(global, 'fetch').mockRejectedValueOnce(
       new Error('Network error')
     );
 
@@ -70,6 +65,20 @@ describe('GET /api/region', () => {
     const data = await response.json();
 
     expect(response.status).toBe(500);
+    expect(data).toEqual({ error: 'Error al obtener datos de comunidades' });
+  });
+
+  it('returns 502 when upstream API returns error status', async () => {
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+      ok: false,
+      status: 500,
+      json: () => Promise.resolve({}),
+    } as Response);
+
+    const response = await GET();
+    const data = await response.json();
+
+    expect(response.status).toBe(502);
     expect(data).toEqual({ error: 'Error al obtener datos de comunidades' });
   });
 });

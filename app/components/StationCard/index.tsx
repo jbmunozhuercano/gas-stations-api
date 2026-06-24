@@ -2,13 +2,7 @@ import { JSX } from 'react';
 import styles from './StationCard.module.css';
 import type { Station } from '../../types/station';
 import { isStationOpen } from '../../utils/stationHours';
-
-function sanitizeHtml(html: string): string {
-  return html
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/&lt;br\s*\/?&gt;/gi, '<br />');
-}
+import { sanitizeHtml } from '../../utils/sanitizeHtml';
 
 interface StationCardProps {
   station: Station;

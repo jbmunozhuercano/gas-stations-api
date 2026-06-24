@@ -1,9 +1,6 @@
 /* Global styles */
 :root {
   --main-font: 'Smooch Sans';
-  --primary-color: #f8f9fa;
-  --secondary-color: #212529;
-  --grey-color: #cacaca;
   --success-color: #00a36c;
   --error-color: #721c24;
   --error-bg: #f8d7da;
@@ -30,7 +27,6 @@ body {
   font-weight: 400;
   font-size: 1em;
   line-height: 1.6;
-  background-color: var(--color-1);
   color: var(--color-5);
   background: var(--color-1) url('../public/images/bg_small.webp') center center
     fixed no-repeat;
@@ -109,7 +105,14 @@ main {
   position: relative;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  main {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media screen and (min-width: 1024px) {
   main {
     height: 80vh;
     display: flex;

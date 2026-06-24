@@ -1,17 +1,3 @@
-import fetch from 'node-fetch';
-
-/**
- * Handles GET requests to fetch gas station price data for the previous day
- * from the Spanish Ministry of Industry, Commerce and Tourism's public API.
- *
- * - Calculates yesterday's date and formats it as 'DD-MM-YYYY'.
- * - Fetches historical terrestrial gas station prices for that date.
- * - Returns the data as a JSON response with status 200.
- * - On error, returns a JSON error message with status 500.
- *
- * @returns {Promise<Response>} A promise that resolves to a Response object containing the fetched data or an error message.
- */
-
 export async function GET() {
   const date = new Date();
   date.setDate(date.getDate() - 1);
@@ -24,6 +10,15 @@ export async function GET() {
 
   try {
     const response = await fetch(url);
+
+    if (!response.ok) {
+      console.error(`External API returned ${response.status}`);
+      return Response.json(
+        { error: 'Error al obtener los datos' },
+        { status: 502 }
+      );
+    }
+
     const data = await response.json();
     return Response.json(data, {
       status: 200,

@@ -1,10 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { GET } from '../route';
 
-vi.mock('node-fetch', () => ({
-  default: vi.fn(),
-}));
-
 describe('GET /api/gas-stations', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -22,10 +18,10 @@ describe('GET /api/gas-stations', () => {
       ],
     };
 
-    const fetchModule = await import('node-fetch');
-    vi.mocked(fetchModule.default).mockResolvedValueOnce({
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+      ok: true,
       json: () => Promise.resolve(mockData),
-    } as any);
+    } as Response);
 
     const response = await GET();
     const data = await response.json();
@@ -37,10 +33,10 @@ describe('GET /api/gas-stations', () => {
   it('returns correct content-type header', async () => {
     const mockData = { ListaEESSPrecio: [] };
 
-    const fetchModule = await import('node-fetch');
-    vi.mocked(fetchModule.default).mockResolvedValueOnce({
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+      ok: true,
       json: () => Promise.resolve(mockData),
-    } as any);
+    } as Response);
 
     const response = await GET();
 
@@ -48,8 +44,7 @@ describe('GET /api/gas-stations', () => {
   });
 
   it('returns 500 when external API fails', async () => {
-    const fetchModule = await import('node-fetch');
-    vi.mocked(fetchModule.default).mockRejectedValueOnce(
+    vi.spyOn(global, 'fetch').mockRejectedValueOnce(
       new Error('Network error')
     );
 
@@ -60,17 +55,31 @@ describe('GET /api/gas-stations', () => {
     expect(data).toEqual({ error: 'Error al obtener los datos' });
   });
 
+  it('returns 502 when upstream API returns error status', async () => {
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+      ok: false,
+      status: 503,
+      json: () => Promise.resolve({}),
+    } as Response);
+
+    const response = await GET();
+    const data = await response.json();
+
+    expect(response.status).toBe(502);
+    expect(data).toEqual({ error: 'Error al obtener los datos' });
+  });
+
   it('fetches data for yesterday\'s date', async () => {
     const mockData = { ListaEESSPrecio: [] };
 
-    const fetchModule = await import('node-fetch');
-    vi.mocked(fetchModule.default).mockResolvedValueOnce({
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+      ok: true,
       json: () => Promise.resolve(mockData),
-    } as any);
+    } as Response);
 
     await GET();
 
-    const calledUrl = vi.mocked(fetchModule.default).mock.calls[0][0] as string;
+    const calledUrl = vi.mocked(global.fetch).mock.calls[0][0] as string;
 
     expect(calledUrl).toContain('EstacionesTerrestresHist/');
     expect(calledUrl).toMatch(

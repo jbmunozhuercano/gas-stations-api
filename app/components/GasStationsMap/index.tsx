@@ -7,8 +7,8 @@ import styles from './GasStationsMap.module.css';
 import { StationCard } from '../StationCard';
 import type { Station } from '../../types/station';
 import { isStationOpen } from '../../utils/stationHours';
+import { parseCoordinate } from '../../utils/parseCoordinate';
 
-// Fix default icon issue
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl:
@@ -27,7 +27,6 @@ interface GasStationsMapProps {
   focusedStation: Station | null;
 }
 
-// Custom marker icons
 const greenIcon = new L.Icon({
   iconUrl:
     'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
@@ -65,6 +64,20 @@ const greyIcon = new L.Icon({
   shadowSize: [41, 41],
 });
 
+function MapUpdater({
+  center,
+  zoom,
+}: {
+  center: LatLngExpression;
+  zoom: number;
+}) {
+  const map = useMap();
+  useEffect(() => {
+    map.setView(center, zoom);
+  }, [center, zoom, map]);
+  return null;
+}
+
 function MapController({
   focusedStation,
   markerRefs,
@@ -77,10 +90,8 @@ function MapController({
   useEffect(() => {
     if (!focusedStation) return;
 
-    const lat = parseFloat(focusedStation.Latitud.replace(',', '.'));
-    const lon = parseFloat(
-      focusedStation['Longitud (WGS84)'].replace(',', '.'),
-    );
+    const lat = parseCoordinate(focusedStation.Latitud);
+    const lon = parseCoordinate(focusedStation['Longitud (WGS84)']);
     if (isNaN(lat) || isNaN(lon)) return;
 
     map.flyTo([lat, lon], 16, { duration: 0.5 });
@@ -113,18 +124,17 @@ export default function GasStationsMap({
       center={center}
       zoom={zoom}
       className={styles.mapContainer}
-      key={center.toString() + zoom}
     >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      <MapUpdater center={center} zoom={zoom} />
       <MapController focusedStation={focusedStation} markerRefs={markerRefs} />
-      {stations.map((station, idx) => {
-        const lat = parseFloat(station.Latitud.replace(',', '.'));
-        const lon = parseFloat(station['Longitud (WGS84)'].replace(',', '.'));
+      {stations.map((station) => {
+        const lat = parseCoordinate(station.Latitud);
+        const lon = parseCoordinate(station['Longitud (WGS84)']);
         const price = parseFloat(String(station[priceKey] ?? '').replace(',', '.'));
         if (isNaN(lat) || isNaN(lon) || isNaN(price)) return null;
 
         const EPSILON = 0.001;
-
         const isOpen = isStationOpen(station.Horario);
 
         let icon = yellowIcon;
@@ -140,7 +150,7 @@ export default function GasStationsMap({
 
         return (
           <Marker
-            key={idx}
+            key={key}
             position={[lat, lon]}
             icon={icon}
             ref={(ref) => {

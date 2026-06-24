@@ -1,42 +1,42 @@
-import fetch from 'node-fetch';
-
 interface Params {
   regionCode: string;
 }
 
-/**
- * Handles GET requests to fetch gas station data for a specific region.
- *
- * @param request - The incoming HTTP request object.
- * @param params - An object containing a promise that resolves to the route parameters, including `regionCode`.
- * @returns A promise that resolves to a `Response` object containing the gas station data in JSON format.
- *
- * @remarks
- * - Fetches data from the Spanish Ministry of Industry, Energy and Tourism's public API.
- * - Adds caching headers to the response for improved performance.
- * - Returns a 500 status code with an error message if the fetch operation fails.
- *
- * @example
- * Example usage in a Next.js API route:
- * export { GET } from './route';
- */
+const VALID_REGION_CODES = /^\d{1,2}$/;
 
 export async function GET(
   request: Request,
   { params }: { params: Promise<Params> }
 ): Promise<Response> {
   const { regionCode } = await params;
+
+  if (!VALID_REGION_CODES.test(regionCode)) {
+    return Response.json(
+      { error: 'Código de región no válido' },
+      { status: 400 }
+    );
+  }
+
   const url = `https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/FiltroCCAA/${regionCode}`;
 
   try {
     const response = await fetch(url);
+
+    if (!response.ok) {
+      console.error(`External API returned ${response.status}`);
+      return Response.json(
+        { error: 'Error al obtener datos de estaciones de servicio' },
+        { status: 502 }
+      );
+    }
+
     const data = await response.json();
 
     return Response.json(data, {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
-        'Cache-Control': 'public, max-age=3600', // Added caching
+        'Cache-Control': 'public, max-age=3600',
       },
     });
   } catch (error) {

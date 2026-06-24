@@ -2,7 +2,6 @@
 import { useState, useEffect, useMemo, useCallback, useRef, JSX } from 'react';
 import debounce from 'lodash/debounce';
 import styles from './page.module.css';
-import 'leaflet/dist/leaflet.css';
 import { Select } from './components/Select';
 import { InputField } from './components/InputField';
 import { GasTypeSelector } from './components/GasTypeSelector';
@@ -21,12 +20,10 @@ const GasStationsMap = dynamic(
   () => import('./components/GasStationsMap').then((mod) => mod.default),
   {
     ssr: false,
+    loading: () => <div className={styles.mapPlaceholder} />,
   },
 );
 
-/**
- * List of available fuel types for selection.
- */
 const FUEL_TYPES: { key: keyof Station; label: string }[] = [
   { key: 'Precio Gasolina 95 E5', label: 'Gasolina 95 E5' },
   { key: 'Precio Gasolina 98 E5', label: 'Gasolina 98 E5' },
@@ -34,28 +31,32 @@ const FUEL_TYPES: { key: keyof Station; label: string }[] = [
   { key: 'Precio Gasoleo Premium', label: 'Gasóleo Premium' },
 ];
 
-/**
- * Home component that displays a list of gas stations with filtering and pagination.
- * Handles region selection, geolocation, and fuel type selection.
- * @returns {JSX.Element} The rendered component.
- */
+function getAveragePrice(stations: Station[], priceKey: keyof Station): number {
+  const prices = stations
+    .map((s) => parseFloat(String(s[priceKey] ?? '').replace(',', '.')))
+    .filter((p) => !isNaN(p));
+  if (prices.length === 0) return 0;
+  return prices.reduce((a, b) => a + b, 0) / prices.length;
+}
+
+function getScrollBehavior(): ScrollBehavior {
+  if (typeof window === 'undefined') return 'smooth';
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ? 'auto'
+    : 'smooth';
+}
+
 export default function Home(): JSX.Element {
   const [regionCode, setRegionCode] = useState('');
   const [stations, setStations] = useState<Station[]>([]);
+  const [inputValue, setInputValue] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredStations, setFilteredStations] = useState<Station[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [useLocation, setUseLocation] = useState(false);
   const [focusedStation, setFocusedStation] = useState<Station | null>(null);
   const mapRowRef = useRef<HTMLDivElement>(null);
 
-  const handleStationClick = (station: Station) => {
-    setFocusedStation(station);
-    mapRowRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-
-  // Custom hook for geolocation
   const {
     latitude,
     longitude,
@@ -65,115 +66,111 @@ export default function Home(): JSX.Element {
     clearError,
   } = useGeolocation();
 
-  /**
-   * Fetches stations data from the API and updates state.
-   */
   const fetchStations = useCallback(async (url: string) => {
     setLoading(true);
     setError('');
-
     try {
       const response = await fetch(url);
       if (!response.ok) throw new Error('Error al obtener datos');
       const data = await response.json();
       setStations(data.ListaEESSPrecio);
     } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError('Ha ocurrido un error');
-      }
+      setError(err instanceof Error ? err.message : 'Ha ocurrido un error');
     } finally {
       setLoading(false);
     }
   }, []);
 
-  /**
-   * Debounced function to filter stations based on the search term.
-   */
-  const debouncedFilterStations = useMemo(() => {
-    return debounce((stations: Station[], municipality: string) => {
-      const term = municipality.trim().toLowerCase();
-      setFilteredStations(
-        stations.filter((station) =>
-          station['Municipio'].toLocaleLowerCase().includes(term),
-        ),
-      );
-    }, 300);
-  }, []);
-
-  /**
-   * Effect to fetch stations when the region changes.
-   */
   useEffect(() => {
     if (regionCode) {
       fetchStations(`/api/gas-stations/${regionCode}`);
-      setUseLocation(false); // Reset geolocation when region changes
-      setSearchTerm(''); // Reset search term when region changes
-      setFocusedStation(null); // Reset focused station when region changes
-      clearError(); // Clear any geolocation error
+      setUseLocation(false);
+      setInputValue('');
+      setSearchTerm('');
+      setFocusedStation(null);
+      clearError();
     } else {
       setStations([]);
-      setFilteredStations([]);
     }
   }, [regionCode, fetchStations, clearError]);
 
-  /**
-   * Effect to filter stations by geolocation or municipality.
-   */
-  useEffect(() => {
-    if (!regionCode || stations.length === 0) {
-      setFilteredStations([]);
-      return;
-    }
-    if (useLocation && latitude && longitude) {
-      // Filter stations by distance if geolocation is enabled
-      const nearbyStations = filterStationsByDistance(
-        stations,
-        latitude,
-        longitude,
-        3,
-      );
-      setFilteredStations(nearbyStations);
-    } else {
-      // Filter stations by municipality search term
-      debouncedFilterStations(stations, searchTerm);
-    }
-  }, [
-    useLocation,
-    latitude,
-    longitude,
-    stations,
-    searchTerm,
-    debouncedFilterStations,
-    regionCode,
-  ]);
+  const debouncedFilter = useMemo(
+    () =>
+      debounce((term: string) => {
+        setSearchTerm(term);
+      }, 300),
+    [],
+  );
 
-  /**
-   * Handles location button click to enable geolocation and fetch stations.
-   */
-  const handleLocationClick = () => {
+  useEffect(() => {
+    return () => {
+      debouncedFilter.cancel();
+    };
+  }, [debouncedFilter]);
+
+  const filteredStations = useMemo(() => {
+    if (!regionCode || stations.length === 0) return [];
+    if (useLocation && latitude && longitude) {
+      return filterStationsByDistance(stations, latitude, longitude, 3);
+    }
+    const term = searchTerm.trim().toLowerCase();
+    if (!term) return stations;
+    return stations.filter((s) =>
+      s['Municipio'].toLocaleLowerCase().includes(term),
+    );
+  }, [stations, searchTerm, useLocation, latitude, longitude, regionCode]);
+
+  const handleStationClick = useCallback(
+    (station: Station) => {
+      setFocusedStation(station);
+      setTimeout(() => {
+        mapRowRef.current?.scrollIntoView({
+          behavior: getScrollBehavior(),
+          block: 'start',
+        });
+      }, 150);
+    },
+    [],
+  );
+
+  const handleLocationClick = useCallback(() => {
     if (!regionCode) return;
     setUseLocation(true);
+    setInputValue('');
     setSearchTerm('');
     getCurrentLocation();
-  };
+  }, [regionCode, getCurrentLocation]);
 
-  /**
-   * Clears all selections and resets the state.
-   */
-  const clearSelections = () => {
+  const clearSelections = useCallback(() => {
     setRegionCode('');
+    setStations([]);
+    setInputValue('');
     setSearchTerm('');
     setUseLocation(false);
-    setFilteredStations([]);
     setFocusedStation(null);
     clearError();
-  };
+  }, [clearError]);
 
-  /**
-   * Calculates the center of filtered stations for map positioning.
-   */
+  const handleInputChange = useCallback(
+    (value: string) => {
+      setInputValue(value);
+      debouncedFilter(value);
+      clearError();
+      setTimeout(() => {
+        mapRowRef.current?.scrollIntoView({
+          behavior: getScrollBehavior(),
+          block: 'start',
+        });
+      }, 150);
+    },
+    [debouncedFilter, clearError],
+  );
+
+  const handleFuelChange = useCallback((key: string) => {
+    setSelectedFuel(key as keyof Station);
+    clearError();
+  }, [clearError]);
+
   const filteredCenter = useMemo<[number, number] | null>(() => {
     if (filteredStations.length === 0) return null;
     const coords = filteredStations
@@ -188,72 +185,39 @@ export default function Home(): JSX.Element {
     return [avgLat, avgLon];
   }, [filteredStations]);
 
-  /**
-   * Calculates the map center based on location, search results, or region.
-   */
-  const mapCenter: [number, number] =
-    useLocation && latitude && longitude
-      ? [latitude, longitude]
-      : filteredCenter
-        ? filteredCenter
-        : regionCode && REGION_CENTERS[regionCode]
-          ? REGION_CENTERS[regionCode]
-          : [40.4168, -3.7038]; // Default center (Madrid)
+  const mapCenter = useMemo<[number, number]>(
+    () =>
+      useLocation && latitude && longitude
+        ? [latitude, longitude]
+        : filteredCenter ??
+          (regionCode && REGION_CENTERS[regionCode]
+            ? REGION_CENTERS[regionCode]
+            : [40.4168, -3.7038]),
+    [useLocation, latitude, longitude, filteredCenter, regionCode],
+  );
 
-  const defaultZoom = 6;
-  const regionZoom = 7;
-  const locationZoom = 12;
-  const municipalityZoom = 10;
+  const zoom = useMemo(() => {
+    if (useLocation && latitude && longitude) return 12;
+    if (searchTerm) return 10;
+    if (regionCode && REGION_CENTERS[regionCode]) return 7;
+    return 6;
+  }, [useLocation, latitude, longitude, searchTerm, regionCode]);
 
-  /**
-   * Calculates the zoom level based on location or region.
-   */
-  const zoom =
-    useLocation && latitude && longitude
-      ? locationZoom
-      : searchTerm
-        ? municipalityZoom
-        : regionCode && REGION_CENTERS[regionCode]
-          ? regionZoom
-          : defaultZoom;
+  const showDistance = !!(useLocation && latitude && longitude);
 
-  /**
-   * Determines whether to show distance information.
-   */
-  const showDistance = useLocation && latitude && longitude ? true : false;
-
-  /**
-   * State for the selected fuel type.
-   */
   const [selectedFuel, setSelectedFuel] = useState<keyof Station>(
     FUEL_TYPES[0].key,
   );
 
-  /**
-   * Calculates the average price for the selected fuel type.
-   * @param stations - Array of stations.
-   * @param priceKey - Selected fuel price key.
-   * @returns Average price as a number.
-   */
-  const getAveragePrice = (stations: Station[], priceKey: keyof Station) => {
-    const prices = stations
-      .map((s) => parseFloat(String(s[priceKey] ?? '').replace(',', '.')))
-      .filter((p) => !isNaN(p));
-    if (prices.length === 0) return 0;
-    return prices.reduce((a, b) => a + b, 0) / prices.length;
-  };
-
-  /**
-   * Memoized value for the average price of the selected fuel type.
-   */
   const averagePrice = useMemo(
-    () => getAveragePrice(filteredStations, selectedFuel as keyof Station),
+    () => getAveragePrice(filteredStations, selectedFuel),
     [filteredStations, selectedFuel],
   );
 
-  const selectedFuelLabel = FUEL_TYPES.find(
-    (f) => f.key === selectedFuel,
-  )?.label;
+  const selectedFuelLabel = useMemo(
+    () => FUEL_TYPES.find((f) => f.key === selectedFuel)?.label,
+    [selectedFuel],
+  );
 
   return (
     <main id="main-content">
@@ -275,23 +239,14 @@ export default function Home(): JSX.Element {
             <InputField
               type="text"
               placeholder="Introduce el municipio"
-              searchTerm={searchTerm}
-              onInputChange={(value) => {
-                setSearchTerm(value);
-                clearError();
-                setTimeout(() => {
-                  mapRowRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 150);
-              }}
+              searchTerm={inputValue}
+              onInputChange={handleInputChange}
               disabled={!regionCode}
             />
           )}
           <GasTypeSelector
             priceKey={selectedFuel as string}
-            onChange={(key) => {
-              setSelectedFuel(key as keyof Station);
-              clearError();
-            }}
+            onChange={handleFuelChange}
           />
           <ClearButton clearSelections={clearSelections} />
         </nav>
@@ -301,7 +256,7 @@ export default function Home(): JSX.Element {
           center={mapCenter}
           showDistance={showDistance}
           zoom={zoom}
-          priceKey={selectedFuel as keyof Station}
+          priceKey={selectedFuel}
           averagePrice={averagePrice}
           focusedStation={focusedStation}
         />

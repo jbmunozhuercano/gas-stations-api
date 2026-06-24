@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import styles from './StationList.module.css';
 import type { Station } from '../../types/station';
 import { isStationOpen } from '../../utils/stationHours';
+import { sanitizeHtml } from '../../utils/sanitizeHtml';
 
 interface StationListProps {
   stations: Station[];
@@ -12,12 +13,7 @@ interface StationListProps {
   onStationClick: (station: Station) => void;
 }
 
-function sanitizeHtml(html: string): string {
-  return html
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/&lt;br\s*\/?&gt;/gi, '<br />');
-}
+const MAX_ANIMATION_DELAY = 0.6;
 
 export function StationList({
   stations,
@@ -72,12 +68,12 @@ export function StationList({
     return () => observer.disconnect();
   }, [sortedStations.length, checkScroll]);
 
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     const el = containerRef.current;
     if (!el) return;
     const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 10;
     setCanScroll(!atBottom);
-  };
+  }, []);
 
   const slideOffset = isDesktop ? 50 : 30;
 
@@ -97,11 +93,12 @@ export function StationList({
             const isOpen = isStationOpen(station.Horario);
             const price = station[selectedFuel as keyof Station];
             const priceNum = parseFloat(String(price ?? '').replace(',', '.'));
+            const delay = Math.min(index * 0.03, MAX_ANIMATION_DELAY);
 
             return (
               <motion.div
                 className={styles.item}
-                key={`${station.Rótulo}-${index}`}
+                key={`${station.Rótulo}-${station.Latitud}`}
                 onClick={() => onStationClick(station)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
@@ -114,7 +111,7 @@ export function StationList({
                 aria-label={`Ver ${station.Rótulo} en el mapa`}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.03, duration: 0.2 }}
+                transition={{ delay, duration: 0.2 }}
                 whileHover={{ scale: 1.02, backgroundColor: 'rgba(37, 66, 82, 0.9)' }}
                 whileTap={{ scale: 0.97 }}
               >
