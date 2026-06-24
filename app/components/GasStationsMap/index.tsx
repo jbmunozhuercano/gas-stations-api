@@ -96,7 +96,7 @@ function MapController({
 
     map.flyTo([lat, lon], 16, { duration: 0.5 });
 
-    const key = `${focusedStation.Rótulo}-${focusedStation.Latitud}`;
+    const key = focusedStation.IDEESS;
     const marker = markerRefs.current.get(key);
     if (marker) {
       setTimeout(() => {
@@ -146,7 +146,7 @@ export default function GasStationsMap({
           icon = redIcon;
         }
 
-        const key = `${station.Rótulo}-${station.Latitud}`;
+        const key = station.IDEESS;
 
         return (
           <Marker
