@@ -142,6 +142,7 @@ export default function Home(): JSX.Element {
   }, [regionCode, getCurrentLocation]);
 
   const clearSelections = useCallback(() => {
+    debouncedFilter.cancel();
     setRegionCode('');
     setStations([]);
     setInputValue('');
@@ -149,7 +150,7 @@ export default function Home(): JSX.Element {
     setUseLocation(false);
     setFocusedStation(null);
     clearError();
-  }, [clearError]);
+  }, [clearError, debouncedFilter]);
 
   const handleInputChange = useCallback(
     (value: string) => {
