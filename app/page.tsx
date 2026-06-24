@@ -143,6 +143,7 @@ export default function Home(): JSX.Element {
 
   const clearSelections = useCallback(() => {
     setRegionCode('');
+    setStations([]);
     setInputValue('');
     setSearchTerm('');
     setUseLocation(false);
