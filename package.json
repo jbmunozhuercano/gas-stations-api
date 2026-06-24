@@ -15,12 +15,10 @@
     "@fortawesome/fontawesome-svg-core": "6.7.2",
     "@fortawesome/free-solid-svg-icons": "6.7.2",
     "@fortawesome/react-fontawesome": "0.2.2",
-    "axios": "^1.7.9",
     "leaflet": "^1.9.4",
     "lodash": "4.17.21",
     "motion": "^12.40.0",
     "next": "16.2.9",
-    "node-fetch": "3.3.2",
     "react": "19.2.7",
     "react-dom": "19.2.7",
     "react-leaflet": "^5.0.0"

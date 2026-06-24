@@ -11,7 +11,6 @@
   border: 2px solid var(--color-3);
   cursor: pointer;
   font-family: var(--main-font);
-  outline: none;
   opacity: 0.8;
 }
 

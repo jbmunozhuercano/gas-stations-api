@@ -40,6 +40,25 @@
   position: relative;
 }
 
+.mapPlaceholder {
+  width: 100%;
+  height: 380px;
+  background-color: var(--color-1);
+}
+
+@media (min-width: 400px) {
+  .mapPlaceholder {
+    height: 500px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .mapPlaceholder {
+    height: 100%;
+    flex: 1;
+  }
+}
+
 @media screen and (max-width: 767px) {
   .listHeader {
     position: fixed;

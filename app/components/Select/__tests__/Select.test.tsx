@@ -25,7 +25,7 @@ describe('Select', () => {
   it('renders with default option', () => {
     render(<Select regionCode="" setRegionCode={() => {}} />);
     expect(
-      screen.getByText('Selecciona una comunidad autónoma')
+      screen.getByText('Comunidad')
     ).toBeInTheDocument();
   });
 

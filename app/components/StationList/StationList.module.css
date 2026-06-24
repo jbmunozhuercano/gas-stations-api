@@ -99,7 +99,6 @@
 .horario {
   font-size: 0.85rem;
   color: var(--color-5);
-  opacity: 0.85;
   width: 38%;
   flex-shrink: 0;
   min-width: 0;
@@ -118,7 +117,6 @@
 .noPrice {
   font-size: 0.7rem;
   color: var(--color-5);
-  opacity: 0.5;
   white-space: nowrap;
   width: 17%;
   flex-shrink: 0;

@@ -1,10 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { GET } from '../route';
 
-vi.mock('node-fetch', () => ({
-  default: vi.fn(),
-}));
-
 describe('GET /api/gas-stations/[regionCode]', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -21,10 +17,10 @@ describe('GET /api/gas-stations/[regionCode]', () => {
       ],
     };
 
-    const fetchModule = await import('node-fetch');
-    vi.mocked(fetchModule.default).mockResolvedValueOnce({
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+      ok: true,
       json: () => Promise.resolve(mockData),
-    } as any);
+    } as Response);
 
     const request = new Request('http://localhost/api/gas-stations/10');
     const params = Promise.resolve({ regionCode: '10' });
@@ -39,10 +35,10 @@ describe('GET /api/gas-stations/[regionCode]', () => {
   it('returns correct content-type header', async () => {
     const mockData = { ListaEESSPrecio: [] };
 
-    const fetchModule = await import('node-fetch');
-    vi.mocked(fetchModule.default).mockResolvedValueOnce({
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+      ok: true,
       json: () => Promise.resolve(mockData),
-    } as any);
+    } as Response);
 
     const request = new Request('http://localhost/api/gas-stations/10');
     const params = Promise.resolve({ regionCode: '10' });
@@ -55,10 +51,10 @@ describe('GET /api/gas-stations/[regionCode]', () => {
   it('returns cache-control header', async () => {
     const mockData = { ListaEESSPrecio: [] };
 
-    const fetchModule = await import('node-fetch');
-    vi.mocked(fetchModule.default).mockResolvedValueOnce({
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+      ok: true,
       json: () => Promise.resolve(mockData),
-    } as any);
+    } as Response);
 
     const request = new Request('http://localhost/api/gas-stations/10');
     const params = Promise.resolve({ regionCode: '10' });
@@ -71,8 +67,7 @@ describe('GET /api/gas-stations/[regionCode]', () => {
   });
 
   it('returns 500 when external API fails', async () => {
-    const fetchModule = await import('node-fetch');
-    vi.mocked(fetchModule.default).mockRejectedValueOnce(
+    vi.spyOn(global, 'fetch').mockRejectedValueOnce(
       new Error('Network error')
     );
 
@@ -86,20 +81,48 @@ describe('GET /api/gas-stations/[regionCode]', () => {
     expect(data).toEqual({ error: 'Error al obtener datos de estaciones de servicio' });
   });
 
+  it('returns 502 when upstream API returns error status', async () => {
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+      ok: false,
+      status: 502,
+      json: () => Promise.resolve({}),
+    } as Response);
+
+    const request = new Request('http://localhost/api/gas-stations/10');
+    const params = Promise.resolve({ regionCode: '10' });
+
+    const response = await GET(request, { params });
+    const data = await response.json();
+
+    expect(response.status).toBe(502);
+    expect(data).toEqual({ error: 'Error al obtener datos de estaciones de servicio' });
+  });
+
+  it('returns 400 for invalid regionCode', async () => {
+    const request = new Request('http://localhost/api/gas-stations/abc');
+    const params = Promise.resolve({ regionCode: 'abc' });
+
+    const response = await GET(request, { params });
+    const data = await response.json();
+
+    expect(response.status).toBe(400);
+    expect(data).toEqual({ error: 'Código de región no válido' });
+  });
+
   it('passes regionCode to external API URL', async () => {
     const mockData = { ListaEESSPrecio: [] };
 
-    const fetchModule = await import('node-fetch');
-    vi.mocked(fetchModule.default).mockResolvedValueOnce({
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+      ok: true,
       json: () => Promise.resolve(mockData),
-    } as any);
+    } as Response);
 
     const request = new Request('http://localhost/api/gas-stations/10');
     const params = Promise.resolve({ regionCode: '10' });
 
     await GET(request, { params });
 
-    const calledUrl = vi.mocked(fetchModule.default).mock.calls[0][0] as string;
+    const calledUrl = vi.mocked(global.fetch).mock.calls[0][0] as string;
 
     expect(calledUrl).toContain('FiltroCCAA/10');
   });
