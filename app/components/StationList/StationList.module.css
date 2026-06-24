@@ -131,7 +131,6 @@
 
 @media screen and (min-width: 1024px) {
   .scrollIndicator {
-    display: none;
     position: sticky;
     bottom: -25px;
     left: 0;

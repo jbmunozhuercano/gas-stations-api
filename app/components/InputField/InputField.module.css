@@ -22,8 +22,6 @@
 
 .input:focus {
   border-color: var(--success-color);
-  background-color: var(--color-1);
-  color: var(--color-5);
 }
 
 .input:disabled {

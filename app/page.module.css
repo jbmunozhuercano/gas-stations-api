@@ -1,5 +1,4 @@
 .listHeader {
-  width: 100%;
   max-width: 1400px;
   display: flex;
   flex-wrap: wrap;
@@ -20,7 +19,6 @@
   top: calc(3.5em + 44px);
   left: 18px;
   right: 18px;
-  width: calc(100vw - 36px);
   max-width: 460px;
   padding: 10px 0.5em;
   box-sizing: border-box;
@@ -49,7 +47,6 @@
     top: auto;
     left: 0;
     right: 0;
-    flex-wrap: wrap;
     gap: 6px;
     padding: 8px;
     background-color: rgba(15, 25, 35, 0.85);
@@ -58,7 +55,6 @@
   .error {
     top: auto;
     bottom: calc(4em + 52px);
-    width: calc(100vw - 36px);
     margin: 0 18px;
   }
 }
