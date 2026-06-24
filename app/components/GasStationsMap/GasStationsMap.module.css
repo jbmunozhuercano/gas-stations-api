@@ -9,10 +9,15 @@
   }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .mapContainer {
+    height: 500px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
   .mapContainer {
     height: 100%;
-    min-height: 300px;
     flex: 1;
   }
 }
