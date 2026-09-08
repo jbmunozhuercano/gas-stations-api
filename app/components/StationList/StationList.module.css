@@ -123,6 +123,37 @@
   text-align: right;
 }
 
+.heart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+  width: 18px;
+  height: 18px;
+}
+
+.heart:hover {
+  transform: scale(1.15);
+}
+
+.heartFilled {
+  color: var(--color-3);
+}
+
+.heartOutline {
+  color: var(--color-5);
+  opacity: 0.4;
+}
+
+.heartOutline:hover {
+  opacity: 0.7;
+}
+
 .scrollIndicator {
   display: none;
 }

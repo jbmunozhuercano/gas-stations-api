@@ -25,6 +25,8 @@ interface GasStationsMapProps {
   priceKey: keyof Station;
   averagePrice: number;
   focusedStation: Station | null;
+  favorites: string[];
+  onToggleFavorite: (ideess: string) => void;
 }
 
 const greenIcon = new L.Icon({
@@ -116,6 +118,8 @@ export default function GasStationsMap({
   priceKey,
   averagePrice,
   focusedStation,
+  favorites,
+  onToggleFavorite,
 }: GasStationsMapProps) {
   const markerRefs = useRef<Map<string, L.Marker>>(new Map());
 
@@ -160,7 +164,12 @@ export default function GasStationsMap({
             }}
           >
             <Popup>
-              <StationCard station={station} showDistance={showDistance} />
+              <StationCard
+                station={station}
+                showDistance={showDistance}
+                isFavorite={favorites.includes(station.IDEESS)}
+                onToggleFavorite={onToggleFavorite}
+              />
             </Popup>
           </Marker>
         );

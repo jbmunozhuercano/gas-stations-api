@@ -11,6 +11,7 @@ import { LocationInfo } from './components/LocationInfo';
 import { StationList } from './components/StationList';
 import { useGeolocation } from './hooks/useGeolocation';
 import { filterStationsByDistance } from './utils/distance';
+import { getFavorites, toggleFavorite } from './utils/favorites';
 import { REGION_CENTERS } from './constants/regionCenters';
 import dynamic from 'next/dynamic';
 
@@ -55,7 +56,12 @@ export default function Home(): JSX.Element {
   const [error, setError] = useState('');
   const [useLocation, setUseLocation] = useState(false);
   const [focusedStation, setFocusedStation] = useState<Station | null>(null);
+  const [favorites, setFavorites] = useState<string[]>([]);
   const mapRowRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setFavorites(getFavorites());
+  }, []);
 
   const {
     latitude,
@@ -151,6 +157,11 @@ export default function Home(): JSX.Element {
     setFocusedStation(null);
     clearError();
   }, [clearError, debouncedFilter]);
+
+  const handleToggleFavorite = useCallback((ideess: string) => {
+    const updated = toggleFavorite(ideess);
+    setFavorites(updated);
+  }, []);
 
   const handleInputChange = useCallback(
     (value: string) => {
@@ -260,6 +271,8 @@ export default function Home(): JSX.Element {
           priceKey={selectedFuel}
           averagePrice={averagePrice}
           focusedStation={focusedStation}
+          favorites={favorites}
+          onToggleFavorite={handleToggleFavorite}
         />
         <StationList
           stations={filteredStations}
@@ -267,6 +280,8 @@ export default function Home(): JSX.Element {
           searchTerm={searchTerm}
           useLocation={useLocation}
           onStationClick={handleStationClick}
+          favorites={favorites}
+          onToggleFavorite={handleToggleFavorite}
         />
         {!loading && filteredStations.length > 0 && (
           <LocationInfo
