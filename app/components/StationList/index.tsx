@@ -58,7 +58,20 @@ export function StationList({
     return [...favs, ...nonFavs];
   }, [stations, selectedFuel, favorites]);
 
-  const isVisible = (searchTerm.trim() !== '' || useLocation) && sortedStations.length > 0;
+  const searchActive = searchTerm.trim() !== '' || useLocation;
+
+  const favoriteStations = useMemo(
+    () => sortedStations.filter((s) => favorites.includes(s.IDEESS)),
+    [sortedStations, favorites],
+  );
+
+  // Desktop default view: show favorites in the right-side list until a search is made
+  const showFavoritesOnly = isDesktop && !searchActive;
+  const visibleStations = searchActive ? sortedStations : favoriteStations;
+
+  const isVisible =
+    (searchActive && sortedStations.length > 0) ||
+    (showFavoritesOnly && favoriteStations.length > 0);
 
   const checkScroll = useCallback(() => {
     const el = containerRef.current;
@@ -73,7 +86,7 @@ export function StationList({
     const observer = new ResizeObserver(checkScroll);
     observer.observe(el);
     return () => observer.disconnect();
-  }, [sortedStations.length, checkScroll]);
+  }, [visibleStations.length, checkScroll]);
 
   const handleScroll = useCallback(() => {
     const el = containerRef.current;
@@ -96,7 +109,7 @@ export function StationList({
           transition={{ duration: 0.3, ease: 'easeOut' }}
           onScroll={handleScroll}
         >
-          {sortedStations.map((station, index) => {
+          {visibleStations.map((station, index) => {
             const isOpen = isStationOpen(station.Horario);
             const price = station[selectedFuel as keyof Station];
             const priceNum = parseFloat(String(price ?? '').replace(',', '.'));

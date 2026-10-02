@@ -139,4 +139,49 @@ describe('StationList favorites', () => {
     expect(items[1]).toHaveTextContent('Station C');
     expect(items[2]).toHaveTextContent('Station B');
   });
+
+  it('does not show favorites without search on mobile', () => {
+    renderList({ searchTerm: '', favorites: ['001'] });
+    const items = screen.queryAllByRole('button', { name: /ver .* en el mapa/i, hidden: true });
+    expect(items).toHaveLength(0);
+  });
+});
+
+describe('StationList desktop default favorites view', () => {
+  beforeEach(() => {
+    Object.defineProperty(window, 'matchMedia', {
+      writable: true,
+      value: vi.fn().mockImplementation((query: string) => ({
+        matches: query.includes('min-width: 1024px'),
+        media: query,
+        onchange: null,
+        addListener: vi.fn(),
+        removeListener: vi.fn(),
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+        dispatchEvent: vi.fn(),
+      })),
+    });
+  });
+
+  it('shows only favorites sorted by price when there is no search', () => {
+    renderList({ searchTerm: '', favorites: ['003', '001'] });
+    const items = screen.getAllByRole('button', { name: /ver .* en el mapa/i, hidden: true });
+    expect(items).toHaveLength(2);
+    expect(items[0]).toHaveTextContent('Station A');
+    expect(items[1]).toHaveTextContent('Station C');
+  });
+
+  it('does not render when there is no search and no favorites', () => {
+    renderList({ searchTerm: '', favorites: [] });
+    const items = screen.queryAllByRole('button', { name: /ver .* en el mapa/i, hidden: true });
+    expect(items).toHaveLength(0);
+  });
+
+  it('shows the full list with favorites first when searching', () => {
+    renderList({ searchTerm: 'test', favorites: ['003'] });
+    const items = screen.getAllByRole('button', { name: /ver .* en el mapa/i, hidden: true });
+    expect(items).toHaveLength(3);
+    expect(items[0]).toHaveTextContent('Station C');
+  });
 });
