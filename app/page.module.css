@@ -16,7 +16,7 @@
 
 .error {
   position: absolute;
-  top: calc(3.5em + 44px);
+  top: calc(var(--nav-h, 3em) + 3em);
   left: 18px;
   right: 18px;
   max-width: 460px;
@@ -73,14 +73,14 @@
   }
   .error {
     top: auto;
-    bottom: calc(4em + 52px);
+    bottom: calc(var(--nav-h, 100px) + 1em);
     margin: 0 18px;
   }
 }
 
 @media screen and (min-width: 768px) {
   .error {
-    top: calc(1em + 44px + 16px);
+    top: calc(var(--nav-h, 3em) + 3em);
     margin-left: calc((100vw - 460px) / 2);
   }
   .listHeader {

@@ -25,6 +25,9 @@ interface GasStationsMapProps {
   priceKey: keyof Station;
   averagePrice: number;
   focusedStation: Station | null;
+  focusNonce: number;
+  favorites: string[];
+  onToggleFavorite: (ideess: string) => void;
 }
 
 const greenIcon = new L.Icon({
@@ -80,9 +83,11 @@ function MapUpdater({
 
 function MapController({
   focusedStation,
+  focusNonce,
   markerRefs,
 }: {
   focusedStation: Station | null;
+  focusNonce: number;
   markerRefs: React.MutableRefObject<Map<string, L.Marker>>;
 }) {
   const map = useMap();
@@ -103,7 +108,7 @@ function MapController({
         marker.openPopup();
       }, 600);
     }
-  }, [focusedStation, map, markerRefs]);
+  }, [focusedStation, focusNonce, map, markerRefs]);
 
   return null;
 }
@@ -116,6 +121,9 @@ export default function GasStationsMap({
   priceKey,
   averagePrice,
   focusedStation,
+  focusNonce,
+  favorites,
+  onToggleFavorite,
 }: GasStationsMapProps) {
   const markerRefs = useRef<Map<string, L.Marker>>(new Map());
 
@@ -127,7 +135,11 @@ export default function GasStationsMap({
     >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       <MapUpdater center={center} zoom={zoom} />
-      <MapController focusedStation={focusedStation} markerRefs={markerRefs} />
+      <MapController
+        focusedStation={focusedStation}
+        focusNonce={focusNonce}
+        markerRefs={markerRefs}
+      />
       {stations.map((station) => {
         const lat = parseCoordinate(station.Latitud);
         const lon = parseCoordinate(station['Longitud (WGS84)']);
@@ -160,7 +172,12 @@ export default function GasStationsMap({
             }}
           >
             <Popup>
-              <StationCard station={station} showDistance={showDistance} />
+              <StationCard
+                station={station}
+                showDistance={showDistance}
+                isFavorite={favorites.includes(station.IDEESS)}
+                onToggleFavorite={onToggleFavorite}
+              />
             </Popup>
           </Marker>
         );

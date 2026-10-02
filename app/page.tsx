@@ -11,6 +11,7 @@ import { LocationInfo } from './components/LocationInfo';
 import { StationList } from './components/StationList';
 import { useGeolocation } from './hooks/useGeolocation';
 import { filterStationsByDistance } from './utils/distance';
+import { getFavorites, toggleFavorite } from './utils/favorites';
 import { REGION_CENTERS } from './constants/regionCenters';
 import dynamic from 'next/dynamic';
 
@@ -55,7 +56,28 @@ export default function Home(): JSX.Element {
   const [error, setError] = useState('');
   const [useLocation, setUseLocation] = useState(false);
   const [focusedStation, setFocusedStation] = useState<Station | null>(null);
+  const [focusNonce, setFocusNonce] = useState(0);
+  const [favorites, setFavorites] = useState<string[]>([]);
   const mapRowRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    setFavorites(getFavorites());
+  }, []);
+
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+    const update = () =>
+      document.documentElement.style.setProperty(
+        '--nav-h',
+        `${header.offsetHeight}px`,
+      );
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(header);
+    return () => observer.disconnect();
+  }, []);
 
   const {
     latitude,
@@ -123,6 +145,7 @@ export default function Home(): JSX.Element {
   const handleStationClick = useCallback(
     (station: Station) => {
       setFocusedStation(station);
+      setFocusNonce((n) => n + 1);
       setTimeout(() => {
         mapRowRef.current?.scrollIntoView({
           behavior: getScrollBehavior(),
@@ -151,6 +174,11 @@ export default function Home(): JSX.Element {
     setFocusedStation(null);
     clearError();
   }, [clearError, debouncedFilter]);
+
+  const handleToggleFavorite = useCallback((ideess: string) => {
+    const updated = toggleFavorite(ideess);
+    setFavorites(updated);
+  }, []);
 
   const handleInputChange = useCallback(
     (value: string) => {
@@ -229,7 +257,11 @@ export default function Home(): JSX.Element {
       )}
 
       <div className={styles.mapRow} ref={mapRowRef}>
-        <nav className={styles.listHeader} aria-label="Filtros de búsqueda">
+        <nav
+          className={styles.listHeader}
+          aria-label="Filtros de búsqueda"
+          ref={headerRef}
+        >
           <Select regionCode={regionCode} setRegionCode={setRegionCode} />
           <LocationButton
             onClick={handleLocationClick}
@@ -260,6 +292,9 @@ export default function Home(): JSX.Element {
           priceKey={selectedFuel}
           averagePrice={averagePrice}
           focusedStation={focusedStation}
+          focusNonce={focusNonce}
+          favorites={favorites}
+          onToggleFavorite={handleToggleFavorite}
         />
         <StationList
           stations={filteredStations}
@@ -267,6 +302,8 @@ export default function Home(): JSX.Element {
           searchTerm={searchTerm}
           useLocation={useLocation}
           onStationClick={handleStationClick}
+          favorites={favorites}
+          onToggleFavorite={handleToggleFavorite}
         />
         {!loading && filteredStations.length > 0 && (
           <LocationInfo

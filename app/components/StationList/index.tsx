@@ -11,6 +11,8 @@ interface StationListProps {
   searchTerm: string;
   useLocation: boolean;
   onStationClick: (station: Station) => void;
+  favorites: string[];
+  onToggleFavorite: (ideess: string) => void;
 }
 
 const MAX_ANIMATION_DELAY = 0.6;
@@ -21,6 +23,8 @@ export function StationList({
   searchTerm,
   useLocation,
   onStationClick,
+  favorites,
+  onToggleFavorite,
 }: StationListProps): JSX.Element {
   const containerRef = useRef<HTMLDivElement>(null);
   const [canScroll, setCanScroll] = useState(false);
@@ -35,7 +39,7 @@ export function StationList({
   }, []);
 
   const sortedStations = useMemo(() => {
-    return [...stations].sort((a, b) => {
+    const sorted = [...stations].sort((a, b) => {
       const priceA = parseFloat(
         String(a[selectedFuel as keyof Station] ?? '').replace(',', '.'),
       );
@@ -49,9 +53,25 @@ export function StationList({
       if (nanB) return -1;
       return priceA - priceB;
     });
-  }, [stations, selectedFuel]);
+    const favs = sorted.filter((s) => favorites.includes(s.IDEESS));
+    const nonFavs = sorted.filter((s) => !favorites.includes(s.IDEESS));
+    return [...favs, ...nonFavs];
+  }, [stations, selectedFuel, favorites]);
 
-  const isVisible = (searchTerm.trim() !== '' || useLocation) && sortedStations.length > 0;
+  const searchActive = searchTerm.trim() !== '' || useLocation;
+
+  const favoriteStations = useMemo(
+    () => sortedStations.filter((s) => favorites.includes(s.IDEESS)),
+    [sortedStations, favorites],
+  );
+
+  // Desktop default view: show favorites in the right-side list until a search is made
+  const showFavoritesOnly = isDesktop && !searchActive;
+  const visibleStations = searchActive ? sortedStations : favoriteStations;
+
+  const isVisible =
+    (searchActive && sortedStations.length > 0) ||
+    (showFavoritesOnly && favoriteStations.length > 0);
 
   const checkScroll = useCallback(() => {
     const el = containerRef.current;
@@ -66,7 +86,7 @@ export function StationList({
     const observer = new ResizeObserver(checkScroll);
     observer.observe(el);
     return () => observer.disconnect();
-  }, [sortedStations.length, checkScroll]);
+  }, [visibleStations.length, checkScroll]);
 
   const handleScroll = useCallback(() => {
     const el = containerRef.current;
@@ -89,7 +109,7 @@ export function StationList({
           transition={{ duration: 0.3, ease: 'easeOut' }}
           onScroll={handleScroll}
         >
-          {sortedStations.map((station, index) => {
+          {visibleStations.map((station, index) => {
             const isOpen = isStationOpen(station.Horario);
             const price = station[selectedFuel as keyof Station];
             const priceNum = parseFloat(String(price ?? '').replace(',', '.'));
@@ -115,6 +135,33 @@ export function StationList({
                 whileHover={{ scale: 1.02, backgroundColor: 'rgba(37, 66, 82, 0.9)' }}
                 whileTap={{ scale: 0.97 }}
               >
+                <button
+                  className={`${styles.heart} ${favorites.includes(station.IDEESS) ? styles.heartFilled : styles.heartOutline}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onToggleFavorite(station.IDEESS);
+                  }}
+                  aria-label={
+                    favorites.includes(station.IDEESS)
+                      ? 'Quitar de favoritas'
+                      : 'Marcar como favorita'
+                  }
+                  type="button"
+                >
+                  <svg
+                    width="100%"
+                    height="100%"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    {favorites.includes(station.IDEESS) ? (
+                      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                    ) : (
+                      <path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z" />
+                    )}
+                  </svg>
+                </button>
                 <div className={styles.name}>
                   {station.Rótulo}
                   {isOpen === false && (
