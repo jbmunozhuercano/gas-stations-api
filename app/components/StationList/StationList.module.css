@@ -77,8 +77,8 @@
   text-transform: uppercase;
   letter-spacing: 0.035em;
   margin: 0;
-  width: 38%;
-  flex-shrink: 0;
+  flex: 0 1 38%;
+  min-width: 0;
 }
 
 .closed {
@@ -91,8 +91,7 @@
 .horario {
   font-size: 0.85rem;
   color: var(--color-5);
-  width: 38%;
-  flex-shrink: 0;
+  flex: 0 1 38%;
   min-width: 0;
 }
 
@@ -101,8 +100,7 @@
   font-weight: 700;
   color: var(--color-4);
   white-space: nowrap;
-  width: 17%;
-  flex-shrink: 0;
+  flex: 0 0 17%;
   text-align: right;
 }
 
@@ -110,8 +108,7 @@
   font-size: 0.7rem;
   color: var(--color-5);
   white-space: nowrap;
-  width: 17%;
-  flex-shrink: 0;
+  flex: 0 0 17%;
   text-align: right;
 }
 
