@@ -1,5 +1,27 @@
 # Changelog
 
+## [2.5.0](https://github.com/jbmunozhuercano/gas-stations-api/compare/gas-stations-api-v2.4.2...gas-stations-api-v2.5.0) (2026-10-02)
+
+
+### Features
+
+* add favorite gas station feature ([a812a7d](https://github.com/jbmunozhuercano/gas-stations-api/commit/a812a7dc49156cb72c1190d9211ab37f34c8fd3a))
+* show favorite stations in list by default on desktop ([9178da4](https://github.com/jbmunozhuercano/gas-stations-api/commit/9178da421afb9100002034597aca616d5a39871e))
+
+
+### Bug Fixes
+
+* enlarge heart icons and keep card heart clear of popup close button ([af4e4e6](https://github.com/jbmunozhuercano/gas-stations-api/commit/af4e4e6c490fc2553438531dbcbdd512be56c420))
+* keep list and error clear of the dynamic header height ([429c705](https://github.com/jbmunozhuercano/gas-stations-api/commit/429c7055faaa36f5f81f0d5d654649dc242dacae))
+* prevent station list item overflow on narrow screens ([6a5d9c4](https://github.com/jbmunozhuercano/gas-stations-api/commit/6a5d9c4703226890ce171d4778d761dabe6caef4))
+* reopen station popup when re-clicking the same listing row ([84a84d0](https://github.com/jbmunozhuercano/gas-stations-api/commit/84a84d0dd7512fcc1d60e8b987f82712cf7f4d96))
+
+
+### Documentation
+
+* add project constitution (mission, roadmap, tech-stack) ([202e111](https://github.com/jbmunozhuercano/gas-stations-api/commit/202e111b1cfb28991a6a0bdea0d9397497c544a4))
+* add SDD feature spec for favorites ([a2bb0df](https://github.com/jbmunozhuercano/gas-stations-api/commit/a2bb0dfbe339414d55b64cb9971d57169e987cf2))
+
 ## [2.4.2](https://github.com/jbmunozhuercano/gas-stations-api/compare/gas-stations-api-v2.4.1...gas-stations-api-v2.4.2) (2026-06-24)
 
 
