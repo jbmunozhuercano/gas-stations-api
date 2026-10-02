@@ -12,7 +12,7 @@
     z-index: 1;
     color: var(--color-5);
     padding: 0.5em;
-    padding-bottom: 4.5em;
+    padding-bottom: calc(var(--nav-h, 100px) + 0.75em);
     background-color: rgba(15, 25, 35, 0.95);
   }
 }
@@ -29,10 +29,10 @@
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 3.5em;
+    top: calc(var(--nav-h, 3em) + 1.5em);
     right: 0.5em;
     width: 320px;
-    max-height: calc(100% - 7.5em);
+    max-height: calc(100% - var(--nav-h, 3em) - 3em);
     overflow-y: auto;
     z-index: 1000;
     color: var(--color-5);
@@ -50,15 +50,7 @@
 
 @media screen and (min-width: 1720px) {
   .listContainer {
-    top: 0.5em;
-    max-height: calc(100% - 3em);
-  }
-}
-
-@media screen and (min-width: 1024px) and (max-width: 1069px) {
-  .listContainer {
-    top: 7em;
-    max-height: calc(100% - 9em);
+    max-height: calc(100% - var(--nav-h, 3em) - 2.5em);
   }
 }
 

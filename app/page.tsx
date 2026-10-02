@@ -59,9 +59,24 @@ export default function Home(): JSX.Element {
   const [focusNonce, setFocusNonce] = useState(0);
   const [favorites, setFavorites] = useState<string[]>([]);
   const mapRowRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     setFavorites(getFavorites());
+  }, []);
+
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+    const update = () =>
+      document.documentElement.style.setProperty(
+        '--nav-h',
+        `${header.offsetHeight}px`,
+      );
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(header);
+    return () => observer.disconnect();
   }, []);
 
   const {
@@ -242,7 +257,11 @@ export default function Home(): JSX.Element {
       )}
 
       <div className={styles.mapRow} ref={mapRowRef}>
-        <nav className={styles.listHeader} aria-label="Filtros de búsqueda">
+        <nav
+          className={styles.listHeader}
+          aria-label="Filtros de búsqueda"
+          ref={headerRef}
+        >
           <Select regionCode={regionCode} setRegionCode={setRegionCode} />
           <LocationButton
             onClick={handleLocationClick}
