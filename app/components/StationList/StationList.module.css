@@ -122,8 +122,8 @@
   cursor: pointer;
   flex-shrink: 0;
   transition: transform 0.2s ease;
-  width: 18px;
-  height: 18px;
+  width: 28px;
+  height: 28px;
 }
 
 .heart:hover {
@@ -135,8 +135,8 @@
 }
 
 .heartOutline {
-  color: var(--color-5);
-  opacity: 0.4;
+  color: var(--color-4);
+  opacity: 0.75;
 }
 
 .heartOutline:hover {

@@ -14,9 +14,10 @@
   font-size: 1rem;
   letter-spacing: 0.035em;
   text-align: center;
-  padding: 0 0 0.25em;
+  padding: 0 2.5em 0.25em;
   margin: 0 0 0.75em;
   border-bottom: 2px solid var(--color-3);
+  position: relative;
 }
 
 .heart {
@@ -29,12 +30,16 @@
   cursor: pointer;
   flex-shrink: 0;
   transition: transform 0.2s ease;
-  width: 16px;
-  height: 16px;
+  width: 26px;
+  height: 26px;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .heart:hover {
-  transform: scale(1.15);
+  transform: translateY(-50%) scale(1.15);
 }
 
 .heartFilled {
@@ -42,8 +47,8 @@
 }
 
 .heartOutline {
-  color: var(--color-5);
-  opacity: 0.4;
+  color: var(--color-4);
+  opacity: 0.75;
 }
 
 .heartOutline:hover {
