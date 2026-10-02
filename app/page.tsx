@@ -56,6 +56,7 @@ export default function Home(): JSX.Element {
   const [error, setError] = useState('');
   const [useLocation, setUseLocation] = useState(false);
   const [focusedStation, setFocusedStation] = useState<Station | null>(null);
+  const [focusNonce, setFocusNonce] = useState(0);
   const [favorites, setFavorites] = useState<string[]>([]);
   const mapRowRef = useRef<HTMLDivElement>(null);
 
@@ -129,6 +130,7 @@ export default function Home(): JSX.Element {
   const handleStationClick = useCallback(
     (station: Station) => {
       setFocusedStation(station);
+      setFocusNonce((n) => n + 1);
       setTimeout(() => {
         mapRowRef.current?.scrollIntoView({
           behavior: getScrollBehavior(),
@@ -271,6 +273,7 @@ export default function Home(): JSX.Element {
           priceKey={selectedFuel}
           averagePrice={averagePrice}
           focusedStation={focusedStation}
+          focusNonce={focusNonce}
           favorites={favorites}
           onToggleFavorite={handleToggleFavorite}
         />
